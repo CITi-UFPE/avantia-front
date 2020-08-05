@@ -11,4 +11,6 @@ module.exports = ({
   heading: '#5579B7',
   text: '#FFFFFF',
   textSecondary: '#FF943B',
+
+  orange: '#FF943B',
 });

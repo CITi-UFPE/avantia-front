@@ -1,10 +1,11 @@
 import React from 'react';
-import { Button } from 'antd';
+
+import { Header } from 'components/organisms';
 
 function App() {
   return (
     <div className="app">
-      <Button type="primary">AAA</Button>
+      <Header />
     </div>
   );
 }
