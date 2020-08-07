@@ -15,7 +15,7 @@ function Header() {
       <Image width="10rem" src={logoPng} />
 
       <Button>
-        Veja nossos preços
+        Contrate Agora
         <WhatsappIcon />
       </Button>
     </Base>

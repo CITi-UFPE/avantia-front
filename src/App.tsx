@@ -6,18 +6,21 @@ import {
   Footer,
 } from 'components/organisms';
 import { Background } from 'components/atoms';
+import GlobalProvider from 'contexts/GlobalProvider';
 
 import { AppWrapper } from 'App.style';
 
 function App() {
   return (
-    <AppWrapper>
-      <Header />
-      <Background>
-        <VideoContainer />
-      </Background>
-      <Footer />
-    </AppWrapper>
+    <GlobalProvider>
+      <AppWrapper>
+        <Header />
+        <Background>
+          <VideoContainer />
+        </Background>
+        <Footer />
+      </AppWrapper>
+    </GlobalProvider>
   );
 }
 

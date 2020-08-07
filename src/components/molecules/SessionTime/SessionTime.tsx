@@ -6,9 +6,9 @@ import { Container } from './SessionTime.style';
 
 function SessionTime() {
   return (
-    <Container>
+    <Container disabled>
       <Paragraph noMargin color="orange">Tempo restante da sessão</Paragraph>
-      <Title fontSize="1.5rem" bold color="orange">20:00</Title>
+      <Title style={{ letterSpacing: '5px' }} fontSize="1.5rem" bold color="orange">--:--</Title>
     </Container>
   );
 }
