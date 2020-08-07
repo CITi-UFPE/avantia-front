@@ -1,12 +1,18 @@
 import React from 'react';
 
-import { Header } from 'components/organisms';
+import { Header, VideoContainer } from 'components/organisms';
+import { Background } from 'components/atoms';
+
+import { AppWrapper } from 'App.style';
 
 function App() {
   return (
-    <div className="app">
+    <AppWrapper>
       <Header />
-    </div>
+      <Background>
+        <VideoContainer />
+      </Background>
+    </AppWrapper>
   );
 }
 

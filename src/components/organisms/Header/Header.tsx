@@ -3,10 +3,10 @@ import React from 'react';
 import { SessionTime } from 'components/molecules';
 import { Button, Image } from 'components/atoms';
 
-import { Base } from './Header.style';
-
-import logoPng from 'assets/logo.png';
 import { ReactComponent as WhatsappSvg } from 'assets/icons/whatsapp.svg';
+import logoPng from 'assets/logo.png';
+
+import { Base } from './Header.style';
 
 function Header() {
   return (
