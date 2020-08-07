@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-import { flexcc } from 'styles/variables';
+import { flex } from 'styles/variables';
 
 export const AppWrapper = styled.article`
-  ${flexcc}
+  ${flex('flex-start', 'center', 'column', 'nowrap')}
   flex-flow: column;
   height: 100vh;
 `;

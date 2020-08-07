@@ -9,6 +9,7 @@ export const BackgroundBase = styled.div`
   ${flexcc}
   width: 100%;
   flex-grow: 1;
+  flex-shrink: 1;
   position: relative;
 `;
 
@@ -17,6 +18,9 @@ const svgBase = css`
   margin: 30px;
   height: 150px;
   width: 150px;
+  path {
+    fill: #5579b7;
+  }
 `;
 
 export const BackgroundLeft = styled(SvgLeft)`

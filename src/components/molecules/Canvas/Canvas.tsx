@@ -1,8 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 
+import { InfoModal } from 'components/molecules';
 import whiteLogo from 'assets/white-logo.png';
 
-import { StyledCanvas } from './Canvas.style';
+import {
+  StyledCanvas,
+  CanvasContainer,
+} from './Canvas.style';
 
 function Canvas({ dimensions, filters }: { dimensions: number[], filters: ServerResponse[] }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -80,11 +84,14 @@ function Canvas({ dimensions, filters }: { dimensions: number[], filters: Server
   }, [canvasRef, filters]);
 
   return (
-    <StyledCanvas
-      ref={canvasRef}
-      width={dimensions[1]}
-      height={dimensions[0]}
-    />
+    <CanvasContainer>
+      <StyledCanvas
+        ref={canvasRef}
+        width={dimensions[1]}
+        height={dimensions[0]}
+      />
+      <InfoModal />
+    </CanvasContainer>
   );
 }
 

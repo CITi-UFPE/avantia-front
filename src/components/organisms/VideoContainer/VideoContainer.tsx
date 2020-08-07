@@ -37,7 +37,7 @@ function VideoContainer() {
 
           formData.set('image', blob as Blob);
 
-          const res = await axios.post('http://localhost:3001/image', formData);
+          const res = await axios.post('https://avantia.herokuapp.com/image', formData);
           const info: ServerResponse[] = res.data.data;
 
           setFilters(info);
@@ -45,8 +45,9 @@ function VideoContainer() {
           console.log(err);
         }
       }, 'image/png');
+      setTimeout(sendImage, 1000);
     };
-    setInterval(sendImage, 1000);
+    sendImage();
   }, [videoElement]);
 
   return (

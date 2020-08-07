@@ -7,18 +7,22 @@ const typedColors = colors as { [key: string]: string };
 type BaseTypes = {
   color?: string;
   bold?: boolean;
+  fontSize?: string;
+  margin?: string;
 }
 
 const base = css`
   ${({ bold }: BaseTypes) => (bold && css`
     font-weight: bolder;
   `)}
-  color: ${({ color }) => (color && (typedColors[color] || color))};
+  font-size: ${({ fontSize }) => fontSize};
+  color: ${({ color }) => (color && (typedColors[color] || color)) || 'black'};
   margin: 0;
 `;
 
 export const Paragraph = styled.p`
   ${base}
+  margin: 15px 0;
 `;
 
 export const Title = styled.h1`
