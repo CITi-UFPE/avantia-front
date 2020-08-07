@@ -2,9 +2,6 @@ import styled, { css } from 'styled-components';
 
 import { flexcc } from 'styles/variables';
 
-import { ReactComponent as SvgLeft } from 'assets/background-left.svg';
-import { ReactComponent as SvgRight } from 'assets/background-right.svg';
-
 export const BackgroundBase = styled.div`
   ${flexcc}
   width: 100%;
@@ -18,18 +15,15 @@ const svgBase = css`
   margin: 30px;
   height: 150px;
   width: 150px;
-  path {
-    fill: #5579b7;
-  }
 `;
 
-export const BackgroundLeft = styled(SvgLeft)`
+export const BackgroundLeft = styled.img`
   ${svgBase}
   bottom: 0;
   left: 0;
 `;
 
-export const BackgroundRight = styled(SvgRight)`
+export const BackgroundRight = styled.img`
   ${svgBase}
   top: 0;
   right: 0;

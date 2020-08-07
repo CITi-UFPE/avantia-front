@@ -7,8 +7,8 @@ import { Container } from './SessionTime.style';
 function SessionTime() {
   return (
     <Container>
-      <Paragraph color="orange">Tempo restante da sessão</Paragraph>
-      <Title bold color="orange">05:00</Title>
+      <Paragraph noMargin color="orange">Tempo restante da sessão</Paragraph>
+      <Title fontSize="1.5rem" bold color="orange">20:00</Title>
     </Container>
   );
 }

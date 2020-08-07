@@ -20,9 +20,13 @@ const base = css`
   margin: 0;
 `;
 
+type PTypes = {
+  noMargin?: boolean;
+}
+
 export const Paragraph = styled.p`
   ${base}
-  margin: 15px 0;
+  margin: ${({ noMargin }: PTypes & BaseTypes) => (noMargin ? '0' : '15px 0')};
 `;
 
 export const Title = styled.h1`

@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { Header, VideoContainer } from 'components/organisms';
+import {
+  Header,
+  VideoContainer,
+  Footer,
+} from 'components/organisms';
 import { Background } from 'components/atoms';
 
 import { AppWrapper } from 'App.style';
@@ -12,6 +16,7 @@ function App() {
       <Background>
         <VideoContainer />
       </Background>
+      <Footer />
     </AppWrapper>
   );
 }
