@@ -1,5 +1,7 @@
 import { css } from 'styled-components';
 
+import colors from 'styles/colors';
+
 export const flexcc = css`
   display: flex;
   justify-content: center;
@@ -12,4 +14,8 @@ export const flex = (justify: string, align: string, direction: string, wrap: st
   align-items: ${align};
   flex-direction: ${direction};
   flex-wrap: ${wrap};
+`;
+
+export const border = css`
+  border: 1px solid ${colors.secondaryBackground};
 `;
