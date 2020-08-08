@@ -12,7 +12,11 @@ export const CanvasContainer = styled.div`
   left: 50%;
   transform: translateX(-50%);
   height: 100%;
-  width: 60%;
+  width: 80%;
   object-fit: cover;
   z-index: 2;
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;

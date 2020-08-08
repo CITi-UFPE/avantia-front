@@ -2,8 +2,6 @@ import styled from 'styled-components';
 
 import colors from 'styles/colors';
 
-import { ReactComponent as WhatsappSvg } from 'assets/icons/whatsapp.svg';
-
 export const InfoButton = styled.button`
   border-left: 1px solid ${colors.secondaryBackground};
   border-bottom: 1px solid ${colors.secondaryBackground};
@@ -26,9 +24,7 @@ export const InfoIcon = styled.img`
   margin: 5px;
 `;
 
-export const WhatsappIcon = styled(WhatsappSvg)`
-  height: 80%;
-  path {
-    fill: white;
-  }
+export const WhatsappIcon = styled.img`
+  width: 15px;
+  margin-left: 10px;
 `;

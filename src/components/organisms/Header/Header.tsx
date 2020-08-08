@@ -1,9 +1,11 @@
 import React from 'react';
 
 import { SessionTime } from 'components/molecules';
-import { Button, Image } from 'components/atoms';
+import { Image, Link } from 'components/atoms';
+import { whatsappLink } from 'variables/contact';
 
 import logoPng from 'assets/logo.png';
+import whatsappSvg from 'assets/icons/whatsapp.svg';
 
 import { Base, WhatsappIcon } from './Header.style';
 
@@ -12,12 +14,12 @@ function Header() {
     <Base>
       <SessionTime />
 
-      <Image width="10rem" src={logoPng} />
+      <Image width="10rem" respWidth="5rem" src={logoPng} />
 
-      <Button>
-        Veja nossos preços
-        <WhatsappIcon />
-      </Button>
+      <Link target="_blank" href={whatsappLink}>
+        Contrate Agora
+        <WhatsappIcon src={whatsappSvg} />
+      </Link>
     </Base>
   );
 }

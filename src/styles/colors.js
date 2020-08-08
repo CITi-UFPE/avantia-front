@@ -13,4 +13,5 @@ module.exports = ({
   textSecondary: '#FF943B',
 
   orange: '#FF943B',
+  gray: '#CECECE',
 });

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 import { Video, Canvas } from 'components/molecules';
+import { useInfo } from 'contexts/GlobalProvider';
 
 import { Container } from './VideoContainer.style';
 
@@ -9,6 +10,8 @@ function VideoContainer() {
   const [dimensions, setDimensions] = useState<number[]>([]);
   const [videoElement, setVideoElement] = useState<HTMLVideoElement>();
   const [filters, setFilters] = useState<ServerResponse[]>();
+
+  const [, setInfo] = useInfo();
 
   const handleDimensions = useCallback((values: number[], video: HTMLVideoElement) => {
     setDimensions(values);
@@ -37,10 +40,16 @@ function VideoContainer() {
 
           formData.set('image', blob as Blob);
 
+          const before = Date.now();
+
           const res = await axios.post('https://avantia.herokuapp.com/image', formData);
           const info: ServerResponse[] = res.data.data;
 
           setFilters(info);
+          setInfo((prevInfo: Object) => ({
+            ...prevInfo,
+            latency: Date.now() - before,
+          }));
         } catch (err) {
           console.log(err);
         }
@@ -48,7 +57,7 @@ function VideoContainer() {
       setTimeout(sendImage, 1000);
     };
     sendImage();
-  }, [videoElement]);
+  }, [videoElement, setInfo]);
 
   return (
     <Container>

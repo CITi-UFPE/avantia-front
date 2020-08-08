@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 import { flexcc } from 'styles/variables';
-
-import { ReactComponent as WhatsappSvg } from 'assets/icons/whatsapp.svg';
+import colors from 'styles/colors';
 
 export const Base = styled.header`
   ${flexcc}
@@ -11,12 +10,10 @@ export const Base = styled.header`
   width: 100%;
   height: 5rem;
 
-  border-bottom: 1px solid #B2B2B2;
+  border-bottom: 1px solid ${colors.secondaryBackground};
 `;
 
-export const WhatsappIcon = styled(WhatsappSvg)`
-  height: 80%;
-  path {
-    fill: white;
-  }
+export const WhatsappIcon = styled.img`
+  width: 15px;
+  margin-left: 10px;
 `;
