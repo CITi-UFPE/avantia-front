@@ -3,7 +3,10 @@ import { Modal } from 'antd';
 
 import infoSvg from 'assets/icons/info.svg';
 import { Paragraph } from 'components/atoms/Text';
-import { Button } from 'components/atoms';
+import { Link } from 'components/atoms';
+import { whatsappLink } from 'variables/contact';
+
+import whatsappSvg from 'assets/icons/whatsapp.svg';
 
 import { InfoButton, InfoIcon, WhatsappIcon } from './InfoModal.style';
 
@@ -25,10 +28,16 @@ function InfoModal() {
         onOk={hideModal}
         onCancel={hideModal}
         footer={[
-          <Button>
+          <Link
+            onClick={hideModal}
+            onAuxClick={hideModal}
+            key="contact"
+            target="_blank"
+            href={whatsappLink}
+          >
             Fale conosco
-            <WhatsappIcon />
-          </Button>,
+            <WhatsappIcon src={whatsappSvg} />
+          </Link>,
         ]}
       >
         <Paragraph fontSize=".8rem">

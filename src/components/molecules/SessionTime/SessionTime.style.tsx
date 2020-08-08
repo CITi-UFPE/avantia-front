@@ -11,4 +11,9 @@ export const Container = styled.div`
       color: ${colors.gray};
     }
   `)}
+
+  @media only screen and (max-width: 600px) {
+    p { font-size: .6rem; }
+    h1 { font-size: 1.2rem; }
+  }
 `;

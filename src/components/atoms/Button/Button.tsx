@@ -5,7 +5,7 @@ import { StyledButton } from './Button.style';
 
 function Button({ children, ...props }: ButtonProps) {
   return (
-    <StyledButton type="primary" {...props}>
+    <StyledButton type="default" {...props}>
       {children}
     </StyledButton>
   );

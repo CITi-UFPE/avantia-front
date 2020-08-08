@@ -1,26 +1,34 @@
 import React from 'react';
-
 import {
-  Header,
-  VideoContainer,
-  Footer,
-} from 'components/organisms';
-import { Background } from 'components/atoms';
+  BrowserRouter as Browser,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
+
+import { Header } from 'components/organisms';
 import GlobalProvider from 'contexts/GlobalProvider';
+
+import { Analytic, Access } from 'components/pages';
 
 import { AppWrapper } from 'App.style';
 
 function App() {
   return (
-    <GlobalProvider>
-      <AppWrapper>
-        <Header />
-        <Background>
-          <VideoContainer />
-        </Background>
-        <Footer />
-      </AppWrapper>
-    </GlobalProvider>
+    <Browser>
+      <GlobalProvider>
+        <AppWrapper>
+          <Header />
+          <Switch>
+            <Route exact path="/">
+              <Redirect to="/acesso" />
+            </Route>
+            <Route path="/acesso" component={Access} />
+            <Route path="/analitico" component={Analytic} />
+          </Switch>
+        </AppWrapper>
+      </GlobalProvider>
+    </Browser>
   );
 }
 

@@ -15,6 +15,11 @@ const svgBase = css`
   margin: 30px;
   height: 150px;
   width: 150px;
+  z-index: -1;
+
+  @media only screen and (max-width: 600px) {
+    display: none;
+  }
 `;
 
 export const BackgroundLeft = styled.img`

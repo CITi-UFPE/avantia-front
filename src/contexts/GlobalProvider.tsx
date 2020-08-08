@@ -8,8 +8,6 @@ function GlobalProvider({ children }: { children: React.ReactNode }) {
     expiringDate: null,
   });
 
-  console.log(info);
-
   return (
     // @ts-ignore
     <GlobalContext.Provider value={[info, setInfo]}>

@@ -9,4 +9,8 @@ export const VideoDisplay = styled.video`
   transform: scaleX(-1);
   position: relative;
   ${border}
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;

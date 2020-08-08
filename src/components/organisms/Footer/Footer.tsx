@@ -4,10 +4,10 @@ import { ConnectionInfo } from 'components/molecules';
 
 import { Base } from './Footer.style';
 
-function Footer() {
+function Footer({ disabled }: { disabled: boolean }) {
   return (
     <Base>
-      <ConnectionInfo />
+      <ConnectionInfo disabled={disabled} />
     </Base>
   );
 }
