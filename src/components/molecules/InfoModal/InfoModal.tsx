@@ -32,7 +32,6 @@ function InfoModal() {
             onClick={hideModal}
             onAuxClick={hideModal}
             key="contact"
-            target="_blank"
             href={whatsappLink}
           >
             Fale conosco

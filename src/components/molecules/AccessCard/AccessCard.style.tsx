@@ -7,6 +7,11 @@ export const AccessBackground = styled.div`
   height: 100%;
   width: 60%;
   padding: 5% 12%;
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+    height: 70%;
+  }
 `;
 
 export const TextContainer = styled.div`

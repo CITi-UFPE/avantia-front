@@ -16,4 +16,17 @@ export const Base = styled.header`
 export const WhatsappIcon = styled.img`
   width: 15px;
   margin-left: 10px;
+
+  @media only screen and (max-width: 600px) {
+    margin: 0;
+  }
+`;
+
+export const Text = styled.p`
+  margin: 0;
+  display: inline;
+
+  @media only screen and (max-width: 600px) {
+    display: none;
+  }
 `;

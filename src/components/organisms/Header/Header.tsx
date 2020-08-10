@@ -7,7 +7,7 @@ import { whatsappLink } from 'variables/contact';
 import logoPng from 'assets/logo.png';
 import whatsappSvg from 'assets/icons/whatsapp.svg';
 
-import { Base, WhatsappIcon } from './Header.style';
+import { Base, WhatsappIcon, Text } from './Header.style';
 
 function Header() {
   return (
@@ -16,8 +16,8 @@ function Header() {
 
       <Image width="10rem" respWidth="5rem" src={logoPng} />
 
-      <Link target="_blank" href={whatsappLink}>
-        Contrate Agora
+      <Link href={whatsappLink}>
+        <Text>Contrate Agora</Text>
         <WhatsappIcon src={whatsappSvg} />
       </Link>
     </Base>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import { Video, Canvas } from 'components/molecules';
@@ -10,6 +11,7 @@ function VideoContainer() {
   const [dimensions, setDimensions] = useState<number[]>([]);
   const [videoElement, setVideoElement] = useState<HTMLVideoElement>();
   const [filters, setFilters] = useState<ServerResponse[]>();
+  const [redirect, setRedirect] = useState('');
 
   const [, setInfo] = useInfo();
 
@@ -42,22 +44,28 @@ function VideoContainer() {
 
           const before = Date.now();
 
-          const res = await axios.post('https://avantia.herokuapp.com/image', formData);
+          const res = await axios.post('http://localhost:3001/image', formData, { withCredentials: true });
           const info: ServerResponse[] = res.data.data;
+          const { expiringDate } = res.data;
 
           setFilters(info);
-          setInfo((prevInfo: Object) => ({
+          setInfo((prevInfo: any) => ({
             ...prevInfo,
             latency: Date.now() - before,
+            ...(prevInfo.expiringDate ? {} : { expiringDate }),
           }));
+          setTimeout(sendImage, 1000);
         } catch (err) {
-          console.log(err);
+          if (err.response?.status === 403) {
+            setRedirect('/expired');
+          }
         }
       }, 'image/png');
-      setTimeout(sendImage, 1000);
     };
     sendImage();
   }, [videoElement, setInfo]);
+
+  if (redirect) return <Redirect to={redirect} />;
 
   return (
     <Container>

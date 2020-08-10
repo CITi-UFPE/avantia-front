@@ -5,14 +5,14 @@ import { Anchor } from './Link.style';
 type LinkProps = {
   children: React.ReactNode;
   href: string;
-  target: string;
   onClick?: (event: any) => void;
   onAuxClick?: (event: any) => void;
+  noBorder?: boolean;
 };
 
 function Link({ children, ...props }: LinkProps) {
   return (
-    <Anchor {...props}>
+    <Anchor target="_blank" {...props}>
       {children}
     </Anchor>
   );
