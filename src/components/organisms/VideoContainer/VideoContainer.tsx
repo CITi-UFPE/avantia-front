@@ -42,19 +42,21 @@ function VideoContainer() {
 
           const before = Date.now();
 
-          const res = await axios.post('https://avantia.herokuapp.com/image', formData);
+          const res = await axios.post('http://localhost:3001/image', formData, { withCredentials: true });
           const info: ServerResponse[] = res.data.data;
+          const { expiringDate } = res.data;
 
           setFilters(info);
-          setInfo((prevInfo: Object) => ({
+          setInfo((prevInfo: any) => ({
             ...prevInfo,
             latency: Date.now() - before,
+            ...(prevInfo.expiringDate ? {} : { expiringDate }),
           }));
         } catch (err) {
-          console.log(err);
+          console.log(err.response);
         }
+        setTimeout(sendImage, 1000);
       }, 'image/png');
-      setTimeout(sendImage, 1000);
     };
     sendImage();
   }, [videoElement, setInfo]);
