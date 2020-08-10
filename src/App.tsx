@@ -9,7 +9,12 @@ import {
 import { Header } from 'components/organisms';
 import GlobalProvider from 'contexts/GlobalProvider';
 
-import { Analytic, Access, ExpiredSession } from 'components/pages';
+import {
+  Analytic,
+  Access,
+  ExpiredSession,
+  Display,
+} from 'components/pages';
 
 import { AppWrapper } from 'App.style';
 
@@ -26,6 +31,7 @@ function App() {
             <Route path="/acesso" component={Access} />
             <Route path="/analitico" component={Analytic} />
             <Route path="/expired" component={ExpiredSession} />
+            <Route path="/display" component={Display} />
           </Switch>
         </AppWrapper>
       </GlobalProvider>

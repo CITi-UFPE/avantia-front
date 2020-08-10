@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 
+import { useInfo } from 'contexts/GlobalProvider';
 import { VideoDisplay } from './Video.style';
 
 function Video({ getDimensions }: { getDimensions: Function }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [, setInfo] = useInfo();
 
   useEffect(() => {
     const getUserMedia = async () => {
@@ -23,6 +25,21 @@ function Video({ getDimensions }: { getDimensions: Function }) {
 
     getUserMedia();
   }, [getDimensions]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      setInfo((prevInfo: Object) => ({
+        ...prevInfo,
+        video: videoRef.current,
+      }));
+    }
+    return () => {
+      setInfo((prevInfo: Object) => ({
+        ...prevInfo,
+        video: null,
+      }));
+    };
+  }, [videoRef, setInfo]);
 
   return (
     <VideoDisplay ref={videoRef} autoPlay>

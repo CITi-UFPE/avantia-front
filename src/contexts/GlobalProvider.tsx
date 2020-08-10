@@ -6,6 +6,8 @@ function GlobalProvider({ children }: { children: React.ReactNode }) {
   const [info, setInfo] = useState({
     latency: null,
     expiringDate: null,
+    canvas: null,
+    video: null,
   });
 
   return (

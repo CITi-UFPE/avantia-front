@@ -9,11 +9,11 @@ export const InfoIcon = styled.img`
 `;
 
 export const InfoContainer = styled.div`
-  ${flex('center', 'flex-start', 'column', 'nowrap')}
-  margin: 0 60px;
+  ${flex('center', 'center', 'column', 'nowrap')}
   ${({ disabled }: { disabled: boolean }) => (disabled && css`
     p, h1 {
       color: ${colors.gray};
+      opacity: 0.8;
     }
   `)}
 `;
