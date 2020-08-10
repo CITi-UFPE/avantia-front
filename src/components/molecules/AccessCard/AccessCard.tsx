@@ -38,7 +38,7 @@ function AccessCard() {
           dispositivo está sendo utilizada em outro aplicativo ou
           navegador
         </Paragraph>
-        <Button onClick={requestAccess}>
+        <Button style={{ color: 'white' }} type="primary" onClick={requestAccess}>
           Autorizar Câmera
           <AccessIcon src={arrowSvg} />
         </Button>

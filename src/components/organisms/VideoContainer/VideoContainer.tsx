@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import { Video, Canvas } from 'components/molecules';
@@ -10,6 +11,7 @@ function VideoContainer() {
   const [dimensions, setDimensions] = useState<number[]>([]);
   const [videoElement, setVideoElement] = useState<HTMLVideoElement>();
   const [filters, setFilters] = useState<ServerResponse[]>();
+  const [redirect, setRedirect] = useState('');
 
   const [, setInfo] = useInfo();
 
@@ -52,14 +54,18 @@ function VideoContainer() {
             latency: Date.now() - before,
             ...(prevInfo.expiringDate ? {} : { expiringDate }),
           }));
+          setTimeout(sendImage, 1000);
         } catch (err) {
-          console.log(err.response);
+          if (err.response?.status === 403) {
+            setRedirect('/expired');
+          }
         }
-        setTimeout(sendImage, 1000);
       }, 'image/png');
     };
     sendImage();
   }, [videoElement, setInfo]);
+
+  if (redirect) return <Redirect to={redirect} />;
 
   return (
     <Container>

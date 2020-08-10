@@ -10,14 +10,10 @@ type Props = {
 }
 
 function Image({
-  src,
-  width,
-  respWidth,
-  alt,
   ...props
 }: Props) {
   return (
-    <StyledImage src={src} respWidth={respWidth} width={width} alt={alt} {...props} />
+    <StyledImage {...props} />
   );
 }
 

@@ -13,7 +13,11 @@ export const Container = styled.div`
   `)}
 
   @media only screen and (max-width: 600px) {
-    p { font-size: .6rem; }
-    h1 { font-size: 1.2rem; }
+    p {
+      font-size: .6rem;
+      width: 50px;
+      text-align: center;
+    }
+    h1 { font-size: .8rem; }
   }
 `;

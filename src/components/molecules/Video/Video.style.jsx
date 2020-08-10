@@ -12,5 +12,6 @@ export const VideoDisplay = styled.video`
 
   @media only screen and (max-width: 600px) {
     width: 100%;
+    height: 70%;
   }
 `;
