@@ -9,6 +9,7 @@ export const Container = styled.div`
   ${({ disabled }: { disabled: boolean }) => (disabled && css`
     p, h1 {
       color: ${colors.gray};
+      opacity: 0.8;
     }
   `)}
 

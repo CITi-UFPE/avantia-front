@@ -11,6 +11,7 @@ export const Anchor = styled.a`
   margin: 5px 0;
   transition: opacity .2s ease-in-out;
   opacity: 1;
+  text-transform: uppercase;
 
   &:focus, &:hover {
     opacity: 0.7;

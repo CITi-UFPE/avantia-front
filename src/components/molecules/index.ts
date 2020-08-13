@@ -5,3 +5,4 @@ export { default as InfoModal } from './InfoModal';
 export { default as ConnectionInfo } from './ConnectionInfo';
 export { default as AccessCard } from './AccessCard';
 export { default as FinalInfo } from './FinalInfo';
+export { default as VideoPlayer } from './VideoPlayer';

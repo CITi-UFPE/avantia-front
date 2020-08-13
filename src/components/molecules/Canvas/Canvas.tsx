@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 import { InfoModal } from 'components/molecules';
+import { useInfo } from 'contexts/GlobalProvider';
 import whiteLogo from 'assets/white-logo.png';
 
 import {
@@ -10,6 +11,7 @@ import {
 
 function Canvas({ dimensions, filters }: { dimensions: number[], filters: ServerResponse[] }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [, setInfo] = useInfo();
 
   useEffect(() => {
     const canvas = canvasRef?.current;
@@ -82,6 +84,21 @@ function Canvas({ dimensions, filters }: { dimensions: number[], filters: Server
       ctx.stroke();
     }
   }, [canvasRef, filters]);
+
+  useEffect(() => {
+    if (canvasRef.current) {
+      setInfo((prevInfo: Object) => ({
+        ...prevInfo,
+        canvas: canvasRef.current,
+      }));
+    }
+    return () => {
+      setInfo((prevInfo: Object) => ({
+        ...prevInfo,
+        canvas: null,
+      }));
+    };
+  }, [canvasRef, setInfo]);
 
   return (
     <CanvasContainer>

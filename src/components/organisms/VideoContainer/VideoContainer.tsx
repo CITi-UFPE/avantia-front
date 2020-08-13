@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Redirect } from 'react-router-dom';
-import axios from 'axios';
 
 import { Video, Canvas } from 'components/molecules';
+import { useAxios } from 'global/func';
 import { useInfo } from 'contexts/GlobalProvider';
 
 import { Container } from './VideoContainer.style';
@@ -12,6 +12,8 @@ function VideoContainer() {
   const [videoElement, setVideoElement] = useState<HTMLVideoElement>();
   const [filters, setFilters] = useState<ServerResponse[]>();
   const [redirect, setRedirect] = useState('');
+
+  const [axiosPost] = useAxios('post');
 
   const [, setInfo] = useInfo();
 
@@ -44,7 +46,10 @@ function VideoContainer() {
 
           const before = Date.now();
 
-          const res = await axios.post('http://localhost:3001/image', formData, { withCredentials: true });
+          const res = await axiosPost({
+            url: '/image',
+            body: formData,
+          });
           const info: ServerResponse[] = res.data.data;
           const { expiringDate } = res.data;
 
@@ -63,7 +68,7 @@ function VideoContainer() {
       }, 'image/png');
     };
     sendImage();
-  }, [videoElement, setInfo]);
+  }, [videoElement, setInfo, axiosPost]);
 
   if (redirect) return <Redirect to={redirect} />;
 
