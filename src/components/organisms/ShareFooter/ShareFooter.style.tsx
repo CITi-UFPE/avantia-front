@@ -35,3 +35,18 @@ export const ShareIcon = styled.img`
     margin: 0;
   }
 `;
+
+export const SocialMediaIcon = styled.img`
+  width: 20px;
+  margin: 0 10px;
+`;
+
+export const TooltipTextContainer = styled.span`
+  /* ${flex('flex-start', 'center', 'column', 'nowrap')} */
+  margin: 0;
+  padding: 0 10px;
+
+  p {
+    margin: 0;
+  }
+`;

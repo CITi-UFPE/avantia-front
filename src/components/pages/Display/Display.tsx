@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import { SecondaryBackground } from 'components/atoms';
 import { ShareFooter } from 'components/organisms';
+import { VideoPlayer } from 'components/molecules';
 
 import {
   Container,
@@ -17,9 +18,10 @@ function Display({ location }: { location: any }) {
       <SecondaryBackground>
         <Container>
           {location.state.type === 'image' && <Image src={data} />}
+          {location.state.type === 'video' && <VideoPlayer src={data} />}
         </Container>
       </SecondaryBackground>
-      <ShareFooter />
+      <ShareFooter data={data} type={location.state.type} />
     </>
   );
 }

@@ -10,7 +10,7 @@ function Video({ getDimensions }: { getDimensions: Function }) {
   useEffect(() => {
     const getUserMedia = async () => {
       const stream = await navigator.mediaDevices.getUserMedia({
-        audio: false,
+        audio: true,
         video: { facingMode: 'user' },
       });
 
@@ -21,10 +21,15 @@ function Video({ getDimensions }: { getDimensions: Function }) {
           getDimensions([video.videoHeight, video.videoWidth], video);
         };
       }
+
+      setInfo((prevInfo: Object) => ({
+        ...prevInfo,
+        stream,
+      }));
     };
 
     getUserMedia();
-  }, [getDimensions]);
+  }, [getDimensions, setInfo]);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -42,7 +47,7 @@ function Video({ getDimensions }: { getDimensions: Function }) {
   }, [videoRef, setInfo]);
 
   return (
-    <VideoDisplay ref={videoRef} autoPlay>
+    <VideoDisplay muted ref={videoRef} autoPlay>
       <track kind="captions" />
     </VideoDisplay>
   );

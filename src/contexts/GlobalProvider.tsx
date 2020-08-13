@@ -8,6 +8,7 @@ function GlobalProvider({ children }: { children: React.ReactNode }) {
     expiringDate: null,
     canvas: null,
     video: null,
+    stream: null,
   });
 
   return (
