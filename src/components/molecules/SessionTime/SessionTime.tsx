@@ -6,15 +6,15 @@ import { useInfo } from 'contexts/GlobalProvider';
 
 import { Container } from './SessionTime.style';
 
-function SessionTime() {
+function SessionTime({ transparent }: { transparent: boolean }) {
   const [info] = useInfo();
   const formattedTime = useFormattedTime(info.expiringDate);
   const isMobile = useMobile();
 
   return (
-    <Container disabled={!info.expiringDate}>
+    <Container style={{ opacity: transparent ? 1 : 0 }} disabled={!info.expiringDate}>
       <Paragraph noMargin color="orange">
-        {(isMobile || isMobile ===  null) ? 'Tempo restante da sessão' : 'Tempo de sessão'}
+        {(isMobile || isMobile === null) ? 'Tempo restante da sessão' : 'Tempo de sessão'}
       </Paragraph>
       <Title
         style={{ letterSpacing: '5px' }}

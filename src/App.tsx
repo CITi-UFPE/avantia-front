@@ -14,6 +14,7 @@ import {
   Access,
   ExpiredSession,
   Display,
+  Share,
 } from 'components/pages';
 
 import { AppWrapper } from 'App.style';
@@ -32,6 +33,7 @@ function App() {
             <Route path="/analitico" component={Analytic} />
             <Route path="/expired" component={ExpiredSession} />
             <Route path="/display" component={Display} />
+            <Route path="/share/:mediaId" component={Share} />
           </Switch>
         </AppWrapper>
       </GlobalProvider>

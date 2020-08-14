@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Switch as AntSwitch } from 'antd';
+import { Switch as AntSwitch, Progress } from 'antd';
 
 import colors from 'styles/colors';
 import { flexcc } from 'styles/variables';
@@ -41,17 +41,17 @@ export const Switch = styled(AntSwitch)`
   }
 `;
 
-export const ButtonContainer = styled.div`
+export const ButtonContainer = styled(Progress)`
   ${flexcc}
-  border: 1px solid ${colors.orange};
-  border-radius: 50px;
-  width: 40px;
-  height: 40px;
+  transition: all .2s ease-in-out;
+
+  ${({ isRecording }: { disabled: boolean, isRecording: boolean }) => (isRecording && css`
+    transform: scale(1.4);
+  `)}
   margin: 0 10px;
 
-  ${({ disabled }: { disabled: boolean }) => disabled && css`
+  ${({ disabled }) => disabled && css`
     opacity: 0.8;
-    border: 1px solid ${colors.gray};
     button {
       cursor: not-allowed;
       background-color: ${colors.gray};
@@ -65,11 +65,11 @@ type ButtonProps = {
 
 export const Button = styled.button`
   background-color: ${({ mode }: ButtonProps) => (mode === 'camera' ? colors.orange : colors.red)};
-  transition: background-color .2s ease-in-out;
+  transition: all .2s ease-in-out;
   border-radius: 50px;
   border: none;
   outline: none;
-  height: 32px;
-  width: 32px;
+  height: 30px;
+  width: 30px;
   cursor: pointer;
 `;

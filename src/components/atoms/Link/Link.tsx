@@ -5,6 +5,7 @@ import { Anchor } from './Link.style';
 type LinkProps = {
   children: React.ReactNode;
   href: string;
+  type?: 'default' | 'primary';
   onClick?: (event: any) => void;
   onAuxClick?: (event: any) => void;
   noBorder?: boolean;

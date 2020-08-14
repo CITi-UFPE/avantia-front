@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import { SessionTime } from 'components/molecules';
 import { Image, Link } from 'components/atoms';
@@ -9,10 +10,10 @@ import whatsappSvg from 'assets/icons/whatsapp.svg';
 
 import { Base, WhatsappIcon, Text } from './Header.style';
 
-function Header() {
+function Header({ location }: { location: any }) {
   return (
     <Base>
-      <SessionTime />
+      <SessionTime transparent={location.pathname.indexOf('share') === -1} />
 
       <Image width="10rem" respWidth="5rem" src={logoPng} />
 
@@ -24,4 +25,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default withRouter(Header);
