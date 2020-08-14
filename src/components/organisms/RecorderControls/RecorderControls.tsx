@@ -1,4 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+} from 'react';
 import { Redirect } from 'react-router-dom';
 import RecordRTC from 'recordrtc';
 import { PauseOutlined } from '@ant-design/icons';
@@ -7,6 +12,7 @@ import { useInfo } from 'contexts/GlobalProvider';
 
 import cameraSvg from 'assets/icons/camera.svg';
 import videoSvg from 'assets/icons/video.svg';
+import colors from 'styles/colors';
 
 import {
   ControlsContainer,
@@ -20,13 +26,14 @@ function RecorderControls() {
   const [mode, setMode] = useState<'camera' | 'video'>('camera');
   const [data, setData] = useState('');
   const [type, setType] = useState<'image' | 'video' | null>(null);
+  const [countdown, setCountdown] = useState<number>(0);
   const [recording, setRecording] = useState(false);
   const [info] = useInfo();
 
   const recorderRef = useRef<RecordRTC | null>(null);
   const intervalRef = useRef(0);
 
-  const drawImageOnVideo = (canvas: HTMLCanvasElement) => {
+  const drawImageOnVideo = useCallback((canvas: HTMLCanvasElement) => {
     const drawCanvas = canvas;
 
     drawCanvas.width = info.video.videoWidth;
@@ -42,9 +49,9 @@ function RecorderControls() {
 
     const image = drawCanvas.toDataURL('image/png');
     return image;
-  };
+  }, [info]);
 
-  const handleRecord = () => {
+  const handleRecord = useCallback((timeLimitExceeded: boolean = false) => {
     if (!info.canvas || !info.video) return;
 
     if (mode === 'camera') {
@@ -52,16 +59,19 @@ function RecorderControls() {
       setType('image');
     }
     if (mode === 'video' && info.stream) {
-      if (recording && recorderRef.current && intervalRef.current) {
-        recorderRef.current.stopRecording();
-        // @ts-ignore
-        recorderRef.current.getDataURL((result) => {
-          setData(result);
-          setType('video');
-        });
-        clearInterval(intervalRef.current);
-        setRecording(false);
-        return;
+      if ((recording && intervalRef.current) || timeLimitExceeded) {
+        if (recorderRef.current) {
+          recorderRef.current.stopRecording();
+          // @ts-ignore
+          recorderRef.current.getDataURL((result) => {
+            setData(result);
+            setType('video');
+          });
+          clearInterval(intervalRef.current);
+          setCountdown(0);
+          setRecording(false);
+          return;
+        }
       }
       const canvas = document.createElement('canvas');
       const drawToCanvas = setInterval(() => {
@@ -90,8 +100,29 @@ function RecorderControls() {
 
       recorderRef.current = recorder;
       intervalRef.current = drawToCanvas;
+
+      if (!timeLimitExceeded) {
+        setCountdown(10);
+      }
     }
-  };
+  }, [drawImageOnVideo, info, mode, recording]);
+
+  useEffect(() => {
+    if (countdown) {
+      const countdownTimeout = setTimeout(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
+
+      return () => clearTimeout(countdownTimeout);
+    }
+    return () => {};
+  }, [countdown]);
+
+  useEffect(() => {
+    if (recording && !countdown) {
+      handleRecord(true);
+    }
+  }, [recording, countdown, handleRecord]);
 
   if (data && type) return <Redirect to={{ pathname: '/display', state: { data, type } }} />;
 
@@ -107,11 +138,21 @@ function RecorderControls() {
         disabled={disabled}
         size="default"
       />
-      <ButtonContainer disabled={disabled}>
-        <Button mode={mode} onClick={handleRecord}>
-          {recording && <PauseOutlined />}
-        </Button>
-      </ButtonContainer>
+      {/*
+      // @ts-ignore */}
+      <ButtonContainer
+        type="circle"
+        percent={countdown ? countdown * 10 : 100}
+        width={40}
+        disabled={disabled}
+        isRecording={recording}
+        strokeColor={disabled ? colors.gray : colors.orange}
+        format={() => (
+          <Button mode={mode} onClick={() => handleRecord(false)}>
+            {recording && <PauseOutlined style={{ color: 'white' }} />}
+          </Button>
+        )}
+      />
     </ControlsContainer>
   );
 }

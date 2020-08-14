@@ -48,6 +48,7 @@ function ShareFooter({ data, type }: { data: string, type: string }) {
         url: '/uploads',
         body: formData,
       });
+      console.log(fileRes);
       setFileId(fileRes.data.data.fileId);
     };
     uploadData();

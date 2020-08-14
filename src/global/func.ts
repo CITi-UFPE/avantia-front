@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useCallback } from 'react';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: 'https://avantia-dev.herokuapp.com',
 });
 
 function useAxios(...methods: ('get' | 'post' | 'put' | 'delete')[]) {
@@ -60,6 +60,7 @@ function useAxios(...methods: ('get' | 'post' | 'put' | 'delete')[]) {
         await success(res, body);
         return res;
       } catch (err) {
+        console.log(err.response);
         await error(err);
         // setError({
         //   type: method,
@@ -67,7 +68,7 @@ function useAxios(...methods: ('get' | 'post' | 'put' | 'delete')[]) {
         //   status: err.response?.status || false,
         //   url: relativeUrl,
         // });
-        throw err;
+        return err;
       }
     };
   });
