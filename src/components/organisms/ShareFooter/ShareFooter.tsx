@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Modal } from 'antd';
 import {
@@ -34,26 +34,22 @@ function ShareFooter({ data, type }: { data: string, type: string }) {
 
   const { host } = window.location;
 
-  useEffect(() => {
-    const uploadData = async () => {
-      const formData = new FormData();
-      const isImage = type === 'image';
+  const handleClick = async () => {
+    const formData = new FormData();
+    const isImage = type === 'image';
 
-      const res = await fetch(data);
-      const blob = await res.blob();
-      const file = new File([blob], `send.${isImage ? 'png' : 'webm'}`, blob);
+    const res = await fetch(data);
+    const blob = await res.blob();
+    const file = new File([blob], `send.${isImage ? 'png' : 'webm'}`, blob);
 
-      formData.set('media', file);
-      const fileRes = await axiosPost({
-        url: '/uploads',
-        body: formData,
-      });
-      console.log(fileRes);
-      setFileId(fileRes.data.data.fileId);
-    };
-    uploadData();
-  }, [axiosPost, data, type]);
-
+    formData.set('media', file);
+    const fileRes = await axiosPost({
+      url: '/uploads',
+      body: formData,
+    });
+    setFileId(fileRes.data.data.fileId);
+    setVisible(true);
+  };
   const shareUrl = `${host}/livedemo/share/${fileId}`;
 
   const tooltipText = (
@@ -105,7 +101,7 @@ function ShareFooter({ data, type }: { data: string, type: string }) {
         <ButtonIcon src={backArrowSvg} />
         {(!isMobile && isMobile !== null) && 'Voltar para teste'}
       </Button>
-      <Button onClick={() => setVisible(true)} style={{ color: 'white' }} type="primary">
+      <Button onClick={handleClick} style={{ color: 'white' }} type="primary">
         {(!isMobile && isMobile !== null) && 'Compartilhar'}
         <ShareIcon src={shareSvg} />
       </Button>
