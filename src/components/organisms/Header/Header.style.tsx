@@ -38,13 +38,14 @@ export const Text = styled.p`
 
 export const LogoContainer = styled.div`
   ${flex('flex-start', 'center', 'unset', 'unset')}
+  position: relative;
   img {
     height: 3rem;
     object-fit: cover;
   }
 
   @media only screen and (max-width: 600px) {
-    flex-direction: column;
+    margin-bottom: 2.2rem;
   }
 `;
 
@@ -55,4 +56,16 @@ export const BetaText = styled.p`
   padding: 4px 8px;
   margin: 0;
   font-size: .6rem;
+
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(100%, -50%);
+
+  @media only screen and (max-width: 600px) {
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 100%);
+    width: max-content;
+  }
 `;

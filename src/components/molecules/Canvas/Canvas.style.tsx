@@ -38,6 +38,6 @@ export const InfoText = styled.p`
   font-size: .8rem;
 
   @media only screen and (max-width: 600px) {
-    display: none;
+    font-size: .6rem;
   }
 `;

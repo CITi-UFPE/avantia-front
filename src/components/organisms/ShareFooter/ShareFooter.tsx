@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Tooltip, Modal } from 'antd';
+import { Modal } from 'antd';
 import {
   WhatsappShareButton,
   TelegramShareButton,
@@ -9,7 +9,6 @@ import {
 
 import { useMobile } from 'hooks';
 import { Button } from 'components/atoms';
-import { Paragraph } from 'components/atoms/Text';
 import { useAxios } from 'global/func';
 
 import backArrowSvg from 'assets/icons/back-arrow.svg';

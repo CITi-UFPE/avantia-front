@@ -9593,11 +9593,6 @@ react-error-overlay@^6.0.7:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.7.tgz#1dcfb459ab671d53f660a991513cb2f0a0553108"
   integrity sha512-TAv1KJFh3RhqxNvhzxj6LeT5NWklP6rDr2a0jaTfsZ5wSZWHOGeqQyejUp3xxLfPt2UpyJEcVQB/zyPcmonNFA==
 
-react-insta-stories@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/react-insta-stories/-/react-insta-stories-2.0.4.tgz#78378586dc7b919e300e9084e7337faa54255166"
-  integrity sha512-Q9tatROe8sKICjRMUL3G4GEi/nld5FLfL3q0DMRRHbeEm7H/q7xQ0B8ftRTZNfWw6O6L9ATIaktgRwMFHJ9cBg==
-
 react-is@^16.12.0, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
