@@ -7,6 +7,7 @@ export const Anchor = styled.a`
     border: 1px solid ${type === 'primary' ? colors.white : colors.orange};
     border-radius: 5px;
   `}
+  height: max-content;
   padding: 5px 10px;
   margin: 5px 0;
   transition: opacity .2s ease-in-out;

@@ -7,6 +7,7 @@ import whiteLogo from 'assets/white-logo.png';
 import {
   StyledCanvas,
   CanvasContainer,
+  InfoText,
 } from './Canvas.style';
 
 function Canvas({ dimensions, filters }: { dimensions: number[], filters: ServerResponse[] }) {
@@ -16,7 +17,7 @@ function Canvas({ dimensions, filters }: { dimensions: number[], filters: Server
   useEffect(() => {
     const canvas = canvasRef?.current;
 
-    const labelRect = { width: 140, height: 30, padding: 15 };
+    const labelRect = { width: 160, height: 30, padding: 15 };
     const imageSize = { width: 50, height: 10 };
 
     const ctx = canvas?.getContext('2d');
@@ -74,9 +75,11 @@ function Canvas({ dimensions, filters }: { dimensions: number[], filters: Server
 
         ctx.fillStyle = 'white';
 
+        const displayText = label === 'mask' ? 'com máscara' : 'sem máscara';
+
         // Text
         ctx.fillText(
-          `${label} ${minifiedProb}`,
+          `${displayText} ${minifiedProb}`,
           labelRectPos.x + labelRect.padding * 2 + imageSize.width,
           labelRectPos.y + (labelRect.height / 2) + 3,
         );
@@ -108,6 +111,10 @@ function Canvas({ dimensions, filters }: { dimensions: number[], filters: Server
         height={dimensions[0]}
       />
       <InfoModal />
+      <InfoText>
+        Esta versão é apenas uma demonstração. Seus dados estão sendo protegidos
+        de acordo com as normas da Lei de Proteção de Dados (LGPD)
+      </InfoText>
     </CanvasContainer>
   );
 }

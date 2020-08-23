@@ -26,14 +26,14 @@ function App() {
         <AppWrapper>
           <Header />
           <Switch>
-            <Route exact path="/">
-              <Redirect to="/acesso" />
+            <Route exact path="/(|livedemo)">
+              <Redirect to="/livedemo/acesso" />
             </Route>
-            <Route path="/acesso" component={Access} />
-            <Route path="/analitico" component={Analytic} />
-            <Route path="/expired" component={ExpiredSession} />
-            <Route path="/display" component={Display} />
-            <Route path="/share/:mediaId" component={Share} />
+            <Route path="/livedemo/acesso" component={Access} />
+            <Route path="/livedemo/analitico" component={Analytic} />
+            <Route path="/livedemo/expired" component={ExpiredSession} />
+            <Route path="/livedemo/display" component={Display} />
+            <Route path="/livedemo/share/:mediaId" component={Share} />
           </Switch>
         </AppWrapper>
       </GlobalProvider>

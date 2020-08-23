@@ -1,28 +1,27 @@
 import React from 'react';
 
 import { Title, Paragraph } from 'components/atoms/Text';
-import { useFormattedTime, useMobile } from 'hooks';
-import { useInfo } from 'contexts/GlobalProvider';
+// import { useFormattedTime } from 'hooks';
+// import { useInfo } from 'contexts/GlobalProvider';
 
 import { Container } from './SessionTime.style';
 
 function SessionTime({ transparent }: { transparent: boolean }) {
-  const [info] = useInfo();
-  const formattedTime = useFormattedTime(info.expiringDate);
-  const isMobile = useMobile();
+  // const [info] = useInfo();
+  // const formattedTime = useFormattedTime(info.expiringDate);
 
   return (
-    <Container style={{ opacity: transparent ? 1 : 0 }} disabled={!info.expiringDate}>
+    <Container style={{ opacity: transparent ? 1 : 0 }} disabled>
       <Paragraph noMargin color="orange">
-        {(isMobile || isMobile === null) ? 'Tempo restante da sessão' : 'Tempo de sessão'}
+        Tempo de sessão
       </Paragraph>
       <Title
         style={{ letterSpacing: '5px' }}
         fontSize="1.5rem"
         bold
-        color={formattedTime === '00:00' ? 'error' : 'orange'}
+        color="orange"
       >
-        {formattedTime}
+        --:--
       </Title>
     </Container>
   );

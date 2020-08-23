@@ -6,9 +6,7 @@ import { Paragraph } from 'components/atoms/Text';
 import { Link } from 'components/atoms';
 import { whatsappLink } from 'variables/contact';
 
-import whatsappSvg from 'assets/icons/whatsapp.svg';
-
-import { InfoButton, InfoIcon, WhatsappIcon } from './InfoModal.style';
+import { InfoButton, InfoIcon } from './InfoModal.style';
 
 function InfoModal() {
   const [visible, setVisible] = useState(false);
@@ -23,7 +21,7 @@ function InfoModal() {
         <InfoIcon src={infoSvg} />
       </InfoButton>
       <Modal
-        title="Sobre o analítico"
+        title="Sobre nossa Análise inteligente"
         visible={visible}
         onOk={hideModal}
         onCancel={hideModal}
@@ -34,31 +32,23 @@ function InfoModal() {
             key="contact"
             href={whatsappLink}
           >
-            Fale conosco
-            <WhatsappIcon src={whatsappSvg} />
+            Saiba mais
           </Link>,
         ]}
       >
         <Paragraph fontSize=".8rem">
-          A ferramenta analítico da Avantia verifica através de
-          {' '}
-          <strong>Inteligência Artificial</strong>
-          {' '}
-          em suas câmeras, se os frequentadores do seu negócio estão utilizando máscara ou não,
-          o que traz mais segurança e controle de você sobre sua empresa.
+          Somos especialistas em detecção através de imagens,
+          contribuindo com clientes como Gerdau, McDonalds,
+          Raia Drogasil e Governo do Estado de Pernambuco.
         </Paragraph>
         <Paragraph fontSize=".8rem">
-          Por se consistir em uma
-          {' '}
-          <strong>análise por câmera</strong>
-          {' '}
-          , ou seja, uma análise estritamente visual, o Analítico ira identificar como máscara
-          quaisquer superfícies sólidas que cubram o nariz e a boca dos usuários.
+          Esta demonstração é nossa Detecção de não uso de
+          máscaras que através de câmeras identifica o uso
+          ou não uso de máscara facial.
         </Paragraph>
         <Paragraph fontSize=".8rem">
-          <strong>Veja abaixo no vídeo</strong>
-          {' '}
-          como o analítico funciona em sua versão original completa
+          Confira essa e outras soluções contra o COVID-19
+          no botão abaixo.
         </Paragraph>
       </Modal>
     </>

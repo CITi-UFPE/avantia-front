@@ -23,3 +23,21 @@ export const CanvasContainer = styled.div`
     transform: translate(-50%, -50%);
   }
 `;
+
+export const InfoText = styled.p`
+  opacity: 0.7;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  color: black;
+  background-color: white;
+  width: 80%;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: .8rem;
+
+  @media only screen and (max-width: 600px) {
+    display: none;
+  }
+`;

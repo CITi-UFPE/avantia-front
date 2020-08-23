@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { flexcc } from 'styles/variables';
+import { flexcc, flex } from 'styles/variables';
 import colors from 'styles/colors';
 
 export const Base = styled.header`
@@ -11,10 +11,15 @@ export const Base = styled.header`
   height: 5rem;
 
   border-bottom: 1px solid ${colors.secondaryBackground};
+
+  @media only screen and (max-width: 600px) {
+    padding: .5rem 0;
+  }
 `;
 
 export const WhatsappIcon = styled.img`
   width: 15px;
+  height: 15px;
   margin-left: 10px;
 
   @media only screen and (max-width: 600px) {
@@ -29,4 +34,25 @@ export const Text = styled.p`
   @media only screen and (max-width: 600px) {
     display: none;
   }
+`;
+
+export const LogoContainer = styled.div`
+  ${flex('flex-start', 'center', 'unset', 'unset')}
+  img {
+    height: 3rem;
+    object-fit: cover;
+  }
+
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+  }
+`;
+
+export const BetaText = styled.p`
+  color: #B2B2B2;
+  border-radius: 18px;
+  background-color: #B2B2B233;
+  padding: 4px 8px;
+  margin: 0;
+  font-size: .6rem;
 `;

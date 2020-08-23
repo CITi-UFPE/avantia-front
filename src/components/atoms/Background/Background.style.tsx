@@ -5,8 +5,7 @@ import { flexcc } from 'styles/variables';
 export const BackgroundBase = styled.div`
   ${flexcc}
   width: 100%;
-  flex-grow: 1;
-  flex-shrink: 1;
+  height: calc(100vh - 10rem);
   position: relative;
 `;
 

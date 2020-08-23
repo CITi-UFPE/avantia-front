@@ -61,11 +61,12 @@ function RecorderControls() {
     if (mode === 'video' && info.stream) {
       if ((recording && intervalRef.current) || timeLimitExceeded) {
         if (recorderRef.current) {
-          recorderRef.current.stopRecording();
-          // @ts-ignore
-          recorderRef.current.getDataURL((result) => {
-            setData(result);
-            setType('video');
+          recorderRef.current.stopRecording(() => {
+            // @ts-ignore
+            recorderRef.current.getDataURL((result) => {
+              setData(result);
+              setType('video');
+            });
           });
           clearInterval(intervalRef.current);
           setCountdown(0);
@@ -124,7 +125,7 @@ function RecorderControls() {
     }
   }, [recording, countdown, handleRecord]);
 
-  if (data && type) return <Redirect to={{ pathname: '/display', state: { data, type } }} />;
+  if (data && type) return <Redirect to={{ pathname: '/livedemo/display', state: { data, type } }} />;
 
   const disabled = !info.canvas || !info.video;
 
@@ -135,7 +136,7 @@ function RecorderControls() {
         onChange={(checked) => setMode(checked ? 'camera' : 'video')}
         checkedChildren={<SwitchIcon src={cameraSvg} />}
         unCheckedChildren={<SwitchIcon src={videoSvg} />}
-        disabled={disabled}
+        disabled
         size="default"
       />
       {/*

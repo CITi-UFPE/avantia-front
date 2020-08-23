@@ -25,14 +25,26 @@ function VideoPlayer({ src }: { src: string }) {
     return (currentTime * 100) / video.duration;
   };
 
-  const handlePlay = () => {
+  const handlePlay = async () => {
     if (videoRef.current) {
-      const video = videoRef.current;
-      video.play();
+      try {
+        const video = videoRef.current;
+        if (video.readyState > 3) {
+          video.crossOrigin = 'anonymous';
+          await video.play();
+        } else {
+          video.addEventListener('loadedmetadata', async () => {
+            video.crossOrigin = 'anonymous';
+            await video.play();
+          });
+        }
 
-      video.addEventListener('timeupdate', (e) => {
-        setCurrentTime(video.currentTime);
-      });
+        video.addEventListener('timeupdate', () => {
+          setCurrentTime(video.currentTime);
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -41,7 +53,10 @@ function VideoPlayer({ src }: { src: string }) {
 
   return (
     <VideoBase>
-      <Video ref={videoRef} src={src} />
+      <Video playsInline crossOrigin="use-credentials" ref={videoRef}>
+        <source type="video/webm" src={src} />
+        <p>Seu navegador não suporta vídeo HTML5.</p>
+      </Video>
       <ControlsContainer>
         <PlayButton onClick={handlePlay}>
           <PlayIcon src={playSvg} />

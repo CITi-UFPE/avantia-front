@@ -11,6 +11,7 @@ import goodConnectionSvg from 'assets/icons/connection/good.svg';
 import badConnectionSvg from 'assets/icons/connection/bad.svg';
 import excellentConnectionSvg from 'assets/icons/connection/excellent.svg';
 import averageConnectionSvg from 'assets/icons/connection/average.svg';
+import { useMobile } from 'hooks';
 
 import {
   InfoIcon,
@@ -26,6 +27,7 @@ function ConnectionInfo({ disabled }: { disabled: boolean }) {
     text: '',
     icon: disabledConnectionSvg,
   });
+  const isMobile = useMobile();
   const [info] = useInfo();
 
   const tooltipText = (
@@ -89,15 +91,17 @@ function ConnectionInfo({ disabled }: { disabled: boolean }) {
 
   return (
     <InfoContainer disabled={disabled}>
-      <TooltipContainer>
-        <Paragraph noMargin color="orange">Conexão:</Paragraph>
-        <Tooltip placement="topRight" color="white" title={tooltipText}>
-          <InfoIcon src={disabled ? infoDisabledSvg : infoSvg} />
-        </Tooltip>
-      </TooltipContainer>
+      {!isMobile && (
+        <TooltipContainer>
+          <Paragraph noMargin color="orange">Conexão:</Paragraph>
+          <Tooltip placement="topRight" color="white" title={tooltipText}>
+            <InfoIcon src={disabled ? infoDisabledSvg : infoSvg} />
+          </Tooltip>
+        </TooltipContainer>
+      )}
       <ConnectionContainer>
         <ConnectionIcon src={disabled ? disabledConnectionSvg : statusInfo.icon} />
-        <Paragraph noMargin color={statusInfo.color}>{statusInfo.text}</Paragraph>
+        {!isMobile && <Paragraph noMargin color={statusInfo.color}>{statusInfo.text}</Paragraph>}
       </ConnectionContainer>
     </InfoContainer>
   );
