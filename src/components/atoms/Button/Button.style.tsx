@@ -9,5 +9,7 @@ export const StyledButton = styled(Button)`
   text-transform: uppercase;
   font-weight: bolder;
   border-radius: 5px;
+  height: min-content;
+  padding: 10px 15px;
   color: ${colors.orange};
 `;

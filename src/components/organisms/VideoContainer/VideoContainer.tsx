@@ -62,7 +62,7 @@ function VideoContainer() {
           setTimeout(sendImage, 1000);
         } catch (err) {
           if (err.response?.status === 403) {
-            setRedirect('/expired');
+            setRedirect('/livedemo/expired');
           }
         }
       }, 'image/png');

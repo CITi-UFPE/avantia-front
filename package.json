@@ -6,7 +6,8 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "deploy": "craco build && netlify deploy"
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",

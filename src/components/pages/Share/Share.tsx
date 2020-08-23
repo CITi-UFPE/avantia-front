@@ -30,7 +30,7 @@ function Share({ location }: { location: any }) {
     });
   }, [axiosGet, mediaId]);
 
-  if (redirect) return <Redirect to="/" />;
+  if (redirect) return <Redirect to="/livedemo" />;
 
   return (
     <>

@@ -11,7 +11,11 @@ function Video({ getDimensions }: { getDimensions: Function }) {
     const getUserMedia = async () => {
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
-        video: { facingMode: 'user' },
+        video: {
+          facingMode: 'user',
+          width: 640,
+          height: 480,
+        },
       });
 
       if (videoRef.current) {
@@ -47,9 +51,26 @@ function Video({ getDimensions }: { getDimensions: Function }) {
   }, [videoRef, setInfo]);
 
   return (
-    <VideoDisplay muted ref={videoRef} autoPlay>
-      <track kind="captions" />
-    </VideoDisplay>
+    <VideoDisplay
+      ref={(ref) => {
+        // @ts-ignore
+        const [video] = [...(ref?.children || [])];
+        // @ts-ignore
+        videoRef.current = video;
+      }}
+      dangerouslySetInnerHTML={{
+        __html: `
+          <video
+            autoplay
+            muted
+            playsinline
+          >
+            <track kind="captions" />
+            <p>Seu navegador não suporta vídeo HTML5.</p>
+          </video>
+        `,
+      }}
+    />
   );
 }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Tooltip } from 'antd';
+import { Modal } from 'antd';
 import {
   WhatsappShareButton,
   TelegramShareButton,
@@ -9,7 +9,6 @@ import {
 
 import { useMobile } from 'hooks';
 import { Button } from 'components/atoms';
-import { Paragraph } from 'components/atoms/Text';
 import { useAxios } from 'global/func';
 
 import backArrowSvg from 'assets/icons/back-arrow.svg';
@@ -28,6 +27,7 @@ import {
 
 function ShareFooter({ data, type }: { data: string, type: string }) {
   const [redirect, setRedirect] = useState('');
+  const [visible, setVisible] = useState(false);
   const [fileId, setFileId] = useState('');
   const isMobile = useMobile();
   const [axiosPost] = useAxios('post');
@@ -41,7 +41,7 @@ function ShareFooter({ data, type }: { data: string, type: string }) {
 
       const res = await fetch(data);
       const blob = await res.blob();
-      const file = new File([blob], `send.${isImage ? 'png' : 'mp4'}`, blob);
+      const file = new File([blob], `send.${isImage ? 'png' : 'webm'}`, blob);
 
       formData.set('media', file);
       const fileRes = await axiosPost({
@@ -54,13 +54,10 @@ function ShareFooter({ data, type }: { data: string, type: string }) {
     uploadData();
   }, [axiosPost, data, type]);
 
-  const shareUrl = `${host}/share/${fileId}`;
+  const shareUrl = `${host}/livedemo/share/${fileId}`;
 
   const tooltipText = (
     <TooltipTextContainer>
-      <Paragraph>
-        Compartilhar em:
-      </Paragraph>
       <WhatsappShareButton
         style={{ outline: 'none' }}
         title="Avantia Analítico"
@@ -92,16 +89,26 @@ function ShareFooter({ data, type }: { data: string, type: string }) {
 
   return (
     <Base>
-      <Button onClick={() => setRedirect('/analitico')}>
+      <Modal
+        visible={visible}
+        title="Compartilhar em:"
+        footer={null}
+        centered
+        onCancel={(e) => {
+          e.stopPropagation();
+          setVisible(false);
+        }}
+      >
+        {tooltipText}
+      </Modal>
+      <Button onClick={() => setRedirect('/livedemo/analitico')}>
         <ButtonIcon src={backArrowSvg} />
-        {(isMobile || isMobile === null) && 'Voltar para teste'}
+        {(!isMobile && isMobile !== null) && 'Voltar para teste'}
       </Button>
-      <Tooltip title={tooltipText} placement="topRight" color="white">
-        <Button style={{ color: 'white' }} type="primary">
-          {(isMobile || isMobile === null) && 'Compartilhar'}
-          <ShareIcon src={shareSvg} />
-        </Button>
-      </Tooltip>
+      <Button onClick={() => setVisible(true)} style={{ color: 'white' }} type="primary">
+        {(!isMobile && isMobile !== null) && 'Compartilhar'}
+        <ShareIcon src={shareSvg} />
+      </Button>
     </Base>
   );
 }

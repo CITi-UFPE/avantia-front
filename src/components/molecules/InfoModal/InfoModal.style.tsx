@@ -23,8 +23,3 @@ export const InfoIcon = styled.img`
   width: 20px;
   margin: 5px;
 `;
-
-export const WhatsappIcon = styled.img`
-  width: 15px;
-  margin-left: 10px;
-`;

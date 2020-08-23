@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useCallback } from 'react';
 
 const api = axios.create({
-  baseURL: 'https://avantia-dev.herokuapp.com',
+  baseURL: 'http://localhost:3001',
 });
 
 function useAxios(...methods: ('get' | 'post' | 'put' | 'delete')[]) {

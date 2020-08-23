@@ -29,4 +29,9 @@ export const ConnectionContainer = styled.div`
 export const ConnectionIcon = styled.img`
   width: 20px;
   margin: 0 5px;
+
+  @media only screen and (max-width: 600px) {
+    width: 30px;
+    margin: 0;
+  }
 `;

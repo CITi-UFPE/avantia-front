@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { notification } from 'antd';
 import { Redirect } from 'react-router-dom';
 
 import { Button } from 'components/atoms';
@@ -20,8 +21,12 @@ function AccessCard() {
         audio: false,
         video: { facingMode: 'user' },
       });
-      setRedirect('/analitico');
+      setRedirect('/livedemo/analitico');
     } catch (err) {
+      notification.error({
+        message: 'Sem acesso à câmera',
+        description: 'Verifique na barra do navegador se há uma solicitação ou um ícone de câmera',
+      });
       console.log(err);
     }
   };

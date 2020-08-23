@@ -6,6 +6,10 @@ import { flexcc } from 'styles/variables';
 
 export const ControlsContainer = styled.div`
   ${flexcc}
+
+  @media only screen and (max-width: 600px) {
+    justify-content: space-around;
+  }
 `;
 
 export const SwitchIcon = styled.img`
@@ -69,7 +73,7 @@ export const Button = styled.button`
   border-radius: 50px;
   border: none;
   outline: none;
-  height: 30px;
-  width: 30px;
+  height: 2rem;
+  width: 2rem;
   cursor: pointer;
 `;
