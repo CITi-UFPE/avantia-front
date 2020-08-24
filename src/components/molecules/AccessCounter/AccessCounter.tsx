@@ -13,7 +13,7 @@ function AccessCounter({ quantity }: { quantity: number }) {
       <AccessCounterContainer>
         {quantity}
       </AccessCounterContainer>
-      <Paragraph>Usuários já experimentaram o analítico</Paragraph>
+      <Paragraph color="blue" noMargin>usuários já utilizaram essa demonstração</Paragraph>
     </Base>
   );
 }

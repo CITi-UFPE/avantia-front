@@ -3,14 +3,20 @@ import { notification } from 'antd';
 import { Redirect } from 'react-router-dom';
 
 import { Button } from 'components/atoms';
-import { Title, Paragraph } from 'components/atoms/Text';
+import { Title } from 'components/atoms/Text';
 import arrowSvg from 'assets/icons/arrow.svg';
 
 import {
   AccessBackground,
   TextContainer,
   AccessIcon,
+  AccessItemContainer,
+  AccessItem,
+  AccessNumber,
+  AccessText,
+  BottomText,
 } from './AccessCard.style';
+import accessItems from './AccessItems';
 
 function AccessCard() {
   const [redirect, setRedirect] = useState('');
@@ -27,7 +33,6 @@ function AccessCard() {
         message: 'Sem acesso à câmera',
         description: 'Verifique na barra do navegador se há uma solicitação ou um ícone de câmera',
       });
-      console.log(err);
     }
   };
 
@@ -36,17 +41,23 @@ function AccessCard() {
   return (
     <AccessBackground>
       <TextContainer>
-        <Title bold color="orange">Autorize o acesso à sua câmera para testar o Analítico</Title>
-        <Paragraph color="white">
-          O analítico precisa ter acesso à sua câmera para iniciar
-          seu teste. Em caso de erro, verifique se a câmera de seu
-          dispositivo está sendo utilizada em outro aplicativo ou
-          navegador
-        </Paragraph>
+        <Title bold color="orange">Como a demonstração funciona?</Title>
+        <AccessItemContainer>
+          {accessItems.map((item, i) => (
+            <AccessItem>
+              <AccessNumber>{i + 1}</AccessNumber>
+              <AccessText>{item}</AccessText>
+            </AccessItem>
+          ))}
+        </AccessItemContainer>
         <Button style={{ color: 'white' }} type="primary" onClick={requestAccess}>
-          Autorizar Câmera
-          <AccessIcon src={arrowSvg} />
+          Iniciar seu teste
+          <AccessIcon button src={arrowSvg} />
         </Button>
+        <BottomText color="white">
+          Sua privacidade é garantida. Estamos alinhados às normativas
+          da nova Lei de Proteção de Dados (LGPD).
+        </BottomText>
       </TextContainer>
     </AccessBackground>
   );
