@@ -4,17 +4,25 @@ import { flexcc, flex } from 'styles/variables';
 import colors from 'styles/colors';
 
 export const Base = styled.header`
-  ${flexcc}
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 
   width: 100%;
   height: 5rem;
 
   border-bottom: 1px solid ${colors.secondaryBackground};
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 750px) {
     padding: .5rem 0;
+
+    div > img {
+      width: 6rem;
+    }
   }
+`;
+
+export const NavItem = styled.div`
+  ${flexcc}
 `;
 
 export const WhatsappIcon = styled.img`
@@ -43,10 +51,6 @@ export const LogoContainer = styled.div`
     height: 3rem;
     object-fit: cover;
   }
-
-  @media only screen and (max-width: 600px) {
-    margin-bottom: 2.2rem;
-  }
 `;
 
 export const BetaText = styled.p`
@@ -62,10 +66,10 @@ export const BetaText = styled.p`
   right: 0;
   transform: translate(100%, -50%);
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 750px) {
     left: 50%;
     bottom: 0;
-    transform: translate(-50%, 100%);
+    transform: translate(-50%, 70%);
     width: max-content;
   }
 `;
