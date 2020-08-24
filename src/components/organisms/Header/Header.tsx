@@ -14,22 +14,29 @@ import {
   Text,
   LogoContainer,
   BetaText,
+  NavItem,
 } from './Header.style';
 
 function Header({ location }: { location: any }) {
   return (
     <Base>
-      <SessionTime transparent={location.pathname.indexOf('share') === -1} />
+      <NavItem>
+        <SessionTime transparent={location.pathname.indexOf('share') === -1} />
+      </NavItem>
 
-      <LogoContainer>
-        <Image width="10rem" respWidth="6rem" src={logoPng} />
-        <BetaText>versão DEMO</BetaText>
-      </LogoContainer>
+      <NavItem>
+        <LogoContainer>
+          <Image width="10rem" respWidth="6rem" src={logoPng} />
+          <BetaText>versão DEMO</BetaText>
+        </LogoContainer>
+      </NavItem>
 
-      <Link href={whatsappLink}>
-        <Text>Entre em contato</Text>
-        <WhatsappIcon src={whatsappSvg} />
-      </Link>
+      <NavItem>
+        <Link href={whatsappLink}>
+          <Text>Entre em contato</Text>
+          <WhatsappIcon src={whatsappSvg} />
+        </Link>
+      </NavItem>
     </Base>
   );
 }
