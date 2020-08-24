@@ -1,17 +1,21 @@
 import styled from 'styled-components';
 
-import { flex, flexcc } from 'styles/variables';
+import { flexcc } from 'styles/variables';
 import colors from 'styles/colors';
 
 export const AccessCounterContainer = styled.div`
-  background-color: ${colors.blue};
-  width: 30px;
-  height: 30px;
   ${flexcc}
+  background-color: ${colors.blue};
+  height: 30px;
+  min-width: 60px;
+  padding: 0 5px;
+  margin: 0 5px;
+  font-size: 1.4rem;
+  font-weight: bolder;
 `;
 
 export const Base = styled.footer`
-  ${flex('center', 'center', 'column', 'nowrap')}
+  ${flexcc}
 
   width: 100%;
   min-height: 5rem;
