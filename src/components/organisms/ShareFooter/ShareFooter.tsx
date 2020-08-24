@@ -23,6 +23,8 @@ function ShareFooter({ data, type }: { data: string, type: string }) {
   const isMobile = useMobile();
   const [axiosPost] = useAxios('post');
 
+  console.log(isMobile);
+
   const { host } = window.location;
 
   const handleClick = async () => {
@@ -64,10 +66,10 @@ function ShareFooter({ data, type }: { data: string, type: string }) {
       </Modal>
       <Button onClick={() => setRedirect('/livedemo/analitico')}>
         <ButtonIcon src={backArrowSvg} />
-        {(!isMobile && isMobile !== null) && 'Voltar para teste'}
+        {!isMobile && 'Voltar para teste'}
       </Button>
       <Button onClick={handleClick} style={{ color: 'white' }} type="primary">
-        {(!isMobile && isMobile !== null) && 'Compartilhar'}
+        {!isMobile && 'Compartilhar'}
         <ShareIcon src={shareSvg} />
       </Button>
     </Base>
