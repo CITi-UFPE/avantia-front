@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { SecondaryBackground, Button } from 'components/atoms';
+import { SecondaryBackground, Button, Loader } from 'components/atoms';
 import { VideoPlayer } from 'components/molecules';
 import { useAxios } from 'global/func';
 
@@ -39,6 +39,7 @@ function Share({ match }: { match: any }) {
         <Container>
           {type === 'image' && <Image src={data} />}
           {type === 'video' && <VideoPlayer src={data} />}
+          {!type && <Loader normal />}
         </Container>
       </SecondaryBackground>
       <Footer>

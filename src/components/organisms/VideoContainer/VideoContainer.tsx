@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Redirect } from 'react-router-dom';
 
+import { Loader } from 'components/atoms';
 import { Video, Canvas } from 'components/molecules';
 import { useAxios } from 'global/func';
 import { useInfo } from 'contexts/GlobalProvider';
@@ -75,9 +76,9 @@ function VideoContainer() {
   return (
     <Container>
       <Video getDimensions={handleDimensions} />
-      {dimensions.length > 0 && filters && (
+      {dimensions.length > 0 && filters ? (
         <Canvas filters={filters} dimensions={dimensions} />
-      )}
+      ) : <Loader />}
     </Container>
   );
 }
