@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Modal } from 'antd';
-import {
-  WhatsappShareButton,
-  TelegramShareButton,
-  LinkedinShareButton,
-} from 'react-share';
 
 import { useMobile } from 'hooks';
 import { Button } from 'components/atoms';
@@ -13,17 +8,13 @@ import { useAxios } from 'global/func';
 
 import backArrowSvg from 'assets/icons/back-arrow.svg';
 import shareSvg from 'assets/icons/share.svg';
-import whatsappSvg from 'assets/icons/whatsapp-real.svg';
-import linkedinSvg from 'assets/icons/linkedin-real.svg';
-import telegramSvg from 'assets/icons/telegram-real.svg';
 
 import {
   Base,
   ButtonIcon,
   ShareIcon,
-  SocialMediaIcon,
-  TooltipTextContainer,
 } from './ShareFooter.style';
+import ShareFooterIcons from './ShareFooterIcons';
 
 function ShareFooter({ data, type }: { data: string, type: string }) {
   const [redirect, setRedirect] = useState('');
@@ -35,51 +26,25 @@ function ShareFooter({ data, type }: { data: string, type: string }) {
   const { host } = window.location;
 
   const handleClick = async () => {
-    const formData = new FormData();
-    const isImage = type === 'image';
+    if (!fileId) {
+      const formData = new FormData();
+      const isImage = type === 'image';
 
-    const res = await fetch(data);
-    const blob = await res.blob();
-    const file = new File([blob], `send.${isImage ? 'png' : 'webm'}`, blob);
+      const res = await fetch(data);
+      const blob = await res.blob();
+      const file = new File([blob], `send.${isImage ? 'png' : 'webm'}`, blob);
 
-    formData.set('media', file);
-    const fileRes = await axiosPost({
-      url: '/uploads',
-      body: formData,
-    });
-    setFileId(fileRes.data.data.fileId);
+      formData.set('media', file);
+      const fileRes = await axiosPost({
+        url: '/uploads',
+        body: formData,
+      });
+      setFileId(fileRes.data.data.fileId);
+    }
     setVisible(true);
   };
-  const shareUrl = `${host}/livedemo/share/${fileId}`;
 
-  const tooltipText = (
-    <TooltipTextContainer>
-      <WhatsappShareButton
-        style={{ outline: 'none' }}
-        title="Avantia Analítico"
-        url={shareUrl}
-        separator={`
-`}
-      >
-        <SocialMediaIcon src={whatsappSvg} />
-      </WhatsappShareButton>
-      <TelegramShareButton
-        style={{ outline: 'none' }}
-        title="Avantia Analítico"
-        url={shareUrl}
-      >
-        <SocialMediaIcon src={telegramSvg} />
-      </TelegramShareButton>
-      <LinkedinShareButton
-        style={{ outline: 'none' }}
-        title="Avantia Analítico"
-        url={shareUrl}
-        summary="Um analítico para reconhecimento de faces"
-      >
-        <SocialMediaIcon src={linkedinSvg} />
-      </LinkedinShareButton>
-    </TooltipTextContainer>
-  );
+  const shareUrl = `${host}/livedemo/share/${fileId}`;
 
   if (redirect) return <Redirect to={redirect} />;
 
@@ -87,7 +52,7 @@ function ShareFooter({ data, type }: { data: string, type: string }) {
     <Base>
       <Modal
         visible={visible}
-        title="Compartilhar em:"
+        title="Compartilhe em:"
         footer={null}
         centered
         onCancel={(e) => {
@@ -95,7 +60,7 @@ function ShareFooter({ data, type }: { data: string, type: string }) {
           setVisible(false);
         }}
       >
-        {tooltipText}
+        <ShareFooterIcons closeModal={() => setVisible(false)} shareUrl={shareUrl} />
       </Modal>
       <Button onClick={() => setRedirect('/livedemo/analitico')}>
         <ButtonIcon src={backArrowSvg} />

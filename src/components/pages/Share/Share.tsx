@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import { SecondaryBackground, Button } from 'components/atoms';
 import { VideoPlayer } from 'components/molecules';
@@ -11,13 +11,14 @@ import {
   Footer,
 } from './Share.style';
 
-function Share({ location }: { location: any }) {
+function Share({ match }: { match: any }) {
   const [data, setData] = useState('');
   const [type, setType] = useState('');
   const [redirect, setRedirect] = useState(false);
 
   const [axiosGet] = useAxios('get');
-  const mediaId = location.pathname.split('/')[2];
+
+  const { mediaId } = match.params;
 
   useEffect(() => {
     axiosGet({
@@ -47,4 +48,4 @@ function Share({ location }: { location: any }) {
   );
 }
 
-export default withRouter(Share);
+export default Share;

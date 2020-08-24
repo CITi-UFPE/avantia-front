@@ -42,11 +42,19 @@ export const SocialMediaIcon = styled.img`
 `;
 
 export const TooltipTextContainer = styled.span`
-  /* ${flex('flex-start', 'center', 'column', 'nowrap')} */
+  ${flex('space-evenly', 'center', 'row', 'nowrap')}
   margin: 0;
   padding: 0 10px;
 
   p {
     margin: 0;
   }
+`;
+
+export const CopyButton = styled.button`
+  background-color: white;
+  border: 0;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
 `;
