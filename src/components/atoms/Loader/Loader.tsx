@@ -14,4 +14,8 @@ function Loader({ normal }: { normal?: boolean }) {
   );
 }
 
+Loader.defaultProps = {
+  normal: false,
+};
+
 export default Loader;

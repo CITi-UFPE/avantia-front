@@ -18,8 +18,13 @@ export const InfoContainer = styled.div`
   `)}
 `;
 
-export const TooltipContainer = styled.div`
+export const ButtonContainer = styled.button`
   ${flexcc}
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
 `;
 
 export const ConnectionContainer = styled.div`
@@ -34,4 +39,10 @@ export const ConnectionIcon = styled.img`
     width: 30px;
     margin: 0;
   }
+`;
+
+export const Highlight = styled.span`
+  text-transform: uppercase;
+  color: ${colors.success};
+  font-weight: bold;
 `;

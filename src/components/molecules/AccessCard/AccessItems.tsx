@@ -44,12 +44,14 @@ const itemsContent = [
     ).
   </>,
   <>
+    Armazenamos fotos e vídeos gravados na plataforma por
+    {' '}
     <strong>
-      Para você visualizar
+      5 dias
     </strong>
     {' '}
-    seu vídeo ou foto, armazenamos este por X tempo em nosso servidor
-    e é apagado automaticamente logo após esgotado o tempo.
+    para que você possa compartilhar um link de
+    acesso com outras pessoas.
   </>,
   <>
     <strong>
