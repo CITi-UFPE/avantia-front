@@ -60,6 +60,8 @@ export const BetaText = styled.p`
   padding: 4px 8px;
   margin: 0;
   font-size: .6rem;
+  width: 80px;
+  text-align: center;
 
   position: absolute;
   top: 50%;

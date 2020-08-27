@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { notification } from 'antd';
 
 import { useInfo } from 'contexts/GlobalProvider';
 import { VideoDisplay } from './Video.style';
@@ -9,27 +10,49 @@ function Video({ getDimensions }: { getDimensions: Function }) {
 
   useEffect(() => {
     const getUserMedia = async () => {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: {
-          facingMode: 'user',
-          width: 640,
-          height: 480,
-        },
-      });
+      try {
+        // @ts-ignore
+        const stream = navigator.mediaStream || await navigator.mediaDevices.getUserMedia({
+          audio: true,
+          video: {
+            facingMode: 'user',
+            width: 640,
+            height: 480,
+          },
+        });
 
-      if (videoRef.current) {
-        const video = videoRef.current;
-        video.srcObject = stream;
-        video.onloadedmetadata = () => {
-          getDimensions([video.videoHeight, video.videoWidth], video);
-        };
+        if (videoRef.current) {
+          const video = videoRef.current;
+          video.srcObject = stream;
+          video.onloadedmetadata = () => {
+            getDimensions([video.videoHeight, video.videoWidth], video);
+          };
+        }
+
+        if ([
+          'iPad Simulator',
+          'iPhone Simulator',
+          'iPod Simulator',
+          'iPad',
+          'iPhone',
+          'iPod',
+        ].includes(navigator.platform)) {
+          notification.warn({
+            message: 'Experienciando problemas?',
+            description: 'Alguns usuários podem experienciar problemas nesse navegador, caso isso aconteça com você, pro favor tente em uma dessas plataformas: Mozila Firefox, Google Chrome, Microsoft Edge, Brave',
+          });
+        }
+
+        setInfo((prevInfo: Object) => ({
+          ...prevInfo,
+          stream,
+        }));
+      } catch (err) {
+        notification.error({
+          message: 'Sem acesso à câmera',
+          description: 'Verifique na barra do navegador se há uma solicitação ou um ícone de câmera',
+        });
       }
-
-      setInfo((prevInfo: Object) => ({
-        ...prevInfo,
-        stream,
-      }));
     };
 
     getUserMedia();

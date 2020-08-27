@@ -8,7 +8,7 @@ module.exports = ({
   warning: '#FF943B',
   error: '#D50808',
   info: '#0CAEAE',
-  heading: '#5579B7',
+  heading: '#FF943B',
   text: '#FFFFFF',
   textSecondary: '#FF943B',
 

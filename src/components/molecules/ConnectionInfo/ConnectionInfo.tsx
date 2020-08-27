@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Tooltip } from 'antd';
+import { Modal } from 'antd';
 
 import { Paragraph } from 'components/atoms/Text';
 import { useInfo } from 'contexts/GlobalProvider';
@@ -16,9 +16,10 @@ import { useMobile } from 'hooks';
 import {
   InfoIcon,
   InfoContainer,
-  TooltipContainer,
+  ButtonContainer,
   ConnectionContainer,
   ConnectionIcon,
+  Highlight,
 } from './ConnectionInfo.style';
 
 function ConnectionInfo({ disabled }: { disabled: boolean }) {
@@ -27,62 +28,28 @@ function ConnectionInfo({ disabled }: { disabled: boolean }) {
     text: '',
     icon: disabledConnectionSvg,
   });
+  const [visible, setVisible] = useState(false);
   const isMobile = useMobile();
   const [info] = useInfo();
-
-  const tooltipText = (
-    <span>
-      <Paragraph>
-        O funcionamento do analítico pode ser comprometido pela
-        {' '}
-        <strong>qualidade da sua conexão</strong>
-        {' '}
-        com a internet.
-      </Paragraph>
-      <Paragraph>
-        Para ter uma boa experiência, verifique se a conexão está BOA
-      </Paragraph>
-    </span>
-  );
 
   const getLatencyOptions = useCallback(() => {
     const { latency } = info;
 
     if (!latency) {
-      return {
-        icon: disabledConnectionSvg,
-        text: '',
-        color: '',
-      };
+      return { icon: disabledConnectionSvg, text: '', color: '' };
     }
 
     if (latency > 3000) {
-      return {
-        icon: badConnectionSvg,
-        text: 'Ruim',
-        color: '#d50808',
-      };
+      return { icon: badConnectionSvg, text: 'Fraca', color: '#d50808' };
     }
     if (latency > 600) {
-      return {
-        icon: averageConnectionSvg,
-        text: 'Média',
-        color: '#e6d12b',
-      };
+      return { icon: averageConnectionSvg, text: 'Instável', color: '#e6d12b' };
     }
     if (latency > 100) {
-      return {
-        icon: goodConnectionSvg,
-        text: 'Boa',
-        color: '#009a1d',
-      };
+      return { icon: goodConnectionSvg, text: 'Estável', color: '#009a1d' };
     }
 
-    return {
-      icon: excellentConnectionSvg,
-      text: 'Excelente',
-      color: '#009a1d',
-    };
+    return { icon: excellentConnectionSvg, text: 'Ideal', color: '#009a1d' };
   }, [info]);
 
   useEffect(() => {
@@ -91,13 +58,41 @@ function ConnectionInfo({ disabled }: { disabled: boolean }) {
 
   return (
     <InfoContainer disabled={disabled}>
+      <Modal
+        visible={visible}
+        title="Qualidade de conexão"
+        footer={null}
+        centered
+        onCancel={(e) => {
+          e.stopPropagation();
+          setVisible(false);
+        }}
+      >
+        <Paragraph>
+          Esta versão é apenas uma demonstração, e a velocidade
+          de detecção também é influenciada pela
+          {' '}
+          <strong>
+            qualidade de sua conexão
+          </strong>
+          {' '}
+          com a internet.
+        </Paragraph>
+        <Paragraph>
+          Conexões indicadas como abaixo do estado
+          {' '}
+          <Highlight>
+            estável
+          </Highlight>
+          {' '}
+          podem caracterizar lentidão no funcionamento da plataforma.
+        </Paragraph>
+      </Modal>
       {!isMobile && (
-        <TooltipContainer>
+        <ButtonContainer onClick={() => setVisible(true)}>
           <Paragraph noMargin color="orange">Conexão:</Paragraph>
-          <Tooltip placement="topRight" color="white" title={tooltipText}>
-            <InfoIcon src={disabled ? infoDisabledSvg : infoSvg} />
-          </Tooltip>
-        </TooltipContainer>
+          <InfoIcon src={disabled ? infoDisabledSvg : infoSvg} />
+        </ButtonContainer>
       )}
       <ConnectionContainer>
         <ConnectionIcon src={disabled ? disabledConnectionSvg : statusInfo.icon} />

@@ -21,7 +21,7 @@ function InfoModal() {
         <InfoIcon src={infoSvg} />
       </InfoButton>
       <Modal
-        title="Sobre nossa Análise inteligente"
+        title="Sobre a Solução de Detecção de Máscaras"
         visible={visible}
         onOk={hideModal}
         onCancel={hideModal}
@@ -37,18 +37,26 @@ function InfoModal() {
         ]}
       >
         <Paragraph fontSize=".8rem">
-          Somos especialistas em detecção através de imagens,
-          contribuindo com clientes como Gerdau, McDonalds,
-          Raia Drogasil e Governo do Estado de Pernambuco.
+          Utilizamos
+          {' '}
+          <span>
+            Inteligência Artificial
+          </span>
+          {' '}
+          para extrair informações de imagens e gerar melhoria de processos,
+          aumento da segurança e redução de custos aos nosso clientes.
         </Paragraph>
         <Paragraph fontSize=".8rem">
-          Esta demonstração é nossa Detecção de não uso de
-          máscaras que através de câmeras identifica o uso
-          ou não uso de máscara facial.
+          Grande parte das tecnologias que utilizamos é desenvolvida no
+          {' '}
+          <span>
+            Avantia Labs
+          </span>
+          , unidade própria de pesquisa e desenvolvimento.
         </Paragraph>
         <Paragraph fontSize=".8rem">
-          Confira essa e outras soluções contra o COVID-19
-          no botão abaixo.
+          Nesta demonstração você pode verificar como receberá informações de seu
+          estabelecimento, sobre a utilização indicada para as máscaras faciais.
         </Paragraph>
       </Modal>
     </>

@@ -12,7 +12,6 @@ export const AccessBackground = styled.div`
 
   @media only screen and (max-width: 600px) {
     width: 100%;
-    height: 80%;
   }
 `;
 
@@ -49,6 +48,7 @@ export const AccessItemContainer = styled.ul`
 export const AccessItem = styled.li`
   list-style: none;
   display: flex;
+  align-items: center;
   margin: 1.5rem 0;
 
   @media only screen and (max-width: 800px) {
@@ -70,7 +70,7 @@ export const AccessNumber = styled.div`
   @media only screen and (max-width: 800px) {
     width: 2rem;
     height: 2rem;
-    font-size: .8rem;
+    font-size: 1rem;
   }
 `;
 
@@ -79,10 +79,10 @@ export const AccessText = styled.p`
   margin: 0;
   text-align: left;
   width: calc(100% - 3.5rem);
-  font-size: .7rem;
+  font-size: .8rem;
 
-  @media only screen and (max-width: 800px) {
-    font-size: .6rem;
+  @media only screen and (max-width: 1000px) {
+    font-size: .7rem;
   }
 `;
 
@@ -91,7 +91,7 @@ export const BottomText = styled.p`
   color: white;
   font-size: .7rem;
 
-  @media only screen and (max-width: 800px) {
+  @media only screen and (max-width: 1000px) {
     margin-top: .5rem;
     font-size: .6rem;
   }

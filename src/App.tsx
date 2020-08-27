@@ -33,7 +33,7 @@ function App() {
             <Route path="/livedemo/analitico" component={Analytic} />
             <Route path="/livedemo/expired" component={ExpiredSession} />
             <Route path="/livedemo/display" component={Display} />
-            <Route path="/livedemo/share/:mediaId" component={Share} />
+            <Route path="/livedemo/s/:mediaId" component={Share} />
           </Switch>
         </AppWrapper>
       </GlobalProvider>

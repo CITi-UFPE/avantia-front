@@ -23,10 +23,18 @@ function AccessCard() {
 
   const requestAccess = async () => {
     try {
-      await navigator.mediaDevices.getUserMedia({
-        audio: false,
-        video: { facingMode: 'user' },
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: {
+          facingMode: 'user',
+          width: 640,
+          height: 480,
+        },
       });
+
+      // @ts-ignore
+      navigator.mediaStream = stream;
+
       setRedirect('/livedemo/analitico');
     } catch (err) {
       notification.error({
@@ -56,7 +64,7 @@ function AccessCard() {
         </Button>
         <BottomText color="white">
           Sua privacidade é garantida. Estamos alinhados às normativas
-          da nova Lei de Proteção de Dados (LGPD).
+          da nova Lei Geral de Proteção de Dados (LGPD).
         </BottomText>
       </TextContainer>
     </AccessBackground>
