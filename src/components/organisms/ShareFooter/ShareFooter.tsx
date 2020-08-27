@@ -23,8 +23,6 @@ function ShareFooter({ data, type }: { data: string, type: string }) {
   const isMobile = useMobile();
   const [axiosPost] = useAxios('post');
 
-  console.log(isMobile);
-
   const { host } = window.location;
 
   const handleClick = async () => {
@@ -46,7 +44,7 @@ function ShareFooter({ data, type }: { data: string, type: string }) {
     setVisible(true);
   };
 
-  const shareUrl = `${host}/livedemo/share/${fileId}`;
+  const shareUrl = `https://${host}/livedemo/s/${fileId}`;
 
   if (redirect) return <Redirect to={redirect} />;
 

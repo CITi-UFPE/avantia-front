@@ -136,7 +136,7 @@ function RecorderControls() {
         onChange={(checked) => setMode(checked ? 'camera' : 'video')}
         checkedChildren={<SwitchIcon src={cameraSvg} />}
         unCheckedChildren={<SwitchIcon src={videoSvg} />}
-        disabled
+        disabled={disabled}
         size="default"
       />
       {/*

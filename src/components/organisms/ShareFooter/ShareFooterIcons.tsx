@@ -5,6 +5,7 @@ import {
   TelegramShareButton,
   LinkedinShareButton,
 } from 'react-share';
+import { notification } from 'antd';
 
 import { Paragraph } from 'components/atoms/Text';
 
@@ -21,6 +22,9 @@ import {
 function ShareFooterIcons({ shareUrl, closeModal }: { shareUrl: string, closeModal: () => void }) {
   const handleCopy = async () => {
     await navigator.clipboard.writeText(shareUrl);
+    notification.success({
+      message: 'Link copiado!',
+    });
     closeModal();
   };
 
@@ -32,7 +36,7 @@ function ShareFooterIcons({ shareUrl, closeModal }: { shareUrl: string, closeMod
       </CopyButton>
       <WhatsappShareButton
         style={{ outline: 'none' }}
-        title="Avantia Analítico"
+        title="Acabei de utilizar o analítico de detecção de máscaras da Avantia! Clique no link abaixo para visualizar como ficou!"
         url={shareUrl}
         onShareWindowClose={closeModal}
         separator={`
@@ -43,7 +47,7 @@ function ShareFooterIcons({ shareUrl, closeModal }: { shareUrl: string, closeMod
       </WhatsappShareButton>
       <TelegramShareButton
         style={{ outline: 'none' }}
-        title="Avantia Analítico"
+        title="Acabei de utilizar o analítico de detecção de máscaras da Avantia! Clique no link abaixo para visualizar como ficou!"
         url={shareUrl}
         onShareWindowClose={closeModal}
       >
@@ -52,7 +56,7 @@ function ShareFooterIcons({ shareUrl, closeModal }: { shareUrl: string, closeMod
       </TelegramShareButton>
       <LinkedinShareButton
         style={{ outline: 'none' }}
-        title="Avantia Analítico"
+        title="Acabei de utilizar o analítico de detecção de máscaras da Avantia! Clique no link abaixo para visualizar como ficou!"
         url={shareUrl}
         onShareWindowClose={closeModal}
         summary="Um analítico para reconhecimento de faces"

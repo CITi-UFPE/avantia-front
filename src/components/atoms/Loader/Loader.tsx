@@ -6,9 +6,9 @@ import {
   Base,
 } from './Loader.style';
 
-function Loader({ normal }: { normal?: boolean }) {
+function Loader({ normal, width, height }: { normal?: boolean, height?: string, width?: string }) {
   return (
-    <Base normal={normal}>
+    <Base normal={normal} style={{ width, height }}>
       <LoaderSvg style={{ width: '5rem' }} />
     </Base>
   );
@@ -16,6 +16,8 @@ function Loader({ normal }: { normal?: boolean }) {
 
 Loader.defaultProps = {
   normal: false,
+  width: 'auto',
+  height: 'auto',
 };
 
 export default Loader;

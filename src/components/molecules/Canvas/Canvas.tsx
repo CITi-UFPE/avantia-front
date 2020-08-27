@@ -34,7 +34,7 @@ function Canvas({ dimensions, filters }: { dimensions: number[], filters: Server
           const arrBbo: number[] = JSON.parse(bbo);
           const minifiedProb = Number((prob * 100).toFixed(0));
 
-          if (minifiedProb < 70) return;
+          if (minifiedProb < 80) return;
 
           const mainColor = label === 'mask' ? '#009A1D' : '#D50808';
           ctx.strokeStyle = mainColor;
@@ -122,7 +122,7 @@ function Canvas({ dimensions, filters }: { dimensions: number[], filters: Server
       <InfoModal />
       <InfoText>
         Esta versão é apenas uma demonstração. Seus dados estão sendo protegidos
-        de acordo com as normas da Lei de Proteção de Dados (LGPD)
+        de acordo com as normas da Lei Geral de Proteção de Dados (LGPD)
       </InfoText>
     </CanvasContainer>
   );

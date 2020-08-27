@@ -40,16 +40,16 @@ function ConnectionInfo({ disabled }: { disabled: boolean }) {
     }
 
     if (latency > 3000) {
-      return { icon: badConnectionSvg, text: 'Ruim', color: '#d50808' };
+      return { icon: badConnectionSvg, text: 'Fraca', color: '#d50808' };
     }
     if (latency > 600) {
-      return { icon: averageConnectionSvg, text: 'Média', color: '#e6d12b' };
+      return { icon: averageConnectionSvg, text: 'Instável', color: '#e6d12b' };
     }
     if (latency > 100) {
-      return { icon: goodConnectionSvg, text: 'Boa', color: '#009a1d' };
+      return { icon: goodConnectionSvg, text: 'Estável', color: '#009a1d' };
     }
 
-    return { icon: excellentConnectionSvg, text: 'Excelente', color: '#009a1d' };
+    return { icon: excellentConnectionSvg, text: 'Ideal', color: '#009a1d' };
   }, [info]);
 
   useEffect(() => {
@@ -69,28 +69,23 @@ function ConnectionInfo({ disabled }: { disabled: boolean }) {
         }}
       >
         <Paragraph>
-          Além de utilizarmos capacidade de detecção reduzida nesta demonstração
+          Esta versão é apenas uma demonstração, e a velocidade
+          de detecção também é influenciada pela
           {' '}
           <strong>
-            sua conexão também influencia
+            qualidade de sua conexão
           </strong>
           {' '}
-          na fluidez da tecnologia.
+          com a internet.
         </Paragraph>
         <Paragraph>
-          Sua conexão deve estar
-          {' '}
-          <span>
-            ao menos
-          </span>
-          {' '}
-          indicada como
+          Conexões indicadas como abaixo do estado
           {' '}
           <Highlight>
             estável
           </Highlight>
           {' '}
-          para poder realizar a demonstração.
+          podem caracterizar lentidão no funcionamento da plataforma.
         </Paragraph>
       </Modal>
       {!isMobile && (

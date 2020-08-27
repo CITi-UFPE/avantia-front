@@ -78,7 +78,7 @@ function VideoContainer() {
       <Video getDimensions={handleDimensions} />
       {dimensions.length > 0 && filters ? (
         <Canvas filters={filters} dimensions={dimensions} />
-      ) : <Loader />}
+      ) : <Loader width={`${dimensions[1] || 0}px`} height={`${dimensions[0] || 0}px`} />}
     </Container>
   );
 }

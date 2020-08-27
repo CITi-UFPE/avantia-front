@@ -27,6 +27,10 @@ type PTypes = {
 export const Paragraph = styled.p`
   ${base}
   margin: ${({ noMargin }: PTypes & BaseTypes) => (noMargin ? '0' : '15px 0')};
+
+  span {
+    font-weight: bold;
+  }
 `;
 
 export const Title = styled.h1`

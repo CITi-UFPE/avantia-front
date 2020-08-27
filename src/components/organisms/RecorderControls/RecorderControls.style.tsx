@@ -46,7 +46,7 @@ export const Switch = styled(AntSwitch)`
 `;
 
 export const ButtonContainer = styled(Progress)`
-  ${flexcc}
+  position: relative;
   transition: all .2s ease-in-out;
 
   ${({ isRecording }: { disabled: boolean, isRecording: boolean }) => (isRecording && css`
@@ -70,10 +70,16 @@ type ButtonProps = {
 export const Button = styled.button`
   background-color: ${({ mode }: ButtonProps) => (mode === 'camera' ? colors.orange : colors.red)};
   transition: all .2s ease-in-out;
-  border-radius: 50px;
+  border-radius: 50%;
   border: none;
   outline: none;
   height: 2rem;
   width: 2rem;
   cursor: pointer;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
 `;

@@ -14,7 +14,7 @@ const itemsContent = [
       Grave
     </strong>
     {' '}
-    se vídeo (
+    seu vídeo (
     <AccessIcon src={videoSvg} />
     {' + '}
     <AccessIcon src={videoRecordSvg} />
@@ -22,24 +22,14 @@ const itemsContent = [
     <AccessIcon src={cameraSvg} />
     {' + '}
     <AccessIcon src={photoShootSvg} />
-    ) utilizando o filtro da solução de
-    detecção de máscaras.
+    ) utilizando nossa detecção de máscaras em tempo real.
   </>,
   <>
-    A demonstração opera com
-    {' '}
-    <strong>
-      20% da capacidade
-    </strong>
-    {' '}
-    total de análise, podedo ser reduzida pela qualidade de sua conexão
-    com a internet.
-    {' '}
-    <strong>
-      Verifique
-    </strong>
-    {' '}
-    sua qualidade de conexão (
+    Você está utilizando uma versão de demonstração
+    que opera em velocidade reduzida. Sua internet também
+    influencia no desempenho do site.
+    Verifique sua qualidade de conexão
+    (
     <AccessIcon src={goodConnectionSvg} />
     ).
   </>,
