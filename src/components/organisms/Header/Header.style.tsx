@@ -72,6 +72,5 @@ export const BetaText = styled.p`
     left: 50%;
     bottom: 0;
     transform: translate(-50%, 70%);
-    width: max-content;
   }
 `;

@@ -37,26 +37,19 @@ function InfoModal() {
         ]}
       >
         <Paragraph fontSize=".8rem">
-          Utilizamos
-          {' '}
-          <span>
-            Inteligência Artificial
-          </span>
-          {' '}
-          para extrair informações de imagens e gerar melhoria de processos,
-          aumento da segurança e redução de custos aos nosso clientes.
+          Armazenamos fotos e vídeos gravados na plataforma por
+          <strong>
+            5 dias
+          </strong>
+          para que você possa compartilhar o link de
+          visualização com outras pessoas.
+          <strong>
+            Não acessamos diretamente seus arquivos.
+          </strong>
         </Paragraph>
         <Paragraph fontSize=".8rem">
-          Grande parte das tecnologias que utilizamos é desenvolvida no
-          {' '}
-          <span>
-            Avantia Labs
-          </span>
-          , unidade própria de pesquisa e desenvolvimento.
-        </Paragraph>
-        <Paragraph fontSize=".8rem">
-          Nesta demonstração você pode verificar como receberá informações de seu
-          estabelecimento, sobre a utilização indicada para as máscaras faciais.
+          Ao fim do período de 5 dias, os arquivos
+          e link são automaticamente deletados.
         </Paragraph>
       </Modal>
     </>

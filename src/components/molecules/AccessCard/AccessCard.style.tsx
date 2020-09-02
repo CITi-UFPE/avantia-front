@@ -53,6 +53,7 @@ export const AccessItem = styled.li`
 
   @media only screen and (max-width: 800px) {
     margin: .6rem 0;
+    line-height: 90%;
   }
 `;
 

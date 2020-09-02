@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 import { InfoModal } from 'components/molecules';
 import { useInfo } from 'contexts/GlobalProvider';
+import filterFilters from 'helpers/filterFilters';
 import whiteLogo from 'assets/white-logo.png';
 
 import {
@@ -28,17 +29,22 @@ function Canvas({ dimensions, filters }: { dimensions: number[], filters: Server
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.lineWidth = 3;
 
+        const filteredFilters = filterFilters(filters);
+
         // eslint-disable-next-line no-restricted-syntax
-        for (const filter of filters) {
+        for (const filter of filteredFilters) {
           const { bb_o: bbo, prob, label } = filter;
           const arrBbo: number[] = JSON.parse(bbo);
           const minifiedProb = Number((prob * 100).toFixed(0));
 
-          if (minifiedProb < 80) return;
+          // eslint-disable-next-line no-continue
+          if (minifiedProb < 80) continue;
 
           const mainColor = label === 'mask' ? '#009A1D' : '#D50808';
           ctx.strokeStyle = mainColor;
           ctx.fillStyle = mainColor;
+
+          ctx.beginPath();
 
           // Stroke
           ctx.rect(
@@ -87,6 +93,8 @@ function Canvas({ dimensions, filters }: { dimensions: number[], filters: Server
                 labelRectPos.y + (labelRect.height / 2) + 3,
               );
               ctx.stroke();
+
+              ctx.closePath();
               res();
             };
           });
