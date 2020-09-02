@@ -7,6 +7,7 @@ import React, {
 import { Redirect } from 'react-router-dom';
 import RecordRTC from 'recordrtc';
 import { PauseOutlined } from '@ant-design/icons';
+import { Tooltip } from 'antd';
 
 import { useInfo } from 'contexts/GlobalProvider';
 
@@ -93,6 +94,7 @@ function RecorderControls() {
 
       const recorder = new RecordRTC(canvasPlusAudioStream, {
         type: 'video',
+        mimeType: 'video/x-matroska;codecs=avc1',
       });
 
       recorder.startRecording();
@@ -129,16 +131,24 @@ function RecorderControls() {
 
   const disabled = !info.canvas || !info.video;
 
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
   return (
     <ControlsContainer>
-      <Switch
-        checked={mode === 'camera'}
-        onChange={(checked) => setMode(checked ? 'camera' : 'video')}
-        checkedChildren={<SwitchIcon src={cameraSvg} />}
-        unCheckedChildren={<SwitchIcon src={videoSvg} />}
-        disabled={disabled}
-        size="default"
-      />
+      <Tooltip
+        {...(isSafari ? {} : { visible: false })}
+        color="black"
+        title="O seu navegador não suporta gravação de vídeo RTC"
+      >
+        <Switch
+          checked={mode === 'camera'}
+          onChange={(checked) => setMode(checked ? 'camera' : 'video')}
+          checkedChildren={<SwitchIcon src={cameraSvg} />}
+          unCheckedChildren={<SwitchIcon src={videoSvg} />}
+          disabled={disabled || isSafari}
+          size="default"
+        />
+      </Tooltip>
       {/*
       // @ts-ignore */}
       <ButtonContainer
