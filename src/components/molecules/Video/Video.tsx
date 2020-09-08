@@ -2,11 +2,29 @@ import React, { useEffect, useRef } from 'react';
 import { notification } from 'antd';
 
 import { useInfo } from 'contexts/GlobalProvider';
-import { VideoDisplay } from './Video.style';
+
+import { ReactComponent as ChromeSVG } from 'assets/BowserIcons/icons8-chrome.svg';
+import { ReactComponent as EdgeSVG } from 'assets/BowserIcons/icons8-microsoft-edge.svg';
+import { ReactComponent as FirefoxSVG } from 'assets/BowserIcons/firefox-logo.svg';
+import { ReactComponent as BraveSVG } from 'assets/BowserIcons/icons8-brave-web-browser.svg';
+
+import { VideoDisplay, BrowserContainer } from './Video.style';
 
 function Video({ getDimensions }: { getDimensions: Function }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [, setInfo] = useInfo();
+
+  const browserIncompatibilityMessage = (
+    <p>
+      Recomendamos o uso dos seguintes navegadores:
+      <BrowserContainer>
+        <ChromeSVG />
+        <EdgeSVG />
+        <FirefoxSVG height="45px" />
+        <BraveSVG />
+      </BrowserContainer>
+    </p>
+  );
 
   useEffect(() => {
     const getUserMedia = async () => {
@@ -28,7 +46,6 @@ function Video({ getDimensions }: { getDimensions: Function }) {
             getDimensions([video.videoHeight, video.videoWidth], video);
           };
         }
-
         if ([
           'iPad Simulator',
           'iPhone Simulator',
@@ -39,7 +56,8 @@ function Video({ getDimensions }: { getDimensions: Function }) {
         ].includes(navigator.platform)) {
           notification.warn({
             message: 'Experienciando problemas?',
-            description: 'Alguns usuários podem experienciar problemas nesse navegador, caso isso aconteça com você, pro favor tente em uma dessas plataformas: Mozila Firefox, Google Chrome, Microsoft Edge, Brave',
+            description: browserIncompatibilityMessage,
+            duration: 10000,
           });
         }
 

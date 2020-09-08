@@ -22,3 +22,9 @@ export const VideoDisplay = styled.div`
     }
   }
 `;
+
+export const BrowserContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+`;
