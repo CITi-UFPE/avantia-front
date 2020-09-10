@@ -42,6 +42,7 @@ function Video({ getDimensions }: { getDimensions: Function }) {
         if (videoRef.current) {
           const video = videoRef.current;
           video.srcObject = stream;
+          video.play();
           video.onloadedmetadata = () => {
             getDimensions([video.videoHeight, video.videoWidth], video);
           };
@@ -101,14 +102,7 @@ function Video({ getDimensions }: { getDimensions: Function }) {
       }}
       dangerouslySetInnerHTML={{
         __html: `
-          <video
-            autoplay
-            muted
-            playsinline
-          >
-            <track kind="captions" />
-            <p>Seu navegador não suporta vídeo HTML5.</p>
-          </video>
+          <video muted playsinline></video>
         `,
       }}
     />
