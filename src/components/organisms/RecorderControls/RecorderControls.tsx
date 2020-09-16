@@ -88,13 +88,13 @@ function RecorderControls() {
         if (t.kind === 'video') canvasPlusAudioStream.addTrack(t);
       });
 
-      info.stream.getTracks().forEach((t: MediaStreamTrack) => {
-        if (t.kind === 'audio') canvasPlusAudioStream.addTrack(t);
-      });
+      // info.stream.getTracks().forEach((t: MediaStreamTrack) => {
+      //   if (t.kind === 'audio') canvasPlusAudioStream.addTrack(t);
+      // });
 
       const recorder = new RecordRTC(canvasPlusAudioStream, {
         type: 'video',
-        mimeType: 'video/x-matroska;codecs=avc1',
+        mimeType: 'video/webm',
       });
 
       recorder.startRecording();
@@ -136,7 +136,8 @@ function RecorderControls() {
   return (
     <ControlsContainer>
       <Tooltip
-        {...(isSafari ? {} : { visible: false })}
+        // {...(isSafari ? {} : { visible: false })}
+        visible={false}
         color="black"
         title="O seu navegador não suporta gravação de vídeo RTC"
       >
@@ -145,7 +146,7 @@ function RecorderControls() {
           onChange={(checked) => setMode(checked ? 'camera' : 'video')}
           checkedChildren={<SwitchIcon src={cameraSvg} />}
           unCheckedChildren={<SwitchIcon src={videoSvg} />}
-          disabled={disabled || isSafari}
+          disabled={disabled}
           size="default"
         />
       </Tooltip>
