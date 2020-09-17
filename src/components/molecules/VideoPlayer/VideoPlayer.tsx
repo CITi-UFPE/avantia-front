@@ -55,6 +55,8 @@ function VideoPlayer({ src }: { src: string }) {
     <VideoBase>
       <Video playsInline crossOrigin="use-credentials" ref={videoRef}>
         <source type="video/webm" src={src} />
+        <source type="video/ogg" src={src} />
+        <source type="video/mp4" src={src} />
         <p>Seu navegador não suporta vídeo HTML5.</p>
       </Video>
       <ControlsContainer>

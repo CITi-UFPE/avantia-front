@@ -94,7 +94,6 @@ function RecorderControls() {
 
       const recorder = new RecordRTC(canvasPlusAudioStream, {
         type: 'video',
-        mimeType: 'video/webm',
       });
 
       recorder.startRecording();
