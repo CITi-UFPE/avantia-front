@@ -38,7 +38,7 @@ function Share({ match }: { match: any }) {
       <SecondaryBackground>
         <Container>
           {type === 'image' && <Image src={data} />}
-          {type === 'video' && <VideoPlayer src={data} />}
+          {type === 'video' && <VideoPlayer src={data as any as Blob[]} />}
           {!type && <Loader normal />}
         </Container>
       </SecondaryBackground>

@@ -1,4 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, {
+  useRef,
+  useState,
+  useCallback,
+  useEffect,
+} from 'react';
 import { Progress } from 'antd';
 
 import { Paragraph } from 'components/atoms/Text';
@@ -9,54 +14,56 @@ import playSvg from 'assets/icons/player.svg';
 
 import {
   VideoBase,
-  Video,
+  Image,
   ControlsContainer,
   PlayIcon,
   PlayButton,
 } from './VideoPlayer.style';
 
-function VideoPlayer({ src }: { src: string }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [currentTime, setCurrentTime] = useState(0);
+function VideoPlayer({ src }: { src: Blob[] }) {
+  const [currentTime] = useState(0);
+  const [playing, setPlaying] = useState(false);
 
-  const getPercentage = () => {
-    if (!videoRef.current) return 0;
-    const video = videoRef.current;
-    return (currentTime * 100) / video.duration;
-  };
+  const imageRef = useRef<HTMLImageElement>(null);
+  const currentFrame = useRef(0);
+
+  const imageArray = src.map((blob) => URL.createObjectURL(blob));
+
+  console.log(src);
+
+  const getPercentage = useCallback(() => {
+    const totalFrames = src.length;
+
+    return (currentFrame.current * 100) / totalFrames;
+  }, [currentFrame, src.length]);
+
+  const playFrame = useCallback(() => {
+    const fps = 24;
+
+    if (playing && currentFrame.current < imageArray.length - 1) {
+      setTimeout(() => {
+        playFrame();
+      }, 1000 / fps);
+
+      if (imageRef.current) imageRef.current.src = imageArray[currentFrame.current];
+      currentFrame.current += 1;
+    }
+  }, [playing, imageArray]);
 
   const handlePlay = async () => {
-    if (videoRef.current) {
-      try {
-        const video = videoRef.current;
-        if (video.readyState > 3) {
-          video.crossOrigin = 'anonymous';
-          await video.play();
-        } else {
-          video.addEventListener('loadedmetadata', async () => {
-            video.crossOrigin = 'anonymous';
-            await video.play();
-          });
-        }
-
-        video.addEventListener('timeupdate', () => {
-          setCurrentTime(video.currentTime);
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    }
+    if (imageRef.current) setPlaying(true);
   };
+
+  useEffect(() => {
+    if (playing) playFrame();
+  }, [playing, playFrame]);
 
   const currentMinutes = Math.floor((currentTime / 60));
   const currentSeconds = ((((currentTime * 1000) % (60 * 1000)) / 1000)).toFixed(0);
 
   return (
     <VideoBase>
-      <Video playsInline crossOrigin="use-credentials" ref={videoRef}>
-        <source type="video/webm" src={src} />
-        <p>Seu navegador não suporta vídeo HTML5.</p>
-      </Video>
+      <Image ref={imageRef} src={imageArray[0]} />
       <ControlsContainer>
         <PlayButton onClick={handlePlay}>
           <PlayIcon src={playSvg} />

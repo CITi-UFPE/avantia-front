@@ -31,6 +31,7 @@ function App() {
             </Route>
             <Route path="/livedemo/acesso" component={Access} />
             <Route path="/livedemo/analitico" component={Analytic} />
+            <Route path="/livedemo/aglomeracao" component={Analytic} />
             <Route path="/livedemo/expired" component={ExpiredSession} />
             <Route path="/livedemo/display" component={Display} />
             <Route path="/livedemo/s/:mediaId" component={Share} />

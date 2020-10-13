@@ -5,6 +5,7 @@ import { Loader } from 'components/atoms';
 import { Video, Canvas } from 'components/molecules';
 import { useAxios } from 'global/func';
 import { useInfo } from 'contexts/GlobalProvider';
+import imageToBlob from 'helpers/imageToBlob';
 
 import { Container } from './VideoContainer.style';
 
@@ -25,48 +26,33 @@ function VideoContainer() {
 
   useEffect(() => {
     const sendImage = async () => {
-      if (!videoElement) return;
-      const canvas = document.createElement('canvas');
+      try {
+        const blob = await imageToBlob(videoElement);
+        const formData = new FormData();
 
-      canvas.width = videoElement.videoWidth;
-      canvas.height = videoElement.videoHeight;
+        formData.set('image', blob);
 
-      const ctx = canvas.getContext('2d');
+        const before = Date.now();
 
-      if (!ctx) return;
+        const res = await axiosPost({
+          url: '/image',
+          body: formData,
+        });
+        const info: ServerResponse[] = res.data.data;
+        const { expiringDate } = res.data;
 
-      ctx.translate(videoElement.videoWidth, 0);
-      ctx.scale(-1, 1);
-      ctx.drawImage(videoElement, 0, 0);
-
-      canvas.toBlob(async (blob) => {
-        try {
-          const formData = new FormData();
-
-          formData.set('image', blob as Blob);
-
-          const before = Date.now();
-
-          const res = await axiosPost({
-            url: '/image',
-            body: formData,
-          });
-          const info: ServerResponse[] = res.data.data;
-          const { expiringDate } = res.data;
-
-          setFilters(info);
-          setInfo((prevInfo: any) => ({
-            ...prevInfo,
-            latency: Date.now() - before,
-            ...(prevInfo.expiringDate ? {} : { expiringDate }),
-          }));
-          setTimeout(sendImage, 1000);
-        } catch (err) {
-          if (err.response?.status === 403) {
-            setRedirect('/livedemo/expired');
-          }
+        setFilters(info);
+        setInfo((prevInfo: any) => ({
+          ...prevInfo,
+          latency: Date.now() - before,
+          ...(prevInfo.expiringDate ? {} : { expiringDate }),
+        }));
+        setTimeout(sendImage, 1000);
+      } catch (err) {
+        if (err.response?.status === 403) {
+          setRedirect('/livedemo/expired');
         }
-      }, 'image/png');
+      }
     };
     sendImage();
   }, [videoElement, setInfo, axiosPost]);

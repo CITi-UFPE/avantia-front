@@ -75,7 +75,7 @@ function Video({ getDimensions }: { getDimensions: Function }) {
     };
 
     getUserMedia();
-  }, [getDimensions, setInfo]);
+  }, [getDimensions, setInfo, browserIncompatibilityMessage]);
 
   useEffect(() => {
     if (videoRef.current) {
