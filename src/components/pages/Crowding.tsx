@@ -2,13 +2,13 @@ import React from 'react';
 
 import { Footer } from 'components/organisms';
 import { Background } from 'components/atoms';
-import { Mask } from 'components/organisms/Analytics';
+import { Crowding } from 'components/organisms/Analytics';
 
 function Analytic() {
   return (
     <>
       <Background>
-        <Mask />
+        <Crowding />
       </Background>
       <Footer disabled={false} />
     </>

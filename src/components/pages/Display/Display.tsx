@@ -14,7 +14,7 @@ import {
 
 function Display({ location }: { location: any }) {
   const [visible, setVisible] = useState(false);
-  const data = location.state?.data;
+  const { data, type } = location.state || {};
 
   useEffect(() => {
     if (!localStorage.getItem('seen_warn')) {
@@ -27,8 +27,8 @@ function Display({ location }: { location: any }) {
     <>
       <SecondaryBackground>
         <Container>
-          {location.state.type === 'image' && <Image src={data} />}
-          {location.state.type === 'video' && <VideoPlayer src={data} />}
+          {type === 'image' && <Image src={data} />}
+          {type === 'video' && <VideoPlayer src={data} />}
         </Container>
       </SecondaryBackground>
       <Modal

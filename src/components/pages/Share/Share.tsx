@@ -26,7 +26,8 @@ function Share({ match }: { match: any }) {
       setState: setData,
       process: (file: any) => {
         setType(file.type);
-        return `data:${file.type === 'image' ? 'image/png' : 'video/webm'};base64,${file.content}`;
+        if (file.type === 'video') return file.content;
+        return `data:image/png;base64,${file.content}`;
       },
     });
   }, [axiosGet, mediaId]);

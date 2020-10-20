@@ -16,7 +16,7 @@ import {
 } from './ShareFooter.style';
 import ShareFooterIcons from './ShareFooterIcons';
 
-function ShareFooter({ data, type }: { data: string, type: string }) {
+function ShareFooter({ data, type }: { data: string | Blob[], type: string }) {
   const [redirect, setRedirect] = useState('');
   const [visible, setVisible] = useState(false);
   const [fileId, setFileId] = useState('');
@@ -26,22 +26,34 @@ function ShareFooter({ data, type }: { data: string, type: string }) {
   const { host } = window.location;
 
   const handleClick = async () => {
-    if (!fileId) {
-      const formData = new FormData();
-      const isImage = type === 'image';
+    try {
+      if (!fileId) {
+        const formData = new FormData();
+        if (typeof data === 'string') {
+          const isImage = type === 'image';
 
-      const res = await fetch(data);
-      const blob = await res.blob();
-      const file = new File([blob], `send.${isImage ? 'png' : 'webm'}`, blob);
+          const res = await fetch(data);
+          const blob = await res.blob();
+          const file = new File([blob], `send.${isImage ? 'png' : 'webm'}`, blob);
 
-      formData.set('media', file);
-      const fileRes = await axiosPost({
-        url: '/uploads',
-        body: formData,
-      });
-      setFileId(fileRes.data.data.fileId);
+          formData.set('media', file);
+        }
+        if (Array.isArray(data)) {
+          data.forEach((image, i) => {
+            const file = new File([image], `frame-${i}.png`, image);
+            formData.append('media', file);
+          });
+        }
+        const fileRes = await axiosPost({
+          url: '/uploads',
+          body: formData,
+        });
+        setFileId(fileRes.data.data.fileId);
+      }
+      setVisible(true);
+    } catch (err) {
+      console.log(err);
     }
-    setVisible(true);
   };
 
   const shareUrl = `https://${host}/livedemo/s/${fileId}`;

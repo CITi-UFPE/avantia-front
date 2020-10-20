@@ -62,12 +62,6 @@ function useAxios(...methods: ('get' | 'post' | 'put' | 'delete')[]) {
       } catch (err) {
         console.log(err.response);
         await error(err);
-        // setError({
-        //   type: method,
-        //   message: err.response?.data?.message || err.message,
-        //   status: err.response?.status || false,
-        //   url: relativeUrl,
-        // });
         return err;
       }
     };
