@@ -12,4 +12,10 @@ export const StyledButton = styled(Button)`
   height: min-content;
   padding: 10px 15px;
   color: ${colors.orange};
+
+  &.small {
+    padding: 5px 10px;
+    font-size: .6rem;
+    border-radius: 50px;
+  }
 `;

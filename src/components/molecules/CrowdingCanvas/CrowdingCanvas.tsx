@@ -1,24 +1,31 @@
 import React, { useEffect, useRef, useState } from 'react';
 import polygonsIntersect from 'polygons-intersect';
 
+import { EntityCounter } from 'components/atoms';
 import { InfoModal } from 'components/molecules';
 import { useInfo } from 'contexts/GlobalProvider';
 
 import {
   StyledCanvas,
   CanvasContainer,
-  InfoText,
 } from './CrowdingCanvas.style';
 
-function Canvas({
-  dimensions,
-  detections,
-}: {
+type CrowdingCanvasProps = {
   dimensions: number[],
   detections: ServerResponse[] | undefined,
-}) {
+  threshold: number,
+  color?: string,
+};
+
+function CrowdingCanvas({
+  dimensions,
+  detections,
+  threshold,
+  color = '#4BBFD1',
+}: CrowdingCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [dots, setDots] = useState<number[][]>([]);
+  const [amount, setAmount] = useState<number>(0);
   const [, setInfo] = useInfo();
 
   useEffect(() => {
@@ -43,6 +50,7 @@ function Canvas({
   useEffect(() => {
     window.addEventListener('keypress', (event) => {
       if (event.key === 'z' && event.ctrlKey) {
+        event.preventDefault();
         setDots((prevDots) => {
           if (prevDots.length === 1) return [];
           const tempDots = [...prevDots];
@@ -65,6 +73,8 @@ function Canvas({
     if (!ctx) return;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
 
     dots.forEach((dot, i) => {
       ctx.beginPath();
@@ -85,7 +95,7 @@ function Canvas({
     });
 
     if (dots[0]) {
-      ctx.fillStyle = '#01020333';
+      ctx.fillStyle = `${color}33`;
       ctx.beginPath();
       ctx.moveTo(dots[0][0], dots[0][1]);
       for (let i = 0; i < dots.length; i += 1) {
@@ -96,8 +106,8 @@ function Canvas({
       ctx.fill();
     }
 
-    ctx.fillStyle = '#000';
-  }, [dots]);
+    ctx.fillStyle = color;
+  }, [dots, color]);
 
   useEffect(() => {
     if (detections && dots.length > 2) {
@@ -122,21 +132,7 @@ function Canvas({
         return intersectionPoints.length > 0;
       });
 
-      console.log(peopleInside.length);
-
-      const canvas = canvasRef.current;
-
-      if (!canvas) return;
-
-      const ctx = canvas.getContext('2d');
-
-      if (!ctx) return;
-
-      ctx.font = '30px Arial';
-
-      ctx.clearRect(0, 0, 30, 30);
-
-      ctx.fillText(peopleInside.length.toString(), 30, 30);
+      setAmount(peopleInside.length);
     }
   }, [detections, dots]);
 
@@ -157,16 +153,13 @@ function Canvas({
 
   return (
     <CanvasContainer>
+      <EntityCounter amount={amount} warn={amount > threshold} />
       <StyledCanvas
         ref={canvasRef}
         width={dimensions[1]}
         height={dimensions[0]}
       />
       <InfoModal />
-      <InfoText>
-        Esta versão é apenas uma demonstração. Seus dados estão sendo protegidos
-        de acordo com as normas da Lei Geral de Proteção de Dados (LGPD)
-      </InfoText>
     </CanvasContainer>
   );
 }
@@ -177,4 +170,4 @@ export interface ServerResponse {
   label: 'person' | 'truck' | 'car' | 'bus';
 }
 
-export default Canvas;
+export default CrowdingCanvas;

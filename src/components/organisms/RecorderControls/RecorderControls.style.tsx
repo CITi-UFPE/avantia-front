@@ -18,9 +18,10 @@ export const SwitchIcon = styled.img`
 
 export const Switch = styled(AntSwitch)`
   background-color: ${colors.orange};
+  transform: scale(.8);
   height: 30px;
   width: 60px;
-  margin: 0 10px;
+  margin: 0 5px;
   &.ant-switch-disabled {
     background-color: ${colors.gray};
     opacity: 0.8;
@@ -48,11 +49,12 @@ export const Switch = styled(AntSwitch)`
 export const ButtonContainer = styled(Progress)`
   position: relative;
   transition: all .2s ease-in-out;
+  transform: scale(.8);
 
   ${({ isRecording }: { disabled: boolean, isRecording: boolean }) => (isRecording && css`
     transform: scale(1.4);
   `)}
-  margin: 0 10px;
+  margin: 0 5px;
 
   ${({ disabled }) => disabled && css`
     opacity: 0.8;

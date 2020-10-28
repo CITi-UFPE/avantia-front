@@ -5,14 +5,12 @@ import colors from 'styles/colors';
 
 export const AccessBackground = styled.div`
   ${flexcc}
-  background-color: #231F20;
-  height: 100%;
-  width: 60%;
-  padding: 5% 8%;
-
-  @media only screen and (max-width: 600px) {
-    width: 100%;
-  }
+  background-color: #011027;
+  width: 100%;
+  border-radius: 5px;
+  height: auto;
+  flex-grow: 1;
+  padding: 10px 8%;
 `;
 
 export const TextContainer = styled.div`
@@ -33,11 +31,12 @@ export const TextContainer = styled.div`
 `;
 
 export const AccessIcon = styled.img`
-  width: 10px;
+  width: 7px;
   margin: ${({ button }: { button?: boolean }) => button && '0 5px'};
 `;
 
 export const AccessItemContainer = styled.ul`
+  ${flex('flex-start', 'center', 'column', 'nowrap')}
   padding: 0;
 
   @media only screen and (max-width: 800px) {
@@ -48,11 +47,13 @@ export const AccessItemContainer = styled.ul`
 export const AccessItem = styled.li`
   list-style: none;
   display: flex;
-  align-items: center;
-  margin: 1.5rem 0;
+  align-items: flex-start;
+  margin: .5rem 0;
+  width: 90%;
+  max-width: 30rem;
 
   @media only screen and (max-width: 800px) {
-    margin: .6rem 0;
+    margin: .2rem 0;
     line-height: 90%;
   }
 `;
@@ -80,20 +81,33 @@ export const AccessText = styled.p`
   margin: 0;
   text-align: left;
   width: calc(100% - 3.5rem);
-  font-size: .8rem;
+  font-size: .6rem;
 
   @media only screen and (max-width: 1000px) {
-    font-size: .7rem;
+    font-size: .5rem;
   }
 `;
 
+export const Image = styled.img`
+  width: 15px;
+  max-height: 15px;
+  margin: 0 5px;
+`;
+
 export const BottomText = styled.p`
+  display: flex;
+  align-items: center;
   margin: 2rem 0 0 0;
   color: white;
-  font-size: .7rem;
+  font-size: .5rem;
+  width: 90%;
+  opacity: 0.6;
+
+  p {
+    margin: 0;
+  }
 
   @media only screen and (max-width: 1000px) {
     margin-top: .5rem;
-    font-size: .6rem;
   }
 `;
