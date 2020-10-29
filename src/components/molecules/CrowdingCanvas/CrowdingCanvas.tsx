@@ -111,28 +111,26 @@ function CrowdingCanvas({
 
   useEffect(() => {
     if (detections && dots.length > 2) {
-      const people = detections.filter(({ label }) => label === 'person');
-
-      const peopleInside = people.filter((person) => {
-        const detectionDots: number[] = JSON.parse(person.bb_o);
+      const entitiesInside = detections.filter((detection) => {
+        const detectionDots: number[] = JSON.parse(detection.bb_o);
 
         const dot1 = [detectionDots[0], detectionDots[1]];
         const dot2 = [detectionDots[0] + detectionDots[2], detectionDots[1]];
         const dot3 = [detectionDots[0] + detectionDots[2], detectionDots[1] + detectionDots[3]];
         const dot4 = [detectionDots[0], detectionDots[1] + detectionDots[3]];
 
-        const personPolygon = [dot1, dot2, dot3, dot4];
-        const personPolygonObj = personPolygon.map(([x, y]) => ({ x, y }));
+        const detectionPolygon = [dot1, dot2, dot3, dot4];
+        const detectionPolygonObj = detectionPolygon.map(([x, y]) => ({ x, y }));
 
         const intersectionPoints = polygonsIntersect(
-          personPolygonObj,
+          detectionPolygonObj,
           dots.map(([x, y]) => ({ x, y })),
         );
 
         return intersectionPoints.length > 0;
       });
 
-      setAmount(peopleInside.length);
+      setAmount(entitiesInside.length);
     }
   }, [detections, dots]);
 

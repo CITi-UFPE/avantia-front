@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 
-function useMobile() {
+function useMobile(breakpoint: number = 600) {
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 600);
+    const checkMobile = () => setIsMobile(window.innerWidth < breakpoint);
 
     window.addEventListener('resize', checkMobile);
     window.addEventListener('load', checkMobile);

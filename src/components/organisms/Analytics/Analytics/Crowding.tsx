@@ -47,6 +47,8 @@ function Crowding({ options }: { options?: OptionsConfig }) {
         const serverResponse: ServerResponse[] = res.data.data;
         const { expiringDate } = res.data;
 
+        // console.log(serverResponse);
+
         setDetections(serverResponse);
         setInfo((prevInfo: any) => ({
           ...prevInfo,

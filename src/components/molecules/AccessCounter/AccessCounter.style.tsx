@@ -25,4 +25,12 @@ export const Base = styled.footer`
   p {
     width: max-content;
   }
+
+  @media only screen and (max-width: 700px) {
+    flex-direction: column;
+
+    p {
+      font-size: .6rem;
+    }
+  }
 `;

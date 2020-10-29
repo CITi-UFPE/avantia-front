@@ -9,6 +9,10 @@ export const BackgroundBase = styled.div`
   flex-grow: 1;
   flex-flow: column;
   position: relative;
+
+  @media only screen and (max-width: 700px) {
+    height: calc(100vh - 160px);
+  }
 `;
 
 const svgBase = css`

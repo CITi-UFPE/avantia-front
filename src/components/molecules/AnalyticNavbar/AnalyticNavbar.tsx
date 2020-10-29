@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { Paragraph } from 'components/atoms/Text';
 import { Image } from 'components/atoms';
@@ -35,14 +36,18 @@ const CustomImage = ({ src }: { src: string }) => (
 function AnalyticNavbar() {
   return (
     <Container>
-      <Card>
-        <CustomImage src={crowdingSvg} />
-        <CustomParagraph>Detecção de Aglomeração</CustomParagraph>
-      </Card>
-      <Card>
-        <CustomImage src={maskSvg} />
-        <CustomParagraph>Detecção de Máscara</CustomParagraph>
-      </Card>
+      <Link style={{ width: '100%' }} to="/livedemo/aglomeracao">
+        <Card>
+          <CustomImage src={crowdingSvg} />
+          <CustomParagraph>Detecção de Aglomeração</CustomParagraph>
+        </Card>
+      </Link>
+      <Link style={{ width: '100%' }} to="/livedemo/mascara">
+        <Card>
+          <CustomImage src={maskSvg} />
+          <CustomParagraph>Detecção de Máscara</CustomParagraph>
+        </Card>
+      </Link>
       <Card disabled>
         <CustomImage src={crossingSvg} />
         <CustomParagraph>Cruzamento de Linha</CustomParagraph>

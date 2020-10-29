@@ -6,6 +6,7 @@ export const Container = styled.div`
   ${flexcc}
   position: relative;
   width: 100%;
-  max-height: 300px;
+  /* height: calc(80vh - 140px); */
+  max-height: 90%;
   overflow: hidden;
 `;

@@ -11,6 +11,12 @@ export const AccessBackground = styled.div`
   height: auto;
   flex-grow: 1;
   padding: 10px 8%;
+
+  @media only screen and (max-width: 700px) {
+    border-radius: 0px;
+    padding: 10px;
+    height: calc(100vh - 176px);
+  }
 `;
 
 export const TextContainer = styled.div`
