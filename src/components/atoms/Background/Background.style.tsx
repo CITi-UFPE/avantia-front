@@ -5,7 +5,7 @@ import { flexcc } from 'styles/variables';
 export const BackgroundBase = styled.div`
   ${flexcc}
   width: 100%;
-  height: calc(100vh - 10rem);
+  height: calc(100vh - 140px);
   position: relative;
 `;
 

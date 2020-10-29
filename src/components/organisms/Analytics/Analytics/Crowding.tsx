@@ -1,7 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { Loader } from 'components/atoms';
+import { OptionsConfig } from 'components/organisms/Options/Options';
 import { Video, CrowdingCanvas } from 'components/molecules';
 import { useAxios } from 'global/func';
 import { useInfo } from 'contexts/GlobalProvider';
@@ -9,7 +14,7 @@ import imageToBlob from 'helpers/imageToBlob';
 
 import { Container } from '../Analytic.style';
 
-function Mask() {
+function Crowding({ options }: { options?: OptionsConfig }) {
   const [dimensions, setDimensions] = useState<number[]>([]);
   const [videoElement, setVideoElement] = useState<HTMLVideoElement>();
   const [detections, setDetections] = useState<ServerResponse[]>();
@@ -42,6 +47,8 @@ function Mask() {
         const serverResponse: ServerResponse[] = res.data.data;
         const { expiringDate } = res.data;
 
+        // console.log(serverResponse);
+
         setDetections(serverResponse);
         setInfo((prevInfo: any) => ({
           ...prevInfo,
@@ -65,11 +72,24 @@ function Mask() {
     <Container>
       <Video getDimensions={handleDimensions} />
       {dimensions.length > 0 ? (
-        <CrowdingCanvas detections={detections} dimensions={dimensions} />
+        <CrowdingCanvas
+          color={options?.color}
+          threshold={options?.quantity || 0}
+          detections={detections?.filter(({ label }) => (
+            options?.notify.includes(label)
+          )) || []}
+          dimensions={dimensions}
+        />
       ) : <Loader width={`${dimensions[1] || 0}px`} height={`${dimensions[0] || 0}px`} />}
     </Container>
   );
 }
+
+Crowding.defaultProps = {
+  options: {
+    quantity: 0,
+  },
+};
 
 export interface ServerResponse {
   'bb_o': string;
@@ -77,4 +97,4 @@ export interface ServerResponse {
   label: 'person' | 'truck' | 'car' | 'bus';
 }
 
-export default Mask;
+export default Crowding;

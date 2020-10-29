@@ -7,3 +7,5 @@ export { default as ConnectionInfo } from './ConnectionInfo';
 export { default as AccessCard } from './AccessCard';
 export { default as FinalInfo } from './FinalInfo';
 export { default as VideoPlayer } from './VideoPlayer';
+export { default as AccessCounter } from './AccessCounter';
+export { default as AnalyticNavbar } from './AnalyticNavbar';

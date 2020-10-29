@@ -5,6 +5,11 @@ import { Redirect } from 'react-router-dom';
 import { Button } from 'components/atoms';
 import { Title } from 'components/atoms/Text';
 import arrowSvg from 'assets/icons/arrow.svg';
+import videoSvg from 'assets/icons/video.svg';
+import whiteConnectionSvg from 'assets/icons/connection/white.svg';
+import timerSvg from 'assets/icons/timer.svg';
+import shareSvg from 'assets/icons/share.svg';
+import lockSvg from 'assets/icons/lock.svg';
 
 import {
   AccessBackground,
@@ -12,7 +17,7 @@ import {
   AccessIcon,
   AccessItemContainer,
   AccessItem,
-  AccessNumber,
+  Image,
   AccessText,
   BottomText,
 } from './AccessCard.style';
@@ -35,7 +40,7 @@ function AccessCard() {
       // @ts-ignore
       navigator.mediaStream = stream;
 
-      setRedirect('/livedemo/analitico');
+      setRedirect('/livedemo');
     } catch (err) {
       notification.error({
         message: 'Sem acesso à câmera',
@@ -49,22 +54,25 @@ function AccessCard() {
   return (
     <AccessBackground>
       <TextContainer>
-        <Title bold color="orange">Como a demonstração funciona?</Title>
+        <Title bold color="orange">Avantia Live Demo</Title>
         <AccessItemContainer>
           {accessItems.map((item, i) => (
             <AccessItem>
-              <AccessNumber>{i + 1}</AccessNumber>
+              <Image src={[videoSvg, whiteConnectionSvg, timerSvg, shareSvg][i]} />
               <AccessText>{item}</AccessText>
             </AccessItem>
           ))}
         </AccessItemContainer>
-        <Button style={{ color: 'white' }} type="primary" onClick={requestAccess}>
-          Iniciar seu teste
+        <Button className="small" style={{ color: 'white' }} size="small" type="primary" onClick={requestAccess}>
+          Ir para o teste
           <AccessIcon button src={arrowSvg} />
         </Button>
         <BottomText color="white">
-          Sua privacidade é garantida. Estamos alinhados às normativas
-          da nova Lei Geral de Proteção de Dados (LGPD).
+          <Image src={lockSvg} />
+          <p>
+            Sua privacidade é garantida. Estamos alinhados às normativas
+            da nova Lei Geral de Proteção de Dados (LGPD).
+          </p>
         </BottomText>
       </TextContainer>
     </AccessBackground>
