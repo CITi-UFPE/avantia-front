@@ -31,6 +31,7 @@ function Crowding({ options }: { options?: OptionsConfig }) {
 
   useEffect(() => {
     const sendImage = async () => {
+      // console.log('send image');
       try {
         const blob = await imageToBlob(videoElement);
         const formData = new FormData();
@@ -39,15 +40,28 @@ function Crowding({ options }: { options?: OptionsConfig }) {
 
         const before = Date.now();
 
-        const res = await axiosPost({
-          url: '/common',
-          body: formData,
+        const res = await new Promise<any>((resolve) => {
+          (async () => {
+            const axiosRes = await axiosPost({
+              url: '/common',
+              body: formData,
+            });
+            resolve(axiosRes);
+          })();
+          setTimeout(() => {
+            resolve(null);
+          }, 2000);
         });
+
+        if (!res) {
+          sendImage();
+          return;
+        }
+
+        console.log(res);
 
         const serverResponse: ServerResponse[] = res.data.data;
         const { expiringDate } = res.data;
-
-        // console.log(serverResponse);
 
         setDetections(serverResponse);
         setInfo((prevInfo: any) => ({
@@ -60,6 +74,8 @@ function Crowding({ options }: { options?: OptionsConfig }) {
         console.log(err);
         if (err.response?.status === 403) {
           setRedirect('/livedemo/expired');
+        } else {
+          sendImage();
         }
       }
     };
