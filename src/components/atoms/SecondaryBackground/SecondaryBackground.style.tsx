@@ -11,7 +11,7 @@ export const BackgroundBase = styled.div`
   position: relative;
 
   @media only screen and (max-width: 700px) {
-    height: calc(100vh - 160px);
+    min-height: calc(100vh - ${({ mobileHigher }: { mobileHigher: boolean }) => (mobileHigher ? '200px' : '160px')});
   }
 `;
 

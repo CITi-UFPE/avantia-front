@@ -8,14 +8,24 @@ import {
   BackgroundRight,
 } from './SecondaryBackground.style';
 
-function SecondaryBackground({ children }: { children: React.ReactNode }) {
+function SecondaryBackground({
+  children,
+  mobileHigher = false,
+}: {
+  children: React.ReactNode,
+  mobileHigher?: boolean,
+}) {
   return (
-    <BackgroundBase>
+    <BackgroundBase mobileHigher={mobileHigher}>
       <BackgroundRight src={middleSvg} />
       <BackgroundLeft src={middleSvg} />
       {children}
     </BackgroundBase>
   );
 }
+
+SecondaryBackground.defaultProps = {
+  mobileHigher: false,
+};
 
 export default SecondaryBackground;

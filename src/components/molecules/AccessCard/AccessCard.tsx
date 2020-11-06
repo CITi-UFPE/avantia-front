@@ -40,7 +40,7 @@ function AccessCard() {
       // @ts-ignore
       navigator.mediaStream = stream;
 
-      setRedirect('/livedemo');
+      setRedirect('/livedemo/escolha');
     } catch (err) {
       notification.error({
         message: 'Sem acesso à câmera',
