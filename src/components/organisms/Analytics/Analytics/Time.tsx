@@ -7,14 +7,20 @@ import { Redirect } from 'react-router-dom';
 
 import { Loader } from 'components/atoms';
 import { OptionsConfig } from 'components/organisms/Options/Options';
-import { Video, CrowdingCanvas } from 'components/molecules';
+import { Video, TimeCanvas } from 'components/molecules';
 import { useAxios } from 'global/func';
 import { useInfo } from 'contexts/GlobalProvider';
 import imageToBlob from 'helpers/imageToBlob';
 
 import { Container } from '../Analytic.style';
 
-function Crowding({ options }: { options?: OptionsConfig }) {
+function Time({
+  options,
+  addNotification,
+}: {
+  options?: OptionsConfig,
+  addNotification: (url: string) => void,
+}) {
   const [dimensions, setDimensions] = useState<number[]>([]);
   const [videoElement, setVideoElement] = useState<HTMLVideoElement>();
   const [detections, setDetections] = useState<ServerResponse[]>();
@@ -31,7 +37,6 @@ function Crowding({ options }: { options?: OptionsConfig }) {
 
   useEffect(() => {
     const sendImage = async () => {
-      // console.log('send image');
       try {
         const blob = await imageToBlob(videoElement);
         const formData = new FormData();
@@ -57,8 +62,6 @@ function Crowding({ options }: { options?: OptionsConfig }) {
           sendImage();
           return;
         }
-
-        console.log(res);
 
         const serverResponse: ServerResponse[] = res.data.data;
         const { expiringDate } = res.data;
@@ -88,9 +91,10 @@ function Crowding({ options }: { options?: OptionsConfig }) {
     <Container>
       <Video getDimensions={handleDimensions} />
       {dimensions.length > 0 ? (
-        <CrowdingCanvas
+        <TimeCanvas
           color={options?.color}
-          threshold={options?.quantity || 0}
+          limitTime={options?.time}
+          addNotification={addNotification}
           detections={detections?.filter(({ label }) => (
             options?.notify.includes(label)
           )) || []}
@@ -101,7 +105,7 @@ function Crowding({ options }: { options?: OptionsConfig }) {
   );
 }
 
-Crowding.defaultProps = {
+Time.defaultProps = {
   options: {
     quantity: 0,
   },
@@ -113,4 +117,4 @@ export interface ServerResponse {
   label: 'person' | 'truck' | 'car' | 'bus';
 }
 
-export default Crowding;
+export default Time;

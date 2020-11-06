@@ -7,11 +7,13 @@ import { Crowding } from 'components/organisms/Analytics';
 import { OptionsConfig } from 'components/organisms/Options/Options';
 import { PageCard, SecondaryBackground } from 'components/atoms';
 import { Options, RecorderControls } from 'components/organisms';
-import { AccessCounter } from 'components/molecules';
+import { AccessCounter, AnalyticNavbar } from 'components/molecules';
 import { useAxios } from 'global/func';
+import { useMobile } from 'hooks';
 
 function CrowdingAnalytic() {
   const [options, setOptions] = useState<OptionsConfig>();
+  const isMobile = useMobile(700);
 
   const [res, setRes] = useState(0);
 
@@ -23,41 +25,61 @@ function CrowdingAnalytic() {
 
   return (
     <>
-      <SecondaryBackground>
-        <PageCard title="Analítico de detecção de aglomeração">
-          <Row style={{ height: '100%' }} gutter={[10, 10]}>
-            <Col style={{ height: '90%' }} span={16}>
-              <Crowding options={options} />
-              <RecorderControls />
-            </Col>
-            <Col span={8}>
-              <Link
-                to="/livedemo/acesso"
-                style={{
-                  textTransform: 'uppercase',
-                  color: '#3FA3B0',
-                  fontSize: '.6rem',
-                }}
-              >
-                <LeftOutlined />
-                Selecione outro analítico de vídeo
-              </Link>
-              <Options
-                notify={[
-                  { value: 'person', label: 'Pessoas' },
-                  { value: 'car', label: 'Carros' },
-                  { value: 'truck', label: 'Caminhões' },
-                  { value: 'bus', label: 'Ônibus' },
-                ]}
-                showQuantity
-                showColorPicker
-                onChange={setOptions}
-              />
-            </Col>
-          </Row>
-        </PageCard>
+      <SecondaryBackground mobileHigher>
+        {isMobile ? (
+          <>
+            <Crowding options={options} />
+            <RecorderControls />
+            <Options
+              notify={[
+                { value: 'person', label: 'Pessoas' },
+                { value: 'car', label: 'Carros' },
+                { value: 'truck', label: 'Caminhões' },
+                { value: 'bus', label: 'Ônibus' },
+              ]}
+              showQuantity
+              showColorPicker
+              onChange={setOptions}
+              mobileHeight="17rem"
+            />
+          </>
+        ) : (
+          <PageCard title="Analítico de detecção de aglomeração">
+            <Row style={{ height: '100%' }} gutter={[10, 10]}>
+              <Col style={{ height: '90%' }} span={16}>
+                <Crowding options={options} />
+                <RecorderControls />
+              </Col>
+              <Col span={8}>
+                <Link
+                  to="/livedemo/acesso"
+                  style={{
+                    textTransform: 'uppercase',
+                    color: '#3FA3B0',
+                    fontSize: '.6rem',
+                  }}
+                >
+                  <LeftOutlined />
+                  Selecione outro analítico de vídeo
+                </Link>
+                <Options
+                  notify={[
+                    { value: 'person', label: 'Pessoas' },
+                    { value: 'car', label: 'Carros' },
+                    { value: 'truck', label: 'Caminhões' },
+                    { value: 'bus', label: 'Ônibus' },
+                  ]}
+                  showQuantity
+                  showColorPicker
+                  onChange={setOptions}
+                />
+              </Col>
+            </Row>
+          </PageCard>
+        )}
       </SecondaryBackground>
-      <AccessCounter quantity={res} />
+      <AnalyticNavbar mobile />
+      {!isMobile && <AccessCounter quantity={res} />}
     </>
   );
 }

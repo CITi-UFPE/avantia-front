@@ -6,7 +6,7 @@ export const Card = styled.div`
   border: 1px solid #cccccc;
   background-color: white;
   border-radius: 10px;
-  padding: 10px 15px;
+  padding: 10px 15px 0px;
   color: black;
   font-size: .6rem;
 
@@ -21,6 +21,27 @@ export const Card = styled.div`
   .ant-checkbox::after {
     border: 1px solid ${colors.lightBlue};
   }
+
+  @media only screen and (max-width: 700px) {
+    width: 100%;
+    position: absolute;
+    z-index: 5;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    bottom: 0;
+    overflow: hidden;
+    height: ${({ mobileHeight }: { mobileHeight: string, mobileShow: boolean }) => mobileHeight || '10rem'};
+    max-height: 0;
+    padding: 0 15px;
+    transition: max-height .8s ease-in-out, padding .4s linear, border .4s linear;
+    border: 0px solid white;
+
+    ${({ mobileShow }) => mobileShow && css`
+      max-height: ${({ mobileHeight }: { mobileHeight: string, mobileShow: boolean }) => mobileHeight || '10rem'};
+      padding: 10px 15px 0px;
+      border: 1px solid #cccccc;
+    `}
+  }
 `;
 
 export const Title = styled.h3`
@@ -33,7 +54,7 @@ export const Label = styled.h3`
   text-transform: uppercase;
   color: #474747;
   font-size: .7rem;
-  margin: 10px 0;
+  margin: 6px 0;
 `;
 
 export const ButtonContainer = styled.div`
@@ -104,4 +125,30 @@ export const Shadow = styled.div`
   right: 0px;
   bottom: 0px;
   left: 0px;
+`;
+
+export const DropdownOpen = styled.button`
+  height: 1rem;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  background-color: white;
+  border: none;
+  outline: none;
+
+  @media only screen and (max-width: 450px) {
+    position: absolute;
+    bottom: 0;
+  }
+`;
+
+export const DropdownClose = styled.button`
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  background-color: white;
+  border: none;
+  outline: none;
 `;

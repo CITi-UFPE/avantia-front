@@ -16,6 +16,8 @@ import {
   ExpiredSession,
   Display,
   Share,
+  Choose,
+  Time,
 } from 'components/pages';
 
 import { AppWrapper } from 'App.style';
@@ -31,8 +33,10 @@ function App() {
               <Redirect to="/livedemo/acesso" />
             </Route>
             <Route path="/livedemo/acesso" component={Access} />
+            <Route path="/livedemo/escolha" component={Choose} />
             <Route path="/livedemo/mascara" component={Analytic} />
             <Route path="/livedemo/aglomeracao" component={Crowding} />
+            <Route path="/livedemo/permanencia" component={Time} />
             <Route path="/livedemo/expired" component={ExpiredSession} />
             <Route path="/livedemo/display" component={Display} />
             <Route path="/livedemo/s/:mediaId" component={Share} />

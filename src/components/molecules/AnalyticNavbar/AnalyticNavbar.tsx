@@ -12,6 +12,7 @@ import timeSvg from 'assets/icons/analytics/time.svg';
 import {
   Container,
   Card,
+  CustomLink,
 } from './AnalyticNavbar.style';
 
 const CustomParagraph = ({ children }: { children: React.ReactNode }) => (
@@ -30,34 +31,38 @@ const CustomParagraph = ({ children }: { children: React.ReactNode }) => (
 );
 
 const CustomImage = ({ src }: { src: string }) => (
-  <Image width="30px" respWidth="5px" src={src} />
+  <Image width="30px" respWidth="30px" src={src} />
 );
 
-function AnalyticNavbar() {
+function AnalyticNavbar({ mobile = false }: { mobile?: boolean }) {
   return (
-    <Container>
-      <Link style={{ width: '100%' }} to="/livedemo/aglomeracao">
+    <Container mobile={mobile}>
+      <CustomLink to="/livedemo/aglomeracao">
         <Card>
           <CustomImage src={crowdingSvg} />
           <CustomParagraph>Detecção de Aglomeração</CustomParagraph>
         </Card>
-      </Link>
-      <Link style={{ width: '100%' }} to="/livedemo/mascara">
+      </CustomLink>
+      <CustomLink to="/livedemo/mascara">
         <Card>
           <CustomImage src={maskSvg} />
           <CustomParagraph>Detecção de Máscara</CustomParagraph>
         </Card>
-      </Link>
+      </CustomLink>
       <Card disabled>
-        <CustomImage src={crossingSvg} />
+        <CustomImage src={timeSvg} />
         <CustomParagraph>Cruzamento de Linha</CustomParagraph>
       </Card>
       <Card disabled>
-        <CustomImage src={timeSvg} />
+        <CustomImage src={crossingSvg} />
         <CustomParagraph>Tempo de Permanência</CustomParagraph>
       </Card>
     </Container>
   );
 }
+
+AnalyticNavbar.defaultProps = {
+  mobile: false,
+};
 
 export default AnalyticNavbar;

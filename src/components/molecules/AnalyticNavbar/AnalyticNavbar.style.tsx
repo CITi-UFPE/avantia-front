@@ -1,8 +1,38 @@
 import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
+
 import { flex } from 'styles/variables';
 
 export const Container = styled.ul`
   ${flex('center', 'center', 'column', 'nowrap')}
+
+  ${({ mobile }: { mobile: boolean }) => (mobile ? css`
+    @media only screen and (min-width: 700px) {
+      display: none;
+    }
+  ` : css`
+    @media only screen and (max-width: 700px) {
+      display: none;
+    }
+  `)}
+
+  @media only screen and (max-width: 700px) {
+    ${flex('space-between', 'center', 'row', 'nowrap')}
+    padding: 0;
+    width: 100%;
+    min-height: 120px;
+    margin: 0;
+    overflow-x: auto;
+  }
+`;
+
+const cardMobile = css`
+  @media only screen and (max-width: 700px) {
+    height: 80%;
+    width: 20%;
+    min-width: 5rem;
+    margin: 0 10px;
+  }
 `;
 
 export const Card = styled.li<{ disabled?: Boolean }>`
@@ -24,9 +54,24 @@ export const Card = styled.li<{ disabled?: Boolean }>`
     transition: color .5s ease-in-out;
   }
 
+  @media only screen and (max-width: 700px) {
+    ${flex('center', 'center', 'column', 'nowrap')}
+    height: 100%;
+    padding: 0 15px;
+    margin: 0;
+
+    p {
+      font-size: .6rem;
+      text-transform: capitalize !important;
+      text-align: center;
+    }
+  }
+
   ${({ disabled }) => (disabled ? css`
     opacity: 0.5;
     cursor: not-allowed;
+
+    ${cardMobile}
   ` : css`
     &:hover {
       cursor: pointer;
@@ -42,4 +87,10 @@ export const Card = styled.li<{ disabled?: Boolean }>`
       }
     }
   `)}
+`;
+
+export const CustomLink = styled(Link)`
+  width: 100%;
+
+  ${cardMobile}
 `;

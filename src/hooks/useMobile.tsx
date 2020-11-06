@@ -6,6 +6,8 @@ function useMobile(breakpoint: number = 600) {
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < breakpoint);
 
+    checkMobile();
+
     window.addEventListener('resize', checkMobile);
     window.addEventListener('load', checkMobile);
 
