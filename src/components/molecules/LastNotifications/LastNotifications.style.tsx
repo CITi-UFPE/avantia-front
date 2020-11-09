@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const Base = styled.div`
   border: 1px solid #cccccc;
@@ -7,7 +7,7 @@ export const Base = styled.div`
   padding: 10px 15px;
   margin: 5px 0;
   color: black;
-  cursor: pointer;
+  cursor: ${({ clickable }: { clickable: boolean }) => (clickable ? 'pointer' : 'unset')};
 `;
 
 export const Title = styled.h3`

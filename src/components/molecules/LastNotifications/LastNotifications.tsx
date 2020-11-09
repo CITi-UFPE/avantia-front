@@ -12,8 +12,15 @@ import LastNotificationsModal from './LastNotificationsModal';
 function LastNotifications({ urlList = [] }: { urlList: (string | null)[] }) {
   const [modalVisible, setModalVisible] = useState(false);
 
+  const atLeastOneImage = urlList.filter((u) => u).length > 0;
   return (
-    <Base role="button" onClick={() => setModalVisible(true)}>
+    <Base
+      role="button"
+      clickable={atLeastOneImage}
+      onClick={() => {
+        if (atLeastOneImage) setModalVisible(true);
+      }}
+    >
       <LastNotificationsModal
         urlList={urlList}
         visible={modalVisible}

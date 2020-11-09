@@ -53,10 +53,12 @@ function AnalyticNavbar({ mobile = false }: { mobile?: boolean }) {
         <CustomImage src={timeSvg} />
         <CustomParagraph>Cruzamento de Linha</CustomParagraph>
       </Card>
-      <Card disabled>
-        <CustomImage src={crossingSvg} />
-        <CustomParagraph>Tempo de Permanência</CustomParagraph>
-      </Card>
+      <CustomLink to="/livedemo/permanencia">
+        <Card>
+          <CustomImage src={crossingSvg} />
+          <CustomParagraph>Tempo de Permanência</CustomParagraph>
+        </Card>
+      </CustomLink>
     </Container>
   );
 }
