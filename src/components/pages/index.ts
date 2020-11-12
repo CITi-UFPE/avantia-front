@@ -5,4 +5,5 @@ export { default as ExpiredSession } from './ExpiredSession';
 export { default as Display } from './Display';
 export { default as Share } from './Share';
 export { default as Time } from './Time';
+export { default as Line } from './Line';
 export { default as Choose } from './Choose';

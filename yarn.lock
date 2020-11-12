@@ -1691,6 +1691,11 @@
     "@types/react" "*"
     hoist-non-react-statics "^3.3.0"
 
+"@types/intersects@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@types/intersects/-/intersects-2.5.0.tgz#4b60e30a91abaf974fb88d00645f3a61ea571ca8"
+  integrity sha512-0zpt+T2HILWWQwJD9BbYF0pNfcLzNUZBUxFeW3u8VwMEZ4lkjQIi5Fu2MnITwauuaY5tEGalKFzXtJiXE7WeCw==
+
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.3.tgz#4ba8ddb720221f432e443bd5f9117fd22cfd4762"
@@ -5942,6 +5947,11 @@ internal-slot@^1.0.2:
     es-abstract "^1.17.0-next.1"
     has "^1.0.3"
     side-channel "^1.0.2"
+
+intersects@^2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/intersects/-/intersects-2.7.2.tgz#a3147de29034a8853b0c4dfe1a14d628678828d7"
+  integrity sha512-/LtLDq40iFtvnjhouev9p2R+jP+raVONPiD1t8Mcj879pkrLiav99BTRPBkfMPwSYr5vTNws3USGoW+8usS45A==
 
 invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
