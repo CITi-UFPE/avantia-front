@@ -49,10 +49,12 @@ function AnalyticNavbar({ mobile = false }: { mobile?: boolean }) {
           <CustomParagraph>Detecção de Máscara</CustomParagraph>
         </Card>
       </CustomLink>
-      <Card disabled>
-        <CustomImage src={timeSvg} />
-        <CustomParagraph>Cruzamento de Linha</CustomParagraph>
-      </Card>
+      <CustomLink to="/livedemo/linha">
+        <Card>
+          <CustomImage src={timeSvg} />
+          <CustomParagraph>Cruzamento de Linha</CustomParagraph>
+        </Card>
+      </CustomLink>
       <CustomLink to="/livedemo/permanencia">
         <Card>
           <CustomImage src={crossingSvg} />

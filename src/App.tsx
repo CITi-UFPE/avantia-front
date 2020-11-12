@@ -18,6 +18,7 @@ import {
   Share,
   Choose,
   Time,
+  Line,
 } from 'components/pages';
 
 import { AppWrapper } from 'App.style';
@@ -36,6 +37,7 @@ function App() {
             <Route path="/livedemo/escolha" component={Choose} />
             <Route path="/livedemo/mascara" component={Analytic} />
             <Route path="/livedemo/aglomeracao" component={Crowding} />
+            <Route path="/livedemo/linha" component={Line} />
             <Route path="/livedemo/permanencia" component={Time} />
             <Route path="/livedemo/expired" component={ExpiredSession} />
             <Route path="/livedemo/display" component={Display} />
