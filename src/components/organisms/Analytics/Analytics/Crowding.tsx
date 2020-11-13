@@ -13,6 +13,7 @@ import { useInfo } from 'contexts/GlobalProvider';
 import imageToBlob from 'helpers/imageToBlob';
 
 import { Container } from '../Analytic.style';
+import { Tutorial } from './Tutorials';
 
 function Crowding({ options }: { options?: OptionsConfig }) {
   const [dimensions, setDimensions] = useState<number[]>([]);
@@ -31,7 +32,6 @@ function Crowding({ options }: { options?: OptionsConfig }) {
 
   useEffect(() => {
     const sendImage = async () => {
-      // console.log('send image');
       try {
         const blob = await imageToBlob(videoElement);
         const formData = new FormData();
@@ -57,8 +57,6 @@ function Crowding({ options }: { options?: OptionsConfig }) {
           sendImage();
           return;
         }
-
-        console.log(res);
 
         const serverResponse: ServerResponse[] = res.data.data;
         const { expiringDate } = res.data;
@@ -87,16 +85,18 @@ function Crowding({ options }: { options?: OptionsConfig }) {
   return (
     <Container>
       <Video getDimensions={handleDimensions} />
-      {dimensions.length > 0 ? (
-        <CrowdingCanvas
-          color={options?.color}
-          threshold={options?.quantity || 0}
-          detections={detections?.filter(({ label }) => (
-            options?.notify.includes(label)
-          )) || []}
-          dimensions={dimensions}
-        />
-      ) : <Loader width={`${dimensions[1] || 0}px`} height={`${dimensions[0] || 0}px`} />}
+      <Tutorial type="crowding">
+        {dimensions.length > 0 ? (
+          <CrowdingCanvas
+            color={options?.color}
+            threshold={options?.quantity || 0}
+            detections={detections?.filter(({ label }) => (
+              options?.notify.includes(label)
+            )) || []}
+            dimensions={dimensions}
+          />
+        ) : <Loader width={`${dimensions[1] || 0}px`} height={`${dimensions[0] || 0}px`} />}
+      </Tutorial>
     </Container>
   );
 }

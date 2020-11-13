@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import polygonsIntersect from 'polygons-intersect';
 import intersects from 'intersects';
 
 import { InfoModal } from 'components/molecules';

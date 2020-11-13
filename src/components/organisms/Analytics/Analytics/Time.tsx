@@ -13,6 +13,7 @@ import { useInfo } from 'contexts/GlobalProvider';
 import imageToBlob from 'helpers/imageToBlob';
 
 import { Container } from '../Analytic.style';
+import { Tutorial } from './Tutorials';
 
 function Time({
   options,
@@ -90,17 +91,19 @@ function Time({
   return (
     <Container>
       <Video getDimensions={handleDimensions} />
-      {dimensions.length > 0 ? (
-        <TimeCanvas
-          color={options?.color}
-          limitTime={options?.time}
-          addNotification={addNotification}
-          detections={detections?.filter(({ label }) => (
-            options?.notify.includes(label)
-          )) || []}
-          dimensions={dimensions}
-        />
-      ) : <Loader width={`${dimensions[1] || 0}px`} height={`${dimensions[0] || 0}px`} />}
+      <Tutorial type="time">
+        {dimensions.length > 0 ? (
+          <TimeCanvas
+            color={options?.color}
+            limitTime={options?.time}
+            addNotification={addNotification}
+            detections={detections?.filter(({ label }) => (
+              options?.notify.includes(label)
+            )) || []}
+            dimensions={dimensions}
+          />
+        ) : <Loader width={`${dimensions[1] || 0}px`} height={`${dimensions[0] || 0}px`} />}
+      </Tutorial>
     </Container>
   );
 }
