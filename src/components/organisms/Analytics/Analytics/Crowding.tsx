@@ -15,7 +15,13 @@ import imageToBlob from 'helpers/imageToBlob';
 import { Container } from '../Analytic.style';
 import { Tutorial } from './Tutorials';
 
-function Crowding({ options }: { options?: OptionsConfig }) {
+function Crowding({
+  options,
+  addNotification,
+}: {
+  options?: OptionsConfig,
+  addNotification: (url: string) => void,
+}) {
   const [dimensions, setDimensions] = useState<number[]>([]);
   const [videoElement, setVideoElement] = useState<HTMLVideoElement>();
   const [detections, setDetections] = useState<ServerResponse[]>();
@@ -93,6 +99,7 @@ function Crowding({ options }: { options?: OptionsConfig }) {
             detections={detections?.filter(({ label }) => (
               options?.notify.includes(label)
             )) || []}
+            addNotification={addNotification}
             dimensions={dimensions}
           />
         ) : <Loader width={`${dimensions[1] || 0}px`} height={`${dimensions[0] || 0}px`} />}

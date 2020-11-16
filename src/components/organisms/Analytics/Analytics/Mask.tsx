@@ -2,7 +2,6 @@ import React, {
   useState,
   useEffect,
   useCallback,
-  useRef,
 } from 'react';
 import { Redirect } from 'react-router-dom';
 
@@ -15,7 +14,13 @@ import imageToBlob from 'helpers/imageToBlob';
 
 import { Container } from '../Analytic.style';
 
-function Mask({ options }: { options?: OptionsConfig }) {
+function Mask({
+  options,
+  addNotification,
+}: {
+  options?: OptionsConfig,
+  addNotification: (url: string) => void,
+}) {
   const [dimensions, setDimensions] = useState<number[]>([]);
   const [videoElement, setVideoElement] = useState<HTMLVideoElement>();
   const [filters, setFilters] = useState<ServerResponse[]>();
@@ -75,6 +80,7 @@ function Mask({ options }: { options?: OptionsConfig }) {
           filters={filters.filter(({ label }) => (
             options?.notify.includes(label)
           ))}
+          addNotification={addNotification}
           dimensions={dimensions}
         />
       ) : <Loader width={`${dimensions[1] || 0}px`} height={`${dimensions[0] || 0}px`} />}

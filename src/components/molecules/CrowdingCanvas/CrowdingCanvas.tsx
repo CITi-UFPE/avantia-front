@@ -1,4 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+} from 'react';
 import polygonsIntersect from 'polygons-intersect';
 
 import { EntityCounter } from 'components/atoms';
@@ -15,6 +20,7 @@ type CrowdingCanvasProps = {
   detections: ServerResponse[] | undefined,
   threshold: number,
   color?: string,
+  addNotification?: (url: string) => void,
 };
 
 function CrowdingCanvas({
@@ -22,11 +28,30 @@ function CrowdingCanvas({
   detections,
   threshold,
   color = '#4BBFD1',
+  addNotification,
 }: CrowdingCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [dots, setDots] = useState<number[][]>([]);
   const [amount, setAmount] = useState<number>(0);
-  const [, setInfo] = useInfo();
+  const [info, setInfo] = useInfo();
+
+  const drawImageOnVideoSync = useCallback((canvas: HTMLCanvasElement) => {
+    const drawCanvas = canvas;
+
+    drawCanvas.width = info.video.videoWidth;
+    drawCanvas.height = info.video.videoHeight;
+
+    const ctx = drawCanvas.getContext('2d') as CanvasRenderingContext2D;
+
+    ctx.translate(drawCanvas.width, 0);
+    ctx.scale(-1, 1);
+    ctx.drawImage(info.video, 0, 0);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(info.canvas, 0, 0);
+
+    const image = drawCanvas.toDataURL('image/png');
+    return image;
+  }, [info]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -148,6 +173,14 @@ function CrowdingCanvas({
       }));
     };
   }, [canvasRef, setInfo]);
+
+  useEffect(() => {
+    if (amount > threshold) {
+      if (addNotification) {
+        addNotification(drawImageOnVideoSync(document.createElement('canvas')));
+      }
+    }
+  }, [amount, threshold]);
 
   return (
     <CanvasContainer>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 
 import { InfoModal } from 'components/molecules';
 import { useInfo } from 'contexts/GlobalProvider';
@@ -10,9 +10,37 @@ import {
   CanvasContainer,
 } from './Canvas.style';
 
-function Canvas({ dimensions, filters }: { dimensions: number[], filters: ServerResponse[] }) {
+function Canvas({
+  dimensions,
+  filters,
+  addNotification,
+}: {
+  dimensions: number[],
+  filters: ServerResponse[],
+  addNotification: (url: string) => void,
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [, setInfo] = useInfo();
+  const [info, setInfo] = useInfo();
+
+  const drawImageOnVideoSync = useCallback((canvas: HTMLCanvasElement) => {
+    const drawCanvas = canvas;
+
+    drawCanvas.width = info.video.videoWidth;
+    drawCanvas.height = info.video.videoHeight;
+
+    const ctx = drawCanvas.getContext('2d') as CanvasRenderingContext2D;
+
+    ctx.translate(drawCanvas.width, 0);
+    ctx.scale(-1, 1);
+    ctx.drawImage(info.video, 0, 0);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(info.canvas, 0, 0);
+
+    const image = drawCanvas.toDataURL('image/png');
+    return image;
+  }, [info]);
+
+  console.log(filters);
 
   useEffect(() => {
     const drawFilters = async () => {
@@ -118,6 +146,21 @@ function Canvas({ dimensions, filters }: { dimensions: number[], filters: Server
       }));
     };
   }, [canvasRef, setInfo]);
+
+  useEffect(() => {
+    const filtersNoMask = filters.filter((filter) => {
+      if (filter.label === 'nomask') {
+        return true;
+      }
+      return false;
+    });
+
+    if (filtersNoMask.length > 0) {
+      if (addNotification) {
+        addNotification(drawImageOnVideoSync(document.createElement('canvas')));
+      }
+    }
+  }, [JSON.stringify(filters)]);
 
   return (
     <CanvasContainer>
