@@ -1,4 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+} from 'react';
 import intersects from 'intersects';
 
 import { InfoModal } from 'components/molecules';
@@ -15,17 +20,37 @@ type LineCanvasProps = {
   detections: ServerResponse[] | undefined,
   threshold: number,
   color?: string,
+  addNotification?: (url: string) => void,
 };
 
 function LineCanvas({
   dimensions,
   detections,
   color = '#4BBFD1',
+  addNotification,
 }: LineCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [dots, setDots] = useState<number[][]>([]);
   const [amount, setAmount] = useState<number>(0);
-  const [, setInfo] = useInfo();
+  const [info, setInfo] = useInfo();
+
+  const drawImageOnVideoSync = useCallback((canvas: HTMLCanvasElement) => {
+    const drawCanvas = canvas;
+
+    drawCanvas.width = info.video.videoWidth;
+    drawCanvas.height = info.video.videoHeight;
+
+    const ctx = drawCanvas.getContext('2d') as CanvasRenderingContext2D;
+
+    ctx.translate(drawCanvas.width, 0);
+    ctx.scale(-1, 1);
+    ctx.drawImage(info.video, 0, 0);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(info.canvas, 0, 0);
+
+    const image = drawCanvas.toDataURL('image/png');
+    return image;
+  }, [info]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -135,22 +160,18 @@ function LineCanvas({
 
         return intersect;
       });
-      console.log(entitiesInside);
 
       setAmount(entitiesInside.length);
     }
   }, [detections, dots]);
 
   useEffect(() => {
-    console.log(intersects.linePolygon(
-      12,
-      0,
-      12,
-      12,
-      [0, 0, 0, 10, 10, 10, 10, 0],
-      0,
-    ));
-  }, []);
+    if (amount > 0) {
+      if (addNotification) {
+        addNotification(drawImageOnVideoSync(document.createElement('canvas')));
+      }
+    }
+  }, [amount]);
 
   useEffect(() => {
     if (canvasRef.current) {

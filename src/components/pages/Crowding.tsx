@@ -7,13 +7,16 @@ import { Crowding } from 'components/organisms/Analytics';
 import { OptionsConfig } from 'components/organisms/Options/Options';
 import { PageCard, SecondaryBackground } from 'components/atoms';
 import { Options, RecorderControls } from 'components/organisms';
-import { AccessCounter, AnalyticNavbar } from 'components/molecules';
+import { AccessCounter, AnalyticNavbar, LastNotifications } from 'components/molecules';
 import { useAxios } from 'global/func';
 import { useMobile } from 'hooks';
 
 function CrowdingAnalytic() {
   const [options, setOptions] = useState<OptionsConfig>();
   const isMobile = useMobile(700);
+  const [notifications, setNotifications] = useState<(string | null)[]>([
+    null, null, null, null, null,
+  ]);
 
   const [res, setRes] = useState(0);
 
@@ -23,12 +26,21 @@ function CrowdingAnalytic() {
     axiosGet({ url: '/accesses', setState: setRes });
   }, [axiosGet]);
 
+  const handleAddNotification = (url: string) => {
+    const notificationsCopy = [...notifications];
+    notificationsCopy.pop();
+    setNotifications([url, ...notificationsCopy]);
+  };
+
   return (
     <>
       <SecondaryBackground mobileHigher>
         {isMobile ? (
           <>
-            <Crowding options={options} />
+            <Crowding
+              options={options}
+              addNotification={handleAddNotification}
+            />
             <RecorderControls />
             <Options
               notify={[
@@ -42,12 +54,16 @@ function CrowdingAnalytic() {
               onChange={setOptions}
               mobileHeight="17rem"
             />
+            <LastNotifications urlList={notifications} />
           </>
         ) : (
           <PageCard title="Analítico de detecção de aglomeração">
             <Row style={{ height: '100%' }} gutter={[10, 10]}>
               <Col style={{ height: '90%' }} span={16}>
-                <Crowding options={options} />
+                <Crowding
+                  options={options}
+                  addNotification={handleAddNotification}
+                />
                 <RecorderControls />
               </Col>
               <Col span={8}>
@@ -73,6 +89,7 @@ function CrowdingAnalytic() {
                   showColorPicker
                   onChange={setOptions}
                 />
+                <LastNotifications urlList={notifications} />
               </Col>
             </Row>
           </PageCard>
