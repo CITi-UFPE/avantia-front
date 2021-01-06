@@ -40,8 +40,6 @@ function Canvas({
     return image;
   }, [info]);
 
-  console.log(filters);
-
   useEffect(() => {
     const drawFilters = async () => {
       const canvas = canvasRef?.current;
@@ -157,7 +155,9 @@ function Canvas({
 
     if (filtersNoMask.length > 0) {
       if (addNotification) {
-        addNotification(drawImageOnVideoSync(document.createElement('canvas')));
+        setTimeout(() => {
+          addNotification(drawImageOnVideoSync(document.createElement('canvas')));
+        }, 50);
       }
     }
   }, [JSON.stringify(filters)]);
@@ -169,7 +169,7 @@ function Canvas({
         width={dimensions[1]}
         height={dimensions[0]}
       />
-      <InfoModal />
+      <InfoModal actionText="Detecção de Máscaras" />
     </CanvasContainer>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { SessionTime } from 'components/molecules';
+import { ConnectionInfo } from 'components/molecules';
 import { Image, Link } from 'components/atoms';
 import { whatsappLink } from 'variables/contact';
 
@@ -17,11 +17,11 @@ import {
   NavItem,
 } from './Header.style';
 
-function Header({ location }: { location: any }) {
+function Header() {
   return (
     <Base>
       <NavItem>
-        <SessionTime transparent={location.pathname.indexOf('share') === -1} />
+        <ConnectionInfo disabled={false} />
       </NavItem>
 
       <NavItem>

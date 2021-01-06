@@ -22,7 +22,7 @@ function LastNotificationsModal({
   return (
     <Modal
       visible={visible}
-      title="Últimas Notificações"
+      title="Últimas Detecções"
       footer={null}
       centered
       onCancel={(e) => {

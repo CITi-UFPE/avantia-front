@@ -14,7 +14,7 @@ import {
 
 function Display({ location }: { location: any }) {
   const [visible, setVisible] = useState(false);
-  const { data, type } = location.state || {};
+  const { data, type, referrer } = location.state || {};
 
   useEffect(() => {
     if (!localStorage.getItem('seen_warn')) {
@@ -67,7 +67,7 @@ function Display({ location }: { location: any }) {
           </span>
         </Paragraph>
       </Modal>
-      <ShareFooter data={data} type={location.state.type} />
+      <ShareFooter data={data} type={location.state.type} referrer={referrer} />
     </>
   );
 }

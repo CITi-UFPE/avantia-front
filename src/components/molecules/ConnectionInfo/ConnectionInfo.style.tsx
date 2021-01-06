@@ -29,6 +29,11 @@ export const ButtonContainer = styled.button`
 
 export const ConnectionContainer = styled.div`
   ${flexcc}
+
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+    margin-top: 15px;
+  }
 `;
 
 export const ConnectionIcon = styled.img`
@@ -36,7 +41,6 @@ export const ConnectionIcon = styled.img`
   margin: 0 5px;
 
   @media only screen and (max-width: 600px) {
-    width: 30px;
     margin: 0;
   }
 `;

@@ -14,10 +14,6 @@ export const Base = styled.header`
 
   @media only screen and (max-width: 750px) {
     padding: .5rem 0;
-
-    div > img {
-      width: 6rem;
-    }
   }
 `;
 

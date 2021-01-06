@@ -54,12 +54,11 @@ export const AccessItem = styled.li`
   list-style: none;
   display: flex;
   align-items: flex-start;
-  margin: .5rem 0;
+  margin: 10px 0;
   width: 90%;
   max-width: 30rem;
 
   @media only screen and (max-width: 800px) {
-    margin: .2rem 0;
     line-height: 90%;
   }
 `;
@@ -87,17 +86,18 @@ export const AccessText = styled.p`
   margin: 0;
   text-align: left;
   width: calc(100% - 3.5rem);
-  font-size: .6rem;
-
-  @media only screen and (max-width: 1000px) {
-    font-size: .5rem;
-  }
+  font-size: 13px;
 `;
 
 export const Image = styled.img`
   width: 15px;
   max-height: 15px;
   margin: 0 5px;
+  margin-top: 5px;
+
+  @media only screen and (max-width: 1000px) {
+    margin-top: 0;
+  }
 `;
 
 export const BottomText = styled.p`

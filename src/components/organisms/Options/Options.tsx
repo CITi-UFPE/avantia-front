@@ -5,15 +5,22 @@ import { ChromePicker } from 'react-color';
 
 import { useMobile } from 'hooks';
 
+import trashIcon from 'assets/icons/trash.svg';
+
 import {
   Card,
   Title,
+  Description,
+  Section,
   Label,
+  TrashButton,
+  TrashIcon,
   ButtonContainer,
   Button,
   Input,
-  Select,
-  Color,
+  ColorsContainer,
+  ColorBall,
+  PlusIcon,
   ModalContainer,
   Shadow,
   DropdownOpen,
@@ -22,9 +29,10 @@ import {
 
 const defaultConfig: OptionsConfig = {
   notify: ['mask', 'person'],
-  quantity: 10,
+  quantity: 1,
   color: '#4BBFD1',
-  time: 10,
+  time: 2,
+  default: true,
 };
 
 type OptionsProps = {
@@ -34,6 +42,7 @@ type OptionsProps = {
   showTime?: boolean,
   onChange: (changeObj: typeof defaultConfig) => void,
   mobileHeight?: string,
+  analyticName?: string,
 };
 
 function Options({
@@ -43,21 +52,32 @@ function Options({
   showColorPicker = false,
   showTime = false,
   mobileHeight = '10rem',
+  analyticName = '',
 }: OptionsProps) {
   const [changeObj, setChangeObj] = useState(defaultConfig);
+  const [tempObj, setTempObj] = useState(defaultConfig);
   const [showColor, setShowColor] = useState(false);
+  const [colors, setColors] = useState(['#61CA55', '#7BAFFA', '#C73C2C', '#F27D39']);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const isMobile = useMobile(700);
 
-  const generateHandler = (key: string) => (value: any) => {
-    setChangeObj((prevObj) => ({
+  const generateHandler = (key: string, both: boolean = false) => (value: any) => {
+    setTempObj((prevObj) => ({
       ...prevObj,
+      default: false,
       [key]: value,
     }));
+    if (both) {
+      setChangeObj((prevObj) => ({
+        ...prevObj,
+        default: false,
+        [key]: value,
+      }));
+    }
   };
 
   useEffect(() => {
-    onChange(changeObj);
+    onChange({ ...changeObj });
   }, [changeObj, onChange]);
 
   return (
@@ -73,65 +93,90 @@ function Options({
             <DownOutlined style={{ color: '#3f3f3f' }} />
           </DropdownClose>
         )}
-        <Title>Configurações</Title>
+        <Title>Configurar Analítico</Title>
+        <Description>{analyticName}</Description>
+        {showColorPicker && (
+          <Section>
+            <Label>Marcar Área de Detecção</Label>
+            <ColorsContainer>
+              {colors.map((color) => (
+                <ColorBall active={color === tempObj.color} color={`${color}`} onClick={() => generateHandler('color', true)(`${color}`)} />
+              ))}
+              <ColorBall
+                color="transparent"
+                border
+                onClick={() => setShowColor((prevShow) => !prevShow)}
+              >
+                <PlusIcon />
+              </ColorBall>
+              <TrashButton
+                onClick={() => generateHandler('default', true)(true)}
+              >
+                <TrashIcon src={trashIcon} />
+              </TrashButton>
+            </ColorsContainer>
+            {showColor && (
+              <ModalContainer>
+                <Shadow onClick={() => setShowColor(false)} />
+                <ChromePicker
+                  color={tempObj.color}
+                  onChangeComplete={({ hex }) => {
+                    generateHandler('color', true)(hex);
+                    setColors((prevColors) => [...prevColors, hex]);
+                  }}
+                />
+              </ModalContainer>
+            )}
+          </Section>
+        )}
         {notify && (
-          <>
-            <Label>Notificar apenas</Label>
+          <Section>
+            <Label>Notificar Apenas</Label>
             <Checkbox.Group
               options={notify}
               defaultValue={defaultConfig.notify}
-              value={changeObj.notify}
+              value={tempObj.notify}
               onChange={generateHandler('notify')}
             />
-          </>
+          </Section>
         )}
         {showQuantity && (
-          <>
+          <Section>
             <Label>Notificar a partir de</Label>
             <Input
-              value={changeObj.quantity}
+              value={tempObj.quantity}
               onChange={(e) => generateHandler('quantity')(Number(e.target.value))}
               type="number"
               min="0"
               placeholder="Ex: 30"
             />
             elementos
-          </>
+          </Section>
         )}
         {showTime && (
-          <>
+          <Section>
             <Label>Notificar a partir de</Label>
             <Input
-              value={changeObj.quantity}
+              value={tempObj.time}
               onChange={(e) => generateHandler('time')(Number(e.target.value))}
               type="number"
               min="0"
               placeholder="Ex: 30"
             />
             segundos
-          </>
-        )}
-        {showColorPicker && (
-          <>
-            <Label>Definições de Seleção</Label>
-            <Select onClick={() => setShowColor((prevShow) => !prevShow)}>
-              <Color color={changeObj.color} />
-              <DownOutlined />
-            </Select>
-            {showColor && (
-              <ModalContainer>
-                <Shadow onClick={() => setShowColor(false)} />
-                <ChromePicker
-                  color={changeObj.color}
-                  onChangeComplete={({ hex }) => generateHandler('color')(hex)}
-                />
-              </ModalContainer>
-            )}
-          </>
+          </Section>
         )}
         <ButtonContainer>
-          <Button onClick={() => setChangeObj(defaultConfig)} clean>Limpar</Button>
-          <Button save>Salvar</Button>
+          <Button
+            onClick={() => {
+              setChangeObj({ ...defaultConfig });
+              setTempObj({ ...defaultConfig });
+            }}
+            clean
+          >
+            Limpar
+          </Button>
+          <Button save onClick={() => setChangeObj(tempObj)}>Aplicar</Button>
         </ButtonContainer>
       </Card>
     </>
@@ -143,6 +188,7 @@ export type OptionsConfig = {
   quantity: number,
   time: number,
   color: string,
+  default: boolean,
 }
 
 export default Options;

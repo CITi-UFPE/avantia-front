@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import colors from 'styles/colors';
-import { flex } from 'styles/variables';
+import { PlusOutlined } from '@ant-design/icons';
 
 export const Card = styled.div`
   border: 1px solid #cccccc;
@@ -48,13 +48,40 @@ export const Title = styled.h3`
   text-transform: uppercase;
   color: black;
   font-size: .8rem;
+  margin: 0;
+`;
+
+export const Description = styled.h3`
+  text-transform: uppercase;
+  color: #707070;
+  font-size: .5rem;
+`;
+
+export const Section = styled.div`
+  padding: 10px;
+  background-color: #EFEFEF;
+  margin-bottom: 8px;
+  border-radius: 5px;
 `;
 
 export const Label = styled.h3`
-  text-transform: uppercase;
-  color: #474747;
+  color: #707070;
   font-size: .7rem;
-  margin: 6px 0;
+  margin: 0 0 6px 0;
+`;
+
+export const TrashButton = styled.button`
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+`;
+
+export const TrashIcon = styled.img`
+  height: 23px;
+  margin: 1px 10px;
 `;
 
 export const ButtonContainer = styled.div`
@@ -96,20 +123,32 @@ export const Input = styled.input`
   border-bottom: 2px solid ${colors.secondaryGray};
 `;
 
-export const Select = styled.button`
-  ${flex('space-around', 'center', 'row', 'nowrap')}
-  border: 1px solid ${colors.secondaryGray};
-  border-radius: 5px;
-  width: 50px;
-  padding: 5px 5px;
-  cursor: pointer;
-  outline: none;
+export const ColorsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `;
 
-export const Color = styled.div`
+export const ColorBall = styled.button`
   width: 15px;
   height: 15px;
-  background-color: ${({ color }: { color: string }) => color};
+  background-color: ${({ color }: { color: string, border?: boolean, active?: boolean }) => color || 'white'};
+  border-radius: 50px;
+  outline: none;
+  margin: 5px;
+  padding: 0;
+  border: ${({ border }) => (border ? '1px solid #B2B2B2' : 'none')};
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ${({ active }) => (active && css`
+    border: 1px solid black;
+  `)}
+`;
+
+export const PlusIcon = styled(PlusOutlined)`
+  color: #B2B2B2;
 `;
 
 export const ModalContainer = styled.div`

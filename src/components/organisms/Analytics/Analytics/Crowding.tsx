@@ -99,6 +99,8 @@ function Crowding({
             detections={detections?.filter(({ label }) => (
               options?.notify.includes(label)
             )) || []}
+            clear={options?.default || false}
+            options={options}
             addNotification={addNotification}
             dimensions={dimensions}
           />

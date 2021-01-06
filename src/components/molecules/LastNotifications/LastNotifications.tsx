@@ -26,7 +26,7 @@ function LastNotifications({ urlList = [] }: { urlList: (string | null)[] }) {
         visible={modalVisible}
         setVisible={setModalVisible}
       />
-      <Title>Últimas Notificações</Title>
+      <Title>Últimas Detecções</Title>
       <ImageContainer>
         {urlList.map((url) => {
           if (!url) return <Placeholder />;

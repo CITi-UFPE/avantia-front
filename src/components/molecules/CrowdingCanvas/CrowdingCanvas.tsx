@@ -21,6 +21,8 @@ type CrowdingCanvasProps = {
   threshold: number,
   color?: string,
   addNotification?: (url: string) => void,
+  clear: boolean,
+  options: any,
 };
 
 function CrowdingCanvas({
@@ -29,11 +31,15 @@ function CrowdingCanvas({
   threshold,
   color = '#4BBFD1',
   addNotification,
+  clear,
+  options,
 }: CrowdingCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [dots, setDots] = useState<number[][]>([]);
   const [amount, setAmount] = useState<number>(0);
+  const [mouseDown, setMouseDown] = useState<boolean>(false);
   const [info, setInfo] = useInfo();
+  const dotGrabbed = useRef<number | null>(null);
 
   const drawImageOnVideoSync = useCallback((canvas: HTMLCanvasElement) => {
     const drawCanvas = canvas;
@@ -61,13 +67,29 @@ function CrowdingCanvas({
         const scaleX = canvas.width / rect.width;
         const scaleY = canvas.height / rect.height;
 
-        setDots((prevDots: number[][]) => ([
-          ...prevDots,
-          [
+        setDots((prevDots: number[][]) => {
+          const dot = [
             (e.clientX - rect.left) * scaleX,
             (e.clientY - rect.top) * scaleY,
-          ],
-        ]));
+          ];
+
+          let isMouseOver = false;
+
+          prevDots.forEach(([x, y]) => {
+            if (
+              Math.abs(dot[0] - x) < 10
+              && Math.abs(dot[1] - y) < 10
+            ) {
+              isMouseOver = true;
+            }
+          });
+
+          if (isMouseOver) return prevDots;
+          return ([
+            ...prevDots,
+            dot,
+          ]);
+        });
       });
     }
   }, [canvasRef]);
@@ -156,6 +178,8 @@ function CrowdingCanvas({
       });
 
       setAmount(entitiesInside.length);
+    } else if (dots.length <= 2) {
+      setAmount(0);
     }
   }, [detections, dots]);
 
@@ -182,15 +206,85 @@ function CrowdingCanvas({
     }
   }, [amount, threshold]);
 
+  useEffect(() => {
+    if (clear) setDots([]);
+  }, [clear, options]);
+
+  const watchCanvas = useCallback((event: any) => {
+    const e = event as MouseEvent;
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+
+      const dot = [
+        (e.clientX - rect.left) * scaleX,
+        (e.clientY - rect.top) * scaleY,
+      ];
+
+      let mouseOverIndex = -1;
+
+      const isGrabbing = document.body.style.cursor === 'grabbing';
+
+      if (isGrabbing) {
+        setDots((prevDots: number[][]) => {
+          const tempDots = [...prevDots];
+
+          if (dotGrabbed.current !== null) {
+            tempDots[dotGrabbed.current] = dot;
+            return tempDots;
+          }
+
+          return prevDots;
+        });
+        return;
+      }
+
+      dots.forEach(([x, y], i) => {
+        if (
+          Math.abs(dot[0] - x) < 10
+          && Math.abs(dot[1] - y) < 10
+        ) mouseOverIndex = i;
+      });
+
+      document.body.style.cursor = mouseOverIndex !== -1 ? 'grab' : 'auto';
+
+      if (mouseOverIndex !== -1 && mouseDown) {
+        document.body.style.cursor = 'grabbing';
+        dotGrabbed.current = mouseOverIndex;
+
+        setDots((prevDots: number[][]) => {
+          const tempDots = [...prevDots];
+
+          tempDots[mouseOverIndex] = dot;
+
+          return tempDots;
+        });
+      }
+    }
+  }, [canvasRef, dots, mouseDown]);
+
+  const handleMouseDown = () => setMouseDown(true);
+
+  const handleMouseUp = () => {
+    setMouseDown(false);
+    dotGrabbed.current = null;
+    document.body.style.cursor = 'auto';
+  };
+
   return (
     <CanvasContainer>
-      <EntityCounter amount={amount} warn={amount > threshold} />
+      <EntityCounter amount={amount} warn={amount >= threshold} />
       <StyledCanvas
         ref={canvasRef}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseMove={watchCanvas}
         width={dimensions[1]}
         height={dimensions[0]}
       />
-      <InfoModal />
+      <InfoModal actionText="Detecção de Aglomeração" />
     </CanvasContainer>
   );
 }

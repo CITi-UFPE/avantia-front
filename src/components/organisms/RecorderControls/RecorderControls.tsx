@@ -23,7 +23,7 @@ import {
   Button,
 } from './RecorderControls.style';
 
-function RecorderControls() {
+function RecorderControls({ referrer }: { referrer: string }) {
   const [mode, setMode] = useState<'camera' | 'video'>('camera');
   const [data, setData] = useState<string | Blob[]>('');
   const [type, setType] = useState<'image' | 'video' | null>(null);
@@ -147,7 +147,7 @@ function RecorderControls() {
     return () => { };
   }, [countdown]);
 
-  if (data && type) return <Redirect to={{ pathname: '/livedemo/display', state: { data, type } }} />;
+  if (data && type) return <Redirect to={{ pathname: '/livedemo/display', state: { data, type, referrer } }} />;
 
   const disabled = !info.canvas || !info.video;
 

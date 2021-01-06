@@ -4,7 +4,12 @@ import { Row, Col } from 'antd';
 import { PageCard, SecondaryBackground } from 'components/atoms';
 import { Mask } from 'components/organisms/Analytics';
 import { Options, RecorderControls } from 'components/organisms';
-import { AccessCounter, AnalyticNavbar, LastNotifications } from 'components/molecules';
+import {
+  AccessCounter,
+  AnalyticNavbar,
+  ConnectionInfo,
+  LastNotifications,
+} from 'components/molecules';
 import { OptionsConfig } from 'components/organisms/Options/Options';
 import { Link } from 'react-router-dom';
 import { LeftOutlined } from '@ant-design/icons';
@@ -40,13 +45,15 @@ function Analytic() {
               options={options}
               addNotification={handleAddNotification}
             />
-            <RecorderControls />
+            <RecorderControls referrer="mascara" />
             <Options
               notify={[
                 { value: 'mask', label: 'Pessoas com Máscara' },
                 { value: 'nomask', label: 'Pessoas sem Máscara' },
               ]}
               onChange={setOptions}
+              mobileHeight="12rem"
+              analyticName="Detecção de Máscara"
             />
             <LastNotifications urlList={notifications} />
           </>
@@ -58,9 +65,9 @@ function Analytic() {
                   options={options}
                   addNotification={handleAddNotification}
                 />
-                <RecorderControls />
+                <RecorderControls referrer="mascara" />
               </Col>
-              <Col span={8}>
+              <Col style={{ height: '90%', overflow: 'auto' }} span={8}>
                 <Link
                   to="/livedemo/acesso"
                   style={{
@@ -78,6 +85,7 @@ function Analytic() {
                     { value: 'nomask', label: 'Pessoas sem Máscara' },
                   ]}
                   onChange={setOptions}
+                  analyticName="Detecção de Máscara"
                 />
                 <LastNotifications urlList={notifications} />
               </Col>

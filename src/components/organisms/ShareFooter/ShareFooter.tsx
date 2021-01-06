@@ -16,7 +16,17 @@ import {
 } from './ShareFooter.style';
 import ShareFooterIcons from './ShareFooterIcons';
 
-function ShareFooter({ data, type }: { data: string | Blob[], type: string }) {
+type ShareFooterProps = {
+  data: string | Blob[],
+  type: string,
+  referrer?: string,
+};
+
+function ShareFooter({
+  data,
+  type,
+  referrer = '',
+}: ShareFooterProps) {
   const [redirect, setRedirect] = useState('');
   const [visible, setVisible] = useState(false);
   const [fileId, setFileId] = useState('');
@@ -74,7 +84,7 @@ function ShareFooter({ data, type }: { data: string | Blob[], type: string }) {
       >
         <ShareFooterIcons closeModal={() => setVisible(false)} shareUrl={shareUrl} />
       </Modal>
-      <Button onClick={() => setRedirect('/livedemo/analitico')}>
+      <Button onClick={() => setRedirect(`/livedemo/${referrer}`)}>
         <ButtonIcon src={backArrowSvg} />
         {!isMobile && 'Voltar para teste'}
       </Button>

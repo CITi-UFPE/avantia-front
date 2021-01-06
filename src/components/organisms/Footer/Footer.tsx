@@ -9,7 +9,7 @@ function Footer({ disabled }: { disabled: boolean }) {
   return (
     <Base>
       <div />
-      <RecorderControls />
+      <RecorderControls referrer="" />
       <ConnectionInfo disabled={disabled} />
     </Base>
   );
