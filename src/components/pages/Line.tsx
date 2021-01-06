@@ -41,7 +41,7 @@ function LineAnalytic() {
               options={options}
               addNotification={handleAddNotification}
             />
-            <RecorderControls />
+            <RecorderControls referrer="linha" />
             <Options
               notify={[
                 { value: 'person', label: 'Pessoas' },
@@ -52,6 +52,7 @@ function LineAnalytic() {
               showColorPicker
               onChange={setOptions}
               mobileHeight="17rem"
+              analyticName="Detecção de Cruzamento de Linha"
             />
             <LastNotifications urlList={notifications} />
           </>
@@ -63,9 +64,9 @@ function LineAnalytic() {
                   options={options}
                   addNotification={handleAddNotification}
                 />
-                <RecorderControls />
+                <RecorderControls referrer="linha" />
               </Col>
-              <Col span={8}>
+              <Col style={{ height: '90%', overflow: 'auto' }} span={8}>
                 <Link
                   to="/livedemo/acesso"
                   style={{
@@ -86,6 +87,7 @@ function LineAnalytic() {
                   ]}
                   showColorPicker
                   onChange={setOptions}
+                  analyticName="Detecção de Cruzamento de Linha"
                 />
                 <LastNotifications urlList={notifications} />
               </Col>

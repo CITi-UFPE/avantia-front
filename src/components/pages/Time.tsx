@@ -42,7 +42,7 @@ function TimeAnalytic() {
               options={options}
               addNotification={handleAddNotification}
             />
-            <RecorderControls />
+            <RecorderControls referrer="permanencia" />
             <Options
               notify={[
                 { value: 'person', label: 'Pessoas' },
@@ -54,6 +54,7 @@ function TimeAnalytic() {
               showColorPicker
               onChange={setOptions}
               mobileHeight="17rem"
+              analyticName="Detecção de Permanência"
             />
             <LastNotifications urlList={notifications} />
           </>
@@ -65,9 +66,9 @@ function TimeAnalytic() {
                   options={options}
                   addNotification={handleAddNotification}
                 />
-                <RecorderControls />
+                <RecorderControls referrer="permanencia" />
               </Col>
-              <Col span={8}>
+              <Col style={{ height: '90%', overflow: 'auto' }} span={8}>
                 <Link
                   to="/livedemo/acesso"
                   style={{
@@ -89,6 +90,7 @@ function TimeAnalytic() {
                   showTime
                   showColorPicker
                   onChange={setOptions}
+                  analyticName="Detecção de Permanência"
                 />
                 <LastNotifications urlList={notifications} />
               </Col>

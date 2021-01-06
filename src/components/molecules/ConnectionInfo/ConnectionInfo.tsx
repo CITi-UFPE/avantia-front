@@ -96,7 +96,7 @@ function ConnectionInfo({ disabled }: { disabled: boolean }) {
       )}
       <ConnectionContainer>
         <ConnectionIcon src={disabled ? disabledConnectionSvg : statusInfo.icon} />
-        {!isMobile && <Paragraph noMargin color={statusInfo.color}>{statusInfo.text}</Paragraph>}
+        <Paragraph noMargin color={statusInfo.color}>{statusInfo.text}</Paragraph>
       </ConnectionContainer>
     </InfoContainer>
   );

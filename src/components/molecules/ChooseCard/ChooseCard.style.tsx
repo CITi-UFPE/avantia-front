@@ -82,7 +82,7 @@ export const AccessText = styled.p`
   margin: 0;
   text-align: left;
   width: calc(100% - 3.5rem);
-  font-size: .8rem;
+  font-size: 13px;
 `;
 
 export const Image = styled.img`

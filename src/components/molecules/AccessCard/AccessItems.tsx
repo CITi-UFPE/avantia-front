@@ -20,6 +20,7 @@ const itemsContent = [
     <strong>
       conexão
     </strong>
+    .
   </>,
   <>
     Fotos e vídeos tirados na plataforma são armazenados por até
@@ -31,8 +32,9 @@ const itemsContent = [
     para que você possa
     {' '}
     <strong>
-      compartilhar-los.
+      compartilhar-los
     </strong>
+    .
   </>,
   <>
     Compartilhe seu vídeo ou foto em suas redes sociais e também

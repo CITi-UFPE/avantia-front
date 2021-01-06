@@ -20,6 +20,8 @@ type TimeCanvasProps = {
   color?: string,
   addNotification: (url: string) => void,
   limitTime?: number,
+  clear: boolean,
+  options: any,
 };
 
 function TimeCanvas({
@@ -28,11 +30,15 @@ function TimeCanvas({
   color = '#4BBFD1',
   addNotification,
   limitTime,
+  clear,
+  options,
 }: TimeCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [dots, setDots] = useState<number[][]>([]);
   const [entities, setEntities] = useState<ServerResponse[]>([]);
+  const [mouseDown, setMouseDown] = useState<boolean>(false);
   const [info, setInfo] = useInfo();
+  const dotGrabbed = useRef<number | null>(null);
 
   const timeMarker = useRef<number>(0);
   const entityLabels = useRef<string[]>([]);
@@ -63,13 +69,29 @@ function TimeCanvas({
         const scaleX = canvas.width / rect.width;
         const scaleY = canvas.height / rect.height;
 
-        setDots((prevDots: number[][]) => ([
-          ...prevDots,
-          [
+        setDots((prevDots: number[][]) => {
+          const dot = [
             (e.clientX - rect.left) * scaleX,
             (e.clientY - rect.top) * scaleY,
-          ],
-        ]));
+          ];
+
+          let isMouseOver = false;
+
+          prevDots.forEach(([x, y]) => {
+            if (
+              Math.abs(dot[0] - x) < 10
+              && Math.abs(dot[1] - y) < 10
+            ) {
+              isMouseOver = true;
+            }
+          });
+
+          if (isMouseOver) return prevDots;
+          return ([
+            ...prevDots,
+            dot,
+          ]);
+        });
       });
     }
   }, [canvasRef]);
@@ -157,6 +179,8 @@ function TimeCanvas({
         return intersectionPoints.length > 0;
       });
       setEntities(entitiesInside);
+    } else if (dots.length <= 2) {
+      setEntities([]);
     }
   }, [dots, JSON.stringify(detections)]);
 
@@ -203,14 +227,84 @@ function TimeCanvas({
     }
   }, [JSON.stringify(entities), limitTime, info]);
 
+  useEffect(() => {
+    if (clear) setDots([]);
+  }, [clear, options]);
+
+  const watchCanvas = useCallback((event: any) => {
+    const e = event as MouseEvent;
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+
+      const dot = [
+        (e.clientX - rect.left) * scaleX,
+        (e.clientY - rect.top) * scaleY,
+      ];
+
+      let mouseOverIndex = -1;
+
+      const isGrabbing = document.body.style.cursor === 'grabbing';
+
+      if (isGrabbing) {
+        setDots((prevDots: number[][]) => {
+          const tempDots = [...prevDots];
+
+          if (dotGrabbed.current !== null) {
+            tempDots[dotGrabbed.current] = dot;
+            return tempDots;
+          }
+
+          return prevDots;
+        });
+        return;
+      }
+
+      dots.forEach(([x, y], i) => {
+        if (
+          Math.abs(dot[0] - x) < 10
+          && Math.abs(dot[1] - y) < 10
+        ) mouseOverIndex = i;
+      });
+
+      document.body.style.cursor = mouseOverIndex !== -1 ? 'grab' : 'auto';
+
+      if (mouseOverIndex !== -1 && mouseDown) {
+        document.body.style.cursor = 'grabbing';
+        dotGrabbed.current = mouseOverIndex;
+
+        setDots((prevDots: number[][]) => {
+          const tempDots = [...prevDots];
+
+          tempDots[mouseOverIndex] = dot;
+
+          return tempDots;
+        });
+      }
+    }
+  }, [canvasRef, dots, mouseDown]);
+
+  const handleMouseDown = () => setMouseDown(true);
+
+  const handleMouseUp = () => {
+    setMouseDown(false);
+    dotGrabbed.current = null;
+    document.body.style.cursor = 'auto';
+  };
+
   return (
     <CanvasContainer>
       <StyledCanvas
         ref={canvasRef}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseMove={watchCanvas}
         width={dimensions[1]}
         height={dimensions[0]}
       />
-      <InfoModal />
+      <InfoModal actionText="Deteclçao de Tempo de Permanência" />
     </CanvasContainer>
   );
 }

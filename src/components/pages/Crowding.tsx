@@ -41,7 +41,7 @@ function CrowdingAnalytic() {
               options={options}
               addNotification={handleAddNotification}
             />
-            <RecorderControls />
+            <RecorderControls referrer="aglomeracao" />
             <Options
               notify={[
                 { value: 'person', label: 'Pessoas' },
@@ -52,7 +52,8 @@ function CrowdingAnalytic() {
               showQuantity
               showColorPicker
               onChange={setOptions}
-              mobileHeight="17rem"
+              mobileHeight="22rem"
+              analyticName="Detecção de Aglomeração"
             />
             <LastNotifications urlList={notifications} />
           </>
@@ -64,9 +65,9 @@ function CrowdingAnalytic() {
                   options={options}
                   addNotification={handleAddNotification}
                 />
-                <RecorderControls />
+                <RecorderControls referrer="aglomeracao" />
               </Col>
-              <Col span={8}>
+              <Col style={{ height: '90%', overflow: 'auto' }} span={8}>
                 <Link
                   to="/livedemo/acesso"
                   style={{
@@ -88,6 +89,7 @@ function CrowdingAnalytic() {
                   showQuantity
                   showColorPicker
                   onChange={setOptions}
+                  analyticName="Detecção de Aglomeração"
                 />
                 <LastNotifications urlList={notifications} />
               </Col>

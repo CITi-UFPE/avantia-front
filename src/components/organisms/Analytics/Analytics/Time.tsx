@@ -100,6 +100,8 @@ function Time({
             detections={detections?.filter(({ label }) => (
               options?.notify.includes(label)
             )) || []}
+            clear={options?.default || false}
+            options={options}
             dimensions={dimensions}
           />
         ) : <Loader width={`${dimensions[1] || 0}px`} height={`${dimensions[0] || 0}px`} />}

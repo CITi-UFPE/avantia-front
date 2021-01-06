@@ -7,9 +7,10 @@ const itemsContent = [
         Selecione
       </strong>
       {' '}
-      um filtro de Soluções da Avantia na barra
+      uma das opções de analítico da Avantia no menu
       {' '}
-      {isMobile ? 'abaixo' : 'ao lado'}
+      {isMobile ? 'abaixo' : 'a direita'}
+      .
     </>
   ),
   () => (
@@ -24,7 +25,7 @@ const itemsContent = [
         segure
       </strong>
       {' '}
-      ele para filmar
+      ele para filmar.
     </>
   ),
 ];

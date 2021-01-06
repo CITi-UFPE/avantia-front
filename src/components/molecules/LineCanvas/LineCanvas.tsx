@@ -21,6 +21,8 @@ type LineCanvasProps = {
   threshold: number,
   color?: string,
   addNotification?: (url: string) => void,
+  clear: boolean,
+  options: any,
 };
 
 function LineCanvas({
@@ -28,11 +30,15 @@ function LineCanvas({
   detections,
   color = '#4BBFD1',
   addNotification,
+  clear,
+  options,
 }: LineCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [dots, setDots] = useState<number[][]>([]);
   const [amount, setAmount] = useState<number>(0);
+  const [mouseDown, setMouseDown] = useState<boolean>(false);
   const [info, setInfo] = useInfo();
+  const dotGrabbed = useRef<number | null>(null);
 
   const drawImageOnVideoSync = useCallback((canvas: HTMLCanvasElement) => {
     const drawCanvas = canvas;
@@ -62,13 +68,29 @@ function LineCanvas({
 
         setDots((prevDots: number[][]) => {
           const tempDots = [...prevDots];
+          const dot = [
+            (e.clientX - rect.left) * scaleX,
+            (e.clientY - rect.top) * scaleY,
+          ];
+
+          let isMouseOver = false;
+
+          tempDots.forEach(([x, y]) => {
+            if (
+              Math.abs(dot[0] - x) < 10
+              && Math.abs(dot[1] - y) < 10
+            ) {
+              isMouseOver = true;
+            }
+          });
+
           if (prevDots.length === 2) tempDots.pop();
+
+          if (isMouseOver) return prevDots;
+
           return ([
             ...tempDots,
-            [
-              (e.clientX - rect.left) * scaleX,
-              (e.clientY - rect.top) * scaleY,
-            ],
+            dot,
           ]);
         });
       });
@@ -142,26 +164,27 @@ function LineCanvas({
       const entitiesInside = detections.filter((detection) => {
         const detectionDots: number[] = JSON.parse(detection.bb_o);
 
-        const dot1 = [detectionDots[0], detectionDots[1]];
-        const dot2 = [detectionDots[0] + detectionDots[2], detectionDots[1]];
-        const dot3 = [detectionDots[0] + detectionDots[2], detectionDots[1] + detectionDots[3]];
-        const dot4 = [detectionDots[0], detectionDots[1] + detectionDots[3]];
+        const width = detectionDots[2];
+        const height = detectionDots[3];
 
-        const detectionPolygon = [...dot1, ...dot2, ...dot3, ...dot4];
+        const radius = width > height ? width / 4 : height / 4;
 
-        const intersect = intersects.linePolygon(
+        const intersect = intersects.circleLine(
+          detectionDots[0] + width / 2,
+          detectionDots[1] + height / 2,
+          radius,
           dots[0][0],
           dots[0][1],
           dots[1][0],
           dots[1][1],
-          detectionPolygon,
-          0,
         );
 
         return intersect;
       });
 
       setAmount(entitiesInside.length);
+    } else if (dots.length <= 1) {
+      setAmount(0);
     }
   }, [detections, dots]);
 
@@ -188,15 +211,85 @@ function LineCanvas({
     };
   }, [canvasRef, setInfo]);
 
+  useEffect(() => {
+    if (clear) setDots([]);
+  }, [clear, options]);
+
+  const watchCanvas = useCallback((event: any) => {
+    const e = event as MouseEvent;
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+
+      const dot = [
+        (e.clientX - rect.left) * scaleX,
+        (e.clientY - rect.top) * scaleY,
+      ];
+
+      let mouseOverIndex = -1;
+
+      const isGrabbing = document.body.style.cursor === 'grabbing';
+
+      if (isGrabbing) {
+        setDots((prevDots: number[][]) => {
+          const tempDots = [...prevDots];
+
+          if (dotGrabbed.current !== null) {
+            tempDots[dotGrabbed.current] = dot;
+            return tempDots;
+          }
+
+          return prevDots;
+        });
+        return;
+      }
+
+      dots.forEach(([x, y], i) => {
+        if (
+          Math.abs(dot[0] - x) < 10
+          && Math.abs(dot[1] - y) < 10
+        ) mouseOverIndex = i;
+      });
+
+      document.body.style.cursor = mouseOverIndex !== -1 ? 'grab' : 'auto';
+
+      if (mouseOverIndex !== -1 && mouseDown) {
+        document.body.style.cursor = 'grabbing';
+        dotGrabbed.current = mouseOverIndex;
+
+        setDots((prevDots: number[][]) => {
+          const tempDots = [...prevDots];
+
+          tempDots[mouseOverIndex] = dot;
+
+          return tempDots;
+        });
+      }
+    }
+  }, [canvasRef, dots, mouseDown]);
+
+  const handleMouseDown = () => setMouseDown(true);
+
+  const handleMouseUp = () => {
+    setMouseDown(false);
+    dotGrabbed.current = null;
+    document.body.style.cursor = 'auto';
+  };
+
   return (
     <CanvasContainer>
       {amount > 0 && <Warn>Cruzamento detectado!</Warn>}
       <StyledCanvas
         ref={canvasRef}
         width={dimensions[1]}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseMove={watchCanvas}
         height={dimensions[0]}
       />
-      <InfoModal />
+      <InfoModal actionText="Detecção de Cruzamento de Linha" />
     </CanvasContainer>
   );
 }
